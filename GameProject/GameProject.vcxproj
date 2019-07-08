@@ -131,6 +131,7 @@
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
     <ClCompile Include="Framework\Util.cpp" />
+    <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\DemoScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />
     <ClInclude Include="Framework\Util.h" />
+    <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="Scene\DemoScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />

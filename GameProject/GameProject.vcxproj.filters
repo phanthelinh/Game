@@ -19,6 +19,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{a0dcf3b9-e29b-453b-8a45-e5888d4ca3b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents">
+      <UniqueIdentifier>{3d5bbf94-089c-47dd-a563-b28740d79e14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,6 +66,9 @@
     <ClCompile Include="Framework\GameMap.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\GameObject.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -103,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Framework\Util.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\GameObject.h">
+      <Filter>GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

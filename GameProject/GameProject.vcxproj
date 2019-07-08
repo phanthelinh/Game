@@ -124,6 +124,8 @@
   <ItemGroup>
     <ClCompile Include="Framework\Animation.cpp" />
     <ClCompile Include="Framework\Camera.cpp" />
+    <ClCompile Include="Framework\Cell.cpp" />
+    <ClCompile Include="Framework\Collision.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
     <ClCompile Include="Framework\GameMap.cpp" />
     <ClCompile Include="Framework\Global.cpp" />
@@ -132,6 +134,7 @@
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
     <ClCompile Include="Framework\Util.cpp" />
+    <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\DemoScene.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
@@ -139,10 +142,10 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Framework\AABB.h" />
     <ClInclude Include="Framework\Animation.h" />
     <ClInclude Include="Framework\Camera.h" />
     <ClInclude Include="Framework\Cell.h" />
+    <ClInclude Include="Framework\Collision.h" />
     <ClInclude Include="Framework\Game.h" />
     <ClInclude Include="Framework\GameMap.h" />
     <ClInclude Include="Framework\Global.h" />
@@ -151,6 +154,7 @@
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />
     <ClInclude Include="Framework\Util.h" />
+    <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="Scene\DemoScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />

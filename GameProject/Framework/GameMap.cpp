@@ -21,11 +21,11 @@ GameMap::GameMap(int tileWidth, int tileHeight, int numTilesWidth, int numTileHe
 void GameMap::RenderMap()
 {
 	//calculating offset
-	int offX = 0;//camera->GetBound().left / tileWidth;
-	int offY = 0;// camera->GetBound().top / tileHeight;
+	int offX = CAMERA->GetBound().left / tileWidth;
+	int offY = CAMERA->GetBound().top / tileHeight;
 	//calculating number of columns and rows that will be drawn
-	int columnsDraw = GLOBAL->g_ScreenWidth / tileWidth;//camera->GetCameraWidth() / tileWidth;
-	int rowsDraw = GLOBAL->g_ScreenHeight / tileHeight;//camera->GetCameraHeight() / tileHeight;
+	int columnsDraw = CAMERA->camWidth / tileWidth;
+	int rowsDraw = CAMERA->camHeight / tileHeight;
 
 	for (int y = 0; y < rowsDraw; y++)
 	{
@@ -41,9 +41,8 @@ void GameMap::RenderMap()
 			{
 				return;
 			}
-			//tileset->Draw(tileID, D3DXVECTOR3(x*tileWidth, y*tileHeight + GlobalVar::GetGameUIArea(), 0));
-			//tileSet->DrawTile(tileID, D3DXVECTOR3((x + offX)*tileWidth, (y + offY)*tileHeight, 0), camera->GetCameraPosition());
-			tileSet->DrawTile(tileID, D3DXVECTOR3((x + offX)*tileWidth, (y + offY)*tileHeight, 0), D3DXVECTOR3(GLOBAL->g_ScreenWidth/2,GLOBAL->g_ScreenHeight/2,0));
+			
+			tileSet->DrawTile(tileID, D3DXVECTOR3((x + offX)*tileWidth, (y + offY)*tileHeight, 0), CAMERA->camPosition);
 		}
 	}
 }

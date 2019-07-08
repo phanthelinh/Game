@@ -22,7 +22,7 @@ void DemoScene::Draw()
 {
 	//back->Draw(128,120);
 	map->RenderMap();
-	simon->Draw(128, 120);
+	simon->Draw(18, 120);
 }
 
 void DemoScene::OnKeyDown(int keyCode)

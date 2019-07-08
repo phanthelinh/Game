@@ -1,15 +1,25 @@
 #pragma once
-#include <vector>
+#include <unordered_set>
+#include "../GameComponents/GameObject.h"
 
 class Cell
 {
 private:
 	int		x, y;
-	//AABB cellBounds;
-	//std::vector<Body*> bodies;
+	int		cellSize;
 	
+
+	bool IsContain(RECT r);
 public:
-	Cell(int x, int x, int width, int height);
-	//void Add(Body* body);
-	//void Remove(Body* body);
+	std::unordered_set<GameObject*> objects;
+
+	Cell(int x, int y, int cellSize);
+	//Add an object to a cell, if it is contained in this cell
+	void Add(GameObject* obj);
+	//Remove an object from a cell
+	void Remove(GameObject* obj);
+	//Get bound
+	RECT GetCellBound();
+	//Release memory
+	void Release();
 };

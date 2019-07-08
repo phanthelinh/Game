@@ -1,12 +1,14 @@
 #pragma once
 #include "Scene.h"
 #include "../Framework/Animation.h"
+#include "../Framework/GameMap.h"
 
 class DemoScene:public Scene
 {
 private:
-	Sprite* back;
-	Animation* simon;
+	Sprite*		back;
+	Animation*	simon;
+	GameMap*	map;
 public:
 	DemoScene();
 	~DemoScene();

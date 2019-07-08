@@ -4,8 +4,9 @@
 
 DemoScene::DemoScene()
 {
-	back = new Sprite("Resources/scenes/intro_255_240.png");
+	//back = new Sprite("Resources/scenes/intro_255_240.png");
 	simon = new Animation("Resources/simon/run_18_32.png", 2, 1, 2);
+	map = new GameMap(32, 32, 24, 6, "Resources/map/01scrn.bmp", "Resources/map/01.csv");
 }
 
 DemoScene::~DemoScene()
@@ -19,7 +20,8 @@ void DemoScene::Update(float deltaTime)
 
 void DemoScene::Draw()
 {
-	back->Draw(128,120);
+	//back->Draw(128,120);
+	map->RenderMap();
 	simon->Draw(128, 120);
 }
 

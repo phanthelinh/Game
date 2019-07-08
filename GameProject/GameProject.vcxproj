@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation.cpp" />
+    <ClCompile Include="Framework\Camera.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
     <ClCompile Include="Framework\Global.cpp" />
     <ClCompile Include="Framework\Sprite.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation.h" />
+    <ClInclude Include="Framework\Camera.h" />
     <ClInclude Include="Framework\Game.h" />
     <ClInclude Include="Framework\Global.h" />
     <ClInclude Include="Framework\Sprite.h" />

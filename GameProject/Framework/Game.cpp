@@ -228,11 +228,22 @@ Game::Game(HINSTANCE hInstance, int nCmdShow)
 
 bool Game::GameInit()
 {
-	if (InitWindow() && InitDirectX())
+	if (InitWindow())
 	{
-		return true;
+		if (!InitDirectX())
+			return false;
+		else
+		{
+			if (!InitKeyboard())
+				return false;
+		}
 	}
-	return false;
+	else
+	{
+		return false;
+	}
+	SceneManager::GetInstance()->ReplaceScene(new DemoScene());
+	return true;
 }
 
 void Game::GameRun()

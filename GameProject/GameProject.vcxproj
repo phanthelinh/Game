@@ -127,6 +127,7 @@
     <ClCompile Include="Framework\Game.cpp" />
     <ClCompile Include="Framework\GameMap.cpp" />
     <ClCompile Include="Framework\Global.cpp" />
+    <ClCompile Include="Framework\Grid.cpp" />
     <ClCompile Include="Framework\Sprite.cpp" />
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
@@ -138,11 +139,14 @@
     <ClCompile Include="Scene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\AABB.h" />
     <ClInclude Include="Framework\Animation.h" />
     <ClInclude Include="Framework\Camera.h" />
+    <ClInclude Include="Framework\Cell.h" />
     <ClInclude Include="Framework\Game.h" />
     <ClInclude Include="Framework\GameMap.h" />
     <ClInclude Include="Framework\Global.h" />
+    <ClInclude Include="Framework\Grid.h" />
     <ClInclude Include="Framework\Sprite.h" />
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />

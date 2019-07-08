@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-
+Camera* Camera::instance = NULL;
 
 Camera::Camera()
 {
@@ -22,6 +22,17 @@ Camera::Camera(int x, int y, int width, int height)
 
 Camera::~Camera()
 {
+}
+
+Camera* Camera::GetInstance()
+{
+	if (instance)
+		return instance;
+	else 
+	{
+		instance = new Camera(GLOBAL->g_ScreenWidth/2, (GLOBAL->g_ScreenHeight - GLOBAL->g_GameUIArea)/2, GLOBAL->g_ScreenWidth, GLOBAL->g_ScreenHeight);
+		return instance;
+	}
 }
 
 RECT Camera::GetBound()

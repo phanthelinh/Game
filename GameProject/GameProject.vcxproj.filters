@@ -48,6 +48,9 @@
     <ClCompile Include="Scene\TitleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Camera.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
     <ClCompile Include="Framework\Tile.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
@@ -87,6 +90,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Tile.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Camera.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Framework\TileSet.h">

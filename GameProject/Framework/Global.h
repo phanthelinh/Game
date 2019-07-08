@@ -25,5 +25,7 @@ public:
 	LPDIRECT3DDEVICE9	g_DirectDevice = NULL;		//Direct X device
 	LPD3DXSPRITE		g_SpriteHandler = NULL;		//Direct X Sprite handler
 	LPDIRECT3DSURFACE9	g_BackBuffer = NULL;		//Back buffer
-
+	int					g_GameUIArea = 0;				//game ui start position
+	int					g_WorldMapWidth;
+	int					g_WorldMapHeight;
 };

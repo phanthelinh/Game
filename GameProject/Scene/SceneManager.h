@@ -15,5 +15,7 @@ public:
 	//Get the current scene of the game
 	Scene*	GetCurrentScene();			
 	//Change to another scene
-	void	ChangeScene(Scene* targetScene);	
+	void	ChangeScene(Scene* targetScene);
+	//replace current scene with another
+	void ReplaceScene(Scene* scene);
 };

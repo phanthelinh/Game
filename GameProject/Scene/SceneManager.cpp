@@ -26,3 +26,9 @@ void SceneManager::ChangeScene(Scene * targetScene)
 	_curScene = nullptr;
 	_curScene = targetScene;
 }
+
+void SceneManager::ReplaceScene(Scene* scene)
+{
+	delete _curScene;
+	_curScene = scene;
+}

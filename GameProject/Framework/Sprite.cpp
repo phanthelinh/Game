@@ -64,8 +64,8 @@ void Sprite::Draw(int x, int y, int viewportX, int viewportY, RECT sourceRect, D
 	D3DXMATRIX mt; //matrix transform
 	D3DXMatrixIdentity(&mt);
 	mt._41 = -(float)(viewportX - GLOBAL->g_ScreenWidth / 2);
-	mt._42 = -(float)(viewportY - ((GLOBAL->g_ScreenHeight/2)));//-GlobalVar::GetGameUIArea()) / 2));
-
+	//mt._42 = -(float)(viewportY - ((GLOBAL->g_ScreenHeight/2)));//-GlobalVar::GetGameUIArea()) / 2));
+	mt._42 = -(float)(viewportY - ((GLOBAL->g_ScreenHeight - GLOBAL->g_GameUIArea) / 2)) + GLOBAL->g_GameUIArea;
 
 	D3DXVECTOR4 transformedPos;
 	D3DXVECTOR3 drawingPosition((float)x, (float)y, 0);

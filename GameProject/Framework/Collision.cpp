@@ -44,7 +44,7 @@ CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
 	BPhaseBox.vy = movingObj.vy;
 
 	if (!IsCollide(BPhaseBox, staticObj))
-		return;
+		return result;
 
 	if (movingObj.vx > 0)
 	{
@@ -92,8 +92,8 @@ CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
 	}
 	float entryTime, exitTime;
 	//Calculate time on entry and exit 
-	entryTime = std::max(txEntry, tyEntry);
-	exitTime = std::min(txExit, tyExit);
+	entryTime = (float) std::max(txEntry, tyEntry);
+	exitTime = (float) std::min(txExit, tyExit);
 
 	//if not collision
 	//collision occur when entryTime < exitTime 

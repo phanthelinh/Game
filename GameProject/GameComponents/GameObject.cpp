@@ -11,6 +11,25 @@ GameObject::~GameObject()
 {
 }
 
+BoundingBox GameObject::GetBoundingBox()
+{
+	BoundingBox bound;
+
+	bound.left = posX - width / 2;
+	bound.top = posY - height / 2;
+	bound.right = posX + width / 2;
+	bound.bottom = posY + height / 2;
+	bound.vX = this->vX;
+	bound.vY = this->vY;
+
+	return bound;
+}
+
+D3DXVECTOR3 GameObject::GetPosition()
+{
+	return D3DXVECTOR3(posX, posY, 0);
+}
+
 RECT GameObject::GetBound()
 {
 	RECT bound;
@@ -21,11 +40,6 @@ RECT GameObject::GetBound()
 	bound.bottom = posY + height / 2;
 
 	return bound;
-}
-
-D3DXVECTOR3 GameObject::GetPosition()
-{
-	return D3DXVECTOR3(posX, posY, 0);
 }
 
 void GameObject::Update(float deltaTime)

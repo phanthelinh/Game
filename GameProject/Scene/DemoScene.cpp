@@ -4,9 +4,8 @@
 
 DemoScene::DemoScene()
 {
-	//back = new Sprite("Resources/scenes/intro_255_240.png");
-	simon = new Animation("Resources/simon/run_18_32.png", 2, 1, 2);
-	map = new GameMap(32, 32, 24, 6, "Resources/map/01scrn.bmp", "Resources/map/01.csv");
+	PLAYER; //get instance
+	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
 }
 
 DemoScene::~DemoScene()
@@ -15,18 +14,20 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
-	simon->Update(deltaTime);
+	PLAYER->Update(deltaTime);
+	PLAYER->HandleKeyboard(keys);
 }
 
 void DemoScene::Draw()
 {
 	//back->Draw(128,120);
 	map->RenderMap();
-	simon->Draw(18, 120);
+	PLAYER->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)
 {
+	keys[keyCode] = true;
 	if (keyCode == VK_RETURN)
 	{
 		SCENES->ChangeScene(new TitleScene());
@@ -35,6 +36,7 @@ void DemoScene::OnKeyDown(int keyCode)
 
 void DemoScene::OnKeyUp(int keyCode)
 {
+	keys[keyCode] = false;
 }
 
 void DemoScene::ReleaseAll()

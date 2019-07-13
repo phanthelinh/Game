@@ -15,12 +15,12 @@ Collision * Collision::GetInstance()
 	}
 }
 
-bool Collision::IsCollide(Box b1, Box b2)
+bool Collision::IsCollide(BoundingBox b1, BoundingBox b2)
 {
 	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
 }
 
-CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
+CollisionResult Collision::SweptAABB(BoundingBox movingObj, BoundingBox staticObj)
 {
 	float dxEntry, dyEntry;	//distance require occurring collision
 	float dxExit, dyExit;	//disrtance require finishing collision
@@ -29,24 +29,24 @@ CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
 	result.isCollide = false;
 	result.entryTime = 1.0f;
 	result.sideX = result.sideY = 0;
-	result.sideCollided = CollisionSide::Unknown;
+	result.sideCollided = CollisionSide::Unknown_;
 
-	movingObj.vx = movingObj.vx - staticObj.vx;
-	movingObj.vy = movingObj.vy - staticObj.vy;
+	movingObj.vX = movingObj.vX - staticObj.vX;
+	movingObj.vY = movingObj.vY - staticObj.vY;
 	//y axis is looking down -> vy > 0: going down
-	Box BPhaseBox;
+	BoundingBox BPhaseBox;
 
-	BPhaseBox.left = movingObj.vx > 0 ? movingObj.left : movingObj.left + movingObj.vx;
-	BPhaseBox.top = movingObj.vy > 0 ? movingObj.top : movingObj.top + movingObj.vy;
-	BPhaseBox.right = movingObj.vx > 0 ? movingObj.right + movingObj.vx : movingObj.right - movingObj.vx;
-	BPhaseBox.bottom = movingObj.vy > 0 ? movingObj.bottom + movingObj.vy : movingObj.bottom + movingObj.vy;
-	BPhaseBox.vx = movingObj.vx;
-	BPhaseBox.vy = movingObj.vy;
+	BPhaseBox.left = movingObj.vX > 0 ? movingObj.left : movingObj.left + movingObj.vX;
+	BPhaseBox.top = movingObj.vY > 0 ? movingObj.top : movingObj.top + movingObj.vY;
+	BPhaseBox.right = movingObj.vX > 0 ? movingObj.right + movingObj.vX : movingObj.right - movingObj.vX;
+	BPhaseBox.bottom = movingObj.vY > 0 ? movingObj.bottom + movingObj.vY : movingObj.bottom + movingObj.vY;
+	BPhaseBox.vX = movingObj.vX;
+	BPhaseBox.vY = movingObj.vY;
 
 	if (!IsCollide(BPhaseBox, staticObj))
 		return result;
 
-	if (movingObj.vx > 0)
+	if (movingObj.vX > 0)
 	{
 		dxEntry = staticObj.left - movingObj.right;
 		dxExit = staticObj.right - movingObj.left;
@@ -56,7 +56,7 @@ CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
 		dxExit = staticObj.left - movingObj.right;
 	}
 	//Object is going from top to bottom
-	if (movingObj.vy > 0)	
+	if (movingObj.vY > 0)	
 	{
 		dyEntry = staticObj.top - movingObj.bottom;
 		dyExit = staticObj.bottom - movingObj.top;
@@ -70,30 +70,30 @@ CollisionResult Collision::SweptAABB(Box movingObj, Box staticObj)
 	//time to intersect with axises
 	double txEntry, tyEntry, txExit, tyExit;
 
-	if (movingObj.vx == 0.0f)
+	if (movingObj.vX == 0.0f)
 	{
 		//due to diving by zero
 		txEntry = -INFINITY;
 		txExit = INFINITY;
 	}
 	else {
-		txEntry = dxEntry / movingObj.vx;
-		txExit = dxExit / movingObj.vx;
+		txEntry = dxEntry / movingObj.vX;
+		txExit = dxExit / movingObj.vX;
 	}
 
-	if (movingObj.vy == 0.0f)
+	if (movingObj.vY == 0.0f)
 	{
 		tyEntry = -INFINITY;
 		tyExit = INFINITY;
 	}
 	else {
-		tyEntry = dyEntry / movingObj.vy;
-		tyExit = dyExit / movingObj.vy;
+		tyEntry = dyEntry / movingObj.vY;
+		tyExit = dyExit / movingObj.vY;
 	}
 	float entryTime, exitTime;
 	//Calculate time on entry and exit 
-	entryTime = (float) std::max(txEntry, tyEntry);
-	exitTime = (float) std::min(txExit, tyExit);
+	entryTime = (float) max(txEntry, tyEntry);
+	exitTime = (float) min(txExit, tyExit);
 
 	//if not collision
 	//collision occur when entryTime < exitTime 

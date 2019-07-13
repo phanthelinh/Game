@@ -2,12 +2,12 @@
 #include "Scene.h"
 #include "../Framework/Animation.h"
 #include "../Framework/GameMap.h"
+#include "../GameComponents/Player/Player.h"
 
 class DemoScene:public Scene
 {
 private:
 	Sprite*		back;
-	Animation*	simon;
 	GameMap*	map;
 public:
 	DemoScene();

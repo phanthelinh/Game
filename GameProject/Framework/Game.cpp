@@ -268,7 +268,7 @@ void Game::GameRun()
 		{
 			deltaTime = max(deltaTime, FRAME_TIME_MILLISEC);
 			
-			GameUpdate(deltaTime);
+			GameUpdate(deltaTime/1000.0f);
 			GameDraw();
 			previousTime = currentTime;
 		}

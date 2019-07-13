@@ -1,7 +1,9 @@
 #pragma once
-
+#include <map>
 class Scene
 {
+protected:
+	std::map<int, bool> keys;
 public:
 	Scene();
 

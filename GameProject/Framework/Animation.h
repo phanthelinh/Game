@@ -18,7 +18,7 @@ public:
 	bool	_infiniteAnim;
 	RECT	_rect;
 
-	Animation(const char* filePath, int totalFrames, int rows, int columns, bool infinite = true, float timePerFrame = 100.0f);
+	Animation(const char* filePath, int totalFrames, int rows, int columns, bool infinite = true, float timePerFrame = 0.1f);
 	void Update(float deltaTime);
 
 };

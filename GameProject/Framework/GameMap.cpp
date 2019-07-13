@@ -3,6 +3,12 @@
 GameMap::GameMap(int tileWidth, int tileHeight, int numTilesWidth, int numTileHeight, const char * tileSetPath, const char * dataFilePath)
 {
 	data = Util::GetMapDataFromFile(dataFilePath);
+	/*if (data.size() != numTilesWidth * numTileHeight)
+	{
+		MessageBox(NULL, "Error on retriving map data", "Error", MB_OK);
+		PostQuitMessage(0);
+		return;
+	}*/
 	if (data.empty())
 	{
 		MessageBox(NULL, "Error on retriving map data", "Error", MB_OK);
@@ -14,7 +20,9 @@ GameMap::GameMap(int tileWidth, int tileHeight, int numTilesWidth, int numTileHe
 	this->numTilesWidth = numTilesWidth;
 
 	tileSet = new TileSet(tileSetPath, tileWidth, tileHeight);
-	//init camera
+	//init game world map width and height
+	GLOBAL->g_WorldMapWidth = numTilesWidth * tileWidth;
+	GLOBAL->g_WorldMapHeight = numTileHeight * tileHeight;
 
 }
 

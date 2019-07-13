@@ -7,7 +7,7 @@ class SceneManager
 {
 private:
 	static SceneManager* _instance;
-	Scene*				_curScene = new DemoScene();
+	Scene*				_curScene = nullptr;
 public:
 	//Get current instance SceneManager
 	static SceneManager* GetInstance();			

@@ -1,15 +1,8 @@
 #pragma once
+#include "../GameComponents/GameObject.h"
+
 #define COLLISION Collision::GetInstance()
 
-struct Box
-{
-	float left;
-	float right;
-	float top;
-	float bottom;
-	float vx;
-	float vy;
-};
 
 enum CollisionSide
 {
@@ -17,7 +10,7 @@ enum CollisionSide
 	Top,
 	Right,
 	Bottom,
-	Unknown
+	Unknown_
 };
 
 struct CollisionResult
@@ -35,7 +28,7 @@ private:
 public:
 	static Collision* GetInstance();
 
-	bool IsCollide(Box b1, Box b2);
+	bool IsCollide(BoundingBox b1, BoundingBox b2);
 
-	CollisionResult SweptAABB(Box movingObj, Box staticObj);
+	CollisionResult SweptAABB(BoundingBox movingObj, BoundingBox staticObj);
 };

@@ -7,10 +7,14 @@ std::vector<int> Util::GetMapDataFromFile(const char * filePath)
 	if (file.good())
 	{
 		std::string curData = "";
+
+		int i = 0;
 		while (file >> curData)
 		{
+			i++;
 			int x = atoi(curData.c_str());
-			data.push_back(x);
+			if (x != 0)
+				data.push_back(x);
 		}
 		file.close();
 	}

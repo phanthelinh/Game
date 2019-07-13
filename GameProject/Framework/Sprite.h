@@ -1,5 +1,6 @@
 #pragma once
 #include "Global.h"
+#include "Camera.h"
 
 
 class Sprite
@@ -22,7 +23,7 @@ public:
 	//Check for rect is a valid reactangle or not
 	bool IsRect(RECT rect);
 	//Draw sprite
-	void Draw(int x, int y, int viewportX = GLOBAL->g_ScreenWidth/2, int viewportY = GLOBAL->g_ScreenHeight/2, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3());
+	void Draw(int x, int y, int viewportX = CAMERA->camPosition.x, int viewportY = CAMERA->camPosition.y, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3());
 
 	void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3());
 };

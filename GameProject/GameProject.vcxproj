@@ -136,7 +136,6 @@
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
-    <ClCompile Include="GameComponents\Player\PlayerData.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerStandingState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="Framework\Util.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
-    <ClInclude Include="GameComponents\Player\PlayerData.h" />
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h" />
     <ClInclude Include="GameComponents\Player\PlayerStandingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerState.h" />

@@ -84,9 +84,6 @@
     <ClCompile Include="GameComponents\Player\Player.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
-    <ClCompile Include="GameComponents\Player\PlayerData.cpp">
-      <Filter>GameComponents\Player</Filter>
-    </ClCompile>
     <ClCompile Include="GameComponents\Player\PlayerStandingState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
@@ -147,9 +144,6 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\Player.h">
-      <Filter>GameComponents\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="GameComponents\Player\PlayerData.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerState.h">

@@ -99,6 +99,9 @@
     <ClCompile Include="GameComponents\Shield\Shield.cpp">
       <Filter>GameComponents\Shield</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Shield\Shield.h">
       <Filter>GameComponents\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerSittingState.h">
+      <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

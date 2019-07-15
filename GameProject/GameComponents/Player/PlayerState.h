@@ -12,7 +12,7 @@ enum StateName
 	LookUpward,
 	Attacking,
 	Attacking_Jump,
-	Attacking_Sit,
+	Attacking_SitBump,
 	Attacking_Shield,
 	Attacking_StandBump,
 	Sitting,

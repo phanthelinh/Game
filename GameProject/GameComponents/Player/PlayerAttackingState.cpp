@@ -8,12 +8,17 @@ PlayerAttackingState::PlayerAttackingState()
 		PLAYER->allow[Jumping] = true;
 		PLAYER->allow[Sitting] = true;
 		PLAYER->allow[Running] = true;
-		PLAYER->currentAnim = PLAYER->animations[Attacking_Shield];
+		PLAYER->currentAnim = PLAYER->animations[Attacking] = PLAYER->animations[Attacking_Shield];
 		PLAYER->shield->SetState(ShieldState::Flying);
-		//reset anim
-		PLAYER->currentAnim->ResetAnim();
+		
 	}
-	
+	else if (prevState == Sitting)
+	{
+		PLAYER->currentAnim = PLAYER->animations[Attacking] = PLAYER->animations[Attacking_SitBump];
+		PLAYER->shield->SetState(ShieldState::Shielded);
+	}
+	//reset anim
+	PLAYER->currentAnim->ResetAnim();
 }
 
 void PlayerAttackingState::Update(float deltaTime)
@@ -26,7 +31,10 @@ void PlayerAttackingState::Update(float deltaTime)
 
 void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys)
 {
-	
+	if (!keys[VK_Z])
+	{
+		PLAYER->ChangeState(new PlayerStandingState());
+	}
 }
 
 StateName PlayerAttackingState::GetState()

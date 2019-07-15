@@ -30,6 +30,10 @@ public:
 
 	void HandleKeyboard(std::map<int, bool> keys);
 
+	void OnKeyDown(int keyCode);
+
+	void OnKeyUp(int keyCode);
+
 	virtual BoundingBox GetBoundingBox();
 
 	std::unordered_map<StateName, Animation*> animations;

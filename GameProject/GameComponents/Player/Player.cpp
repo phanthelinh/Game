@@ -14,7 +14,7 @@ Player::Player()
 	
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 
-	currentAnim = animations[Standing];
+	//currentAnim = animations[Standing];
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
@@ -47,14 +47,13 @@ void Player::Update(float deltaTime)
 		SetPosition(D3DXVECTOR3(GLOBAL->g_WorldMapWidth - 16, posY, 0));
 	}
 	//assign position for shield
-	if (shield->curState == ShieldState::Normal)
+	if (shield->curState == ShieldState::Flying) //shield flying is true when start attack shiled state
 	{
-		shield->SetPosition(GetPosition());
-		shield->SetTranslationToPlayer(isReverse, ShieldState::Normal);
-	}
-	if (shield->curState == ShieldState::Flying)
-	{
-		if (!shieldFlying)
+		if (currentAnim->_isFinished) //if sprite throw is finish, start to throw shield
+		{
+			shieldFlying = true;
+		}
+		if (!shieldFlying) //shield is still with player, at sprite no 0 and 1
 		{
 			shield->SetPosition(GetPosition());
 			shield->SetTranslationToPlayer(isReverse, ShieldState::Flying, currentAnim->_curIndex);
@@ -62,31 +61,32 @@ void Player::Update(float deltaTime)
 		else
 		{
 			shield->Update(deltaTime);
-			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
+			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox());
+			
 			if (colRes.isCollide)
 			{
 				//
 				shield->SetPosition(D3DXVECTOR3(shield->posX + shield->vX*colRes.entryTime, shield->posY + shield->vY*colRes.entryTime, 0));
-				if (IsCollide(shield->GetBound()))
-				{
-					shieldFlying = false;
-					shield->SetState(ShieldState::Normal);
-				}
-				
+				shieldFlying = false;
+				shield->SetState(ShieldState::Normal);
 			}
-		}
-		if (currentAnim->_isFinished)
-		{
-			shieldFlying = true;
-		}
-		
+		}	
+	}
+	else
+	{
+		//set shield position to player position
+		shield->SetPosition(GetPosition());
+		shield->SetTranslationToPlayer(isReverse, shield->curState);
 	}
 }
 
 void Player::Draw()
 {
 	currentAnim->_isFlipHor = isReverse;
-	shield->isReverse = !isReverse; //only sprite shield affected
+	if (!shieldFlying)
+	{
+		shield->isReverse = isReverse;
+	}
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
 }
@@ -107,6 +107,37 @@ void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects)
 void Player::HandleKeyboard(std::map<int, bool> keys)
 {
 	currentState->HandleKeyboard(keys);
+}
+
+void Player::OnKeyDown(int keyCode)
+{
+	switch (keyCode)
+	{
+	case VK_Z:
+		if (allow[Attacking_Shield])
+		{
+			allow[Attacking_Shield] = false;
+			ChangeState(new PlayerAttackingState());
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::OnKeyUp(int keyCode)
+{
+	switch (keyCode)
+	{
+	case VK_Z:
+		allow[Attacking_Shield] = true;
+		break;
+	case VK_UP:
+		shield->SetState(ShieldState::Normal);
+		break;
+	default:
+		break;
+	}
 }
 
 BoundingBox Player::GetBoundingBox()

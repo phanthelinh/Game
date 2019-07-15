@@ -7,9 +7,11 @@ Player::Player()
 	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Attacking_Shield] = animations[Attacking] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
-	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false, 0.01);
-	
+	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
+	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
+
 	currentAnim = animations[Standing];
+	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
 	posX = 16;
@@ -59,8 +61,14 @@ void Player::Update(float deltaTime)
 			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
 			if (colRes.isCollide)
 			{
-				shieldFlying = false;
-				shield->SetState(ShieldState::Normal);
+				//
+				shield->SetPosition(D3DXVECTOR3(shield->posX + shield->vX*colRes.entryTime, shield->posY + shield->vY*colRes.entryTime, 0));
+				if (IsCollide(shield->GetBound()))
+				{
+					shieldFlying = false;
+					shield->SetState(ShieldState::Normal);
+				}
+				
 			}
 		}
 		if (currentAnim->_isFinished)
@@ -73,7 +81,8 @@ void Player::Update(float deltaTime)
 
 void Player::Draw()
 {
-	currentAnim->_isFlipHor = shield->shield->_isFlipHor = isReverse;
+	currentAnim->_isFlipHor = isReverse;
+	shield->isReverse = !isReverse; //only sprite shield affected
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
 }

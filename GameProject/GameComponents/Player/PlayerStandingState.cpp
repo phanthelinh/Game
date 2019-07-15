@@ -19,10 +19,22 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 	if (keys[VK_LEFT] || keys[VK_RIGHT])
 	{
 		PLAYER->ChangeState(new PlayerRunningState());
+		return;
 	}
 	if (keys[VK_Z])
 	{
 		PLAYER->ChangeState(new PlayerAttackingState());
+		return;
+	}
+	if (keys[VK_UP])
+	{
+		PLAYER->currentAnim = PLAYER->animations[LookUpward];
+		PLAYER->shield->SetState(ShieldState::Shield_Upward);
+	}
+	else
+	{
+		PLAYER->currentAnim = PLAYER->animations[Standing];
+		PLAYER->shield->SetState(ShieldState::Normal);
 	}
 }
 

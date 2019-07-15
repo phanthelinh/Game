@@ -9,6 +9,7 @@ enum StateName
 	Running,
 	Falling,
 	Jumping,
+	LookUpward,
 	Attacking,
 	Attacking_Jump,
 	Attacking_Sit,

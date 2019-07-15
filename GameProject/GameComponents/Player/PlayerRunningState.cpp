@@ -19,12 +19,12 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
 {
 	if (keys[VK_LEFT])
 	{
-		PLAYER->isReverse = true;
+		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
 	else if (keys[VK_RIGHT])
 	{
-		PLAYER->isReverse = false;
+		PLAYER->isReverse = true;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
 	else

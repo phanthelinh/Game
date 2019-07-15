@@ -7,6 +7,7 @@ enum ShieldState
 {
 	Normal,
 	Shielded,
+	Shield_Upward,
 	Flying
 };
 

@@ -209,8 +209,8 @@ void Game::GameDraw()
 	auto device = GLOBAL->g_DirectDevice;
 	auto spriteHandler = GLOBAL->g_SpriteHandler;
 	//device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-	device->ColorFill(GLOBAL->g_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 	device->BeginScene();
+	device->ColorFill(GLOBAL->g_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	
 	scene->Draw();
@@ -251,7 +251,8 @@ void Game::GameRun()
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
 	srand(time(NULL));
-	float previousTime = (float)GetTickCount();
+	auto frameStart = GetTickCount();
+	auto tickPerFrame = 1000.0f / FRAME_PER_SEC;
 	while (true)
 	{
 		if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
@@ -261,21 +262,21 @@ void Game::GameRun()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		float currentTime = (float)GetTickCount();
-		float deltaTime = (currentTime - previousTime); //milisecond
+		auto now = GetTickCount();
+		auto dt = (now - frameStart); //milisecond
 		
-		if (deltaTime >= FRAME_TIME_MILLISEC)
+		if (dt >= tickPerFrame)
 		{
-			deltaTime = max(deltaTime, FRAME_TIME_MILLISEC);
-			
-			GameUpdate(deltaTime/1000.0f);
+			//deltaTime = max(deltaTime, FRAME_TIME_MILLISEC);
+			frameStart = now;
+			GameUpdate(dt*0.01f);
 			GameDraw();
-			previousTime = currentTime;
 		}
 		else
 		{
-			Sleep(FRAME_TIME_MILLISEC - deltaTime);
+			Sleep(tickPerFrame - dt);
 		}
+		
 	}
 }
 

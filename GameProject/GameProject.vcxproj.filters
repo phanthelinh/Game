@@ -97,7 +97,7 @@
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameComponents\Shield\Shield.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GameComponents\Shield</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

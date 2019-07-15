@@ -10,6 +10,8 @@
 #define KEYBOARD_BUFFER_SIZE	1024
 #define FRAME_PER_SEC			60.0f
 #define FRAME_TIME_MILLISEC		100.0f/FRAME_PER_SEC
+#define VK_X					0x58
+#define VK_Z					0x5a
 class Global
 {
 private:

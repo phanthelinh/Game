@@ -25,6 +25,9 @@
     <Filter Include="GameComponents\Player">
       <UniqueIdentifier>{3c50479e-4d9c-43a1-9248-6504956d35d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\Shield">
+      <UniqueIdentifier>{d1de89d2-1e2d-4183-96b3-8df042be8f64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,6 +93,12 @@
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Shield\Shield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -154,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h">
       <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerAttackingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Shield\Shield.h">
+      <Filter>GameComponents\Shield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

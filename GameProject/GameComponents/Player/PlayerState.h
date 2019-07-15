@@ -10,6 +10,11 @@ enum StateName
 	Falling,
 	Jumping,
 	Attacking,
+	Attacking_Jump,
+	Attacking_Sit,
+	Attacking_Shield,
+	Attacking_StandBump,
+	Sitting,
 	Die
 };
 

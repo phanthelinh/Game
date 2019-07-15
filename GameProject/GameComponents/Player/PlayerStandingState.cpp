@@ -20,6 +20,10 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 	{
 		PLAYER->ChangeState(new PlayerRunningState());
 	}
+	if (keys[VK_Z])
+	{
+		PLAYER->ChangeState(new PlayerAttackingState());
+	}
 }
 
 StateName PlayerStandingState::GetState()

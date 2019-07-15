@@ -1,6 +1,6 @@
 #include "PlayerRunningState.h"
 
-#define PLAYER_RUNNING_SPEED 80.0f
+#define PLAYER_RUNNING_SPEED 120.0f
 
 PlayerRunningState::PlayerRunningState()
 {
@@ -22,17 +22,18 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
 		PLAYER->isReverse = true;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
+	else if (keys[VK_RIGHT])
+	{
+		PLAYER->isReverse = false;
+		PLAYER->vX = PLAYER_RUNNING_SPEED;
+	}
 	else
 	{
-		if (keys[VK_RIGHT])
-		{
-			PLAYER->isReverse = false;
-			PLAYER->vX = PLAYER_RUNNING_SPEED;
-		}
-		else
-		{
-			PLAYER->ChangeState(new PlayerStandingState());
-		}
+		PLAYER->ChangeState(new PlayerStandingState());
+	}
+	if (keys[VK_Z])
+	{
+		PLAYER->ChangeState(new PlayerAttackingState());
 	}
 }
 

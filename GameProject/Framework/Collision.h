@@ -30,5 +30,5 @@ public:
 
 	bool IsCollide(BoundingBox b1, BoundingBox b2);
 
-	CollisionResult SweptAABB(BoundingBox movingObj, BoundingBox staticObj);
+	CollisionResult SweptAABB(BoundingBox movingObj, BoundingBox staticObj, float deltaTime);
 };

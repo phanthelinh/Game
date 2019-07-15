@@ -232,11 +232,11 @@ bool Game::GameInit()
 	{
 		if (!InitDirectX())
 			return false;
-		else
+		/*else
 		{
 			if (!InitKeyboard())
 				return false;
-		}
+		}*/
 	}
 	else
 	{

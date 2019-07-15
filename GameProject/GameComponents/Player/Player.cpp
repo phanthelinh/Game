@@ -4,7 +4,7 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[Running] = new Animation("Resources/simon/run_18_32.png", 2, 1, 2);
+	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Attacking_Shield] = animations[Attacking] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false,0.02);
 	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false, 0.02);

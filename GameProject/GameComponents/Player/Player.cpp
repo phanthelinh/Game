@@ -4,7 +4,7 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
-	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4);
+	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4, true, 0.65);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
 
@@ -14,7 +14,7 @@ Player::Player()
 	
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 
-	//currentAnim = animations[Standing];
+	currentAnim = animations[Standing];
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
@@ -60,15 +60,32 @@ void Player::Update(float deltaTime)
 		}
 		else
 		{
-			shield->Update(deltaTime);
+			
 			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox());
 			
 			if (colRes.isCollide)
 			{
-				//
-				shield->SetPosition(D3DXVECTOR3(shield->posX + shield->vX*colRes.entryTime, shield->posY + shield->vY*colRes.entryTime, 0));
-				shieldFlying = false;
-				shield->SetState(ShieldState::Normal);
+				startcheck = true;
+			}
+			else
+			{
+				shield->Update(deltaTime);
+			}
+			if (startcheck)
+			{
+				if (IsCollide(shield->GetBound()))
+				{
+					//
+					//shield->SetPosition(D3DXVECTOR3(shield->posX + shield->vX*colRes.entryTime, shield->posY + shield->vY*colRes.entryTime, 0));
+					shieldFlying = false;
+					startcheck = false;
+					shield->SetState(ShieldState::Normal);
+				}
+				else
+				{
+					shield->Update(deltaTime);
+				}
+				
 			}
 		}	
 	}
@@ -98,6 +115,7 @@ void Player::ChangeState(PlayerState * newState)
 	currentAnim = animations[currentState->GetState()];
 	width = currentAnim->_frameWidth;
 	height = currentAnim->_frameHeight;
+	currentAnim->ResetAnim();
 }
 
 void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects)

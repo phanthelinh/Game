@@ -25,7 +25,7 @@ PlayerAttackingState::PlayerAttackingState()
 		PLAYER->shield->SetState(ShieldState::Shielded);
 	}
 	//reset anim
-	PLAYER->currentAnim->ResetAnim();
+	//PLAYER->currentAnim->ResetAnim();
 }
 
 void PlayerAttackingState::Update(float deltaTime)
@@ -38,10 +38,7 @@ void PlayerAttackingState::Update(float deltaTime)
 
 void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys)
 {
-	if (!keys[VK_Z])
-	{
-		PLAYER->ChangeState(new PlayerStandingState());
-	}
+	
 }
 
 StateName PlayerAttackingState::GetState()
@@ -52,6 +49,10 @@ StateName PlayerAttackingState::GetState()
 			return Attacking_StandBump;
 		else
 			return Attacking_Shield;
+	}
+	else if(prevState == Sitting)
+	{
+		return Attacking_SitBump;
 	}
 	return Attacking;
 }

@@ -45,4 +45,6 @@ public:
 	Shield*			shield;
 private:
 	static Player*	instance;
+
+	bool startcheck = false;
 };

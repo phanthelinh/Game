@@ -1,7 +1,7 @@
 #include "Shield.h"
 
-#define SHIELD_FLYING_SPEED_MIN -80.0f
-#define SHIELD_FLYING_SPEED_MAX  80.0f
+#define SHIELD_FLYING_SPEED_MIN -70.0f
+#define SHIELD_FLYING_SPEED_MAX  70.0f
 
 
 Shield::Shield()
@@ -71,11 +71,11 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 	case Shield_Upward:
 		if (playerReverse) //face to right
 		{
-			_translationToPlayer = { 5,-16,0 };
+			_translationToPlayer = { 5,-18,0 };
 		}
 		else
 		{
-			_translationToPlayer = { -5,-16,0 };
+			_translationToPlayer = { -5,-18,0 };
 		}
 		break;
 	case Flying:

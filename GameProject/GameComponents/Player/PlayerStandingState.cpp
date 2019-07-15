@@ -25,7 +25,7 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 		PLAYER->currentAnim = PLAYER->animations[LookUpward];
 		PLAYER->shield->SetState(ShieldState::Shield_Upward);
 	}
-	if (keys[VK_DOWN])
+	else if (keys[VK_DOWN])
 	{
 		PLAYER->ChangeState(new PlayerSittingState());
 		PLAYER->shield->SetState(ShieldState::Shielded);

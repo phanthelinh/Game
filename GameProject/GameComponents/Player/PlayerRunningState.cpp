@@ -1,6 +1,6 @@
 #include "PlayerRunningState.h"
 
-#define PLAYER_RUNNING_SPEED 120.0f
+#define PLAYER_RUNNING_SPEED 20.0f
 
 PlayerRunningState::PlayerRunningState()
 {

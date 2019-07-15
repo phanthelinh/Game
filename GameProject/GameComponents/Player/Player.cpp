@@ -10,7 +10,7 @@ Player::Player()
 	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 
-	currentAnim = animations[Running];
+	currentAnim = animations[Standing];
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;

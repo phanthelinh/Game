@@ -1,6 +1,6 @@
 #include "PlayerRunningState.h"
 
-#define PLAYER_RUNNING_SPEED 20.0f
+#define PLAYER_RUNNING_SPEED 12.0f
 
 PlayerRunningState::PlayerRunningState()
 {
@@ -30,10 +30,6 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
 	else
 	{
 		PLAYER->ChangeState(new PlayerStandingState());
-	}
-	if (keys[VK_Z])
-	{
-		PLAYER->ChangeState(new PlayerAttackingState());
 	}
 }
 

@@ -1,8 +1,8 @@
 #include "Shield.h"
 
-#define SHIELD_FLYING_SPEED_MIN -70.0f
-#define SHIELD_FLYING_SPEED_MAX 70.0f
-#define MAX_DISTANCE_SHIELD_FLYING (GLOBAL->g_ScreenWidth/2)
+#define SHIELD_FLYING_SPEED_MIN -80.0f
+#define SHIELD_FLYING_SPEED_MAX  80.0f
+
 
 Shield::Shield()
 {
@@ -16,24 +16,35 @@ void Shield::SetState(ShieldState state)
 	switch (curState)
 	{
 	case Normal:
-		shield->_sourceRect = { 51,0,59,16 };
+		shield->_sourceRect = { 2,0,10,16 };
 		shield->_textureWidth = width = 8;
 		shield->_textureHeight = height = 16;
+		vX = vY = 0;
 		break;
 	case Shielded:
-		shield->_sourceRect = { 27,0,43,16 };
+		shield->_sourceRect = { 18,0,34,16 };
 		shield->_textureWidth = width = 16;
 		shield->_textureHeight = height = 16;
+		vX = vY = 0;
 		break;
 	case Shield_Upward:
-		shield->_sourceRect = { 2,2,18,12 };
+		shield->_sourceRect = { 42,2,58,12 };
 		shield->_textureWidth = width = 16;
 		shield->_textureHeight = height = 10;
+		vX = vY = 0;
 		break;
 	case Flying:
-		shield->_sourceRect = { 2,2,18,12 };
+		shield->_sourceRect = { 42,2,58,12 };
 		shield->_textureWidth = width = 16;
 		shield->_textureHeight = height = 10;
+		if (isReverse)
+		{
+			vX = SHIELD_FLYING_SPEED_MAX;
+		}
+		else
+		{
+			vX = SHIELD_FLYING_SPEED_MIN;
+		}
 		break;
 	default:
 		break;
@@ -45,52 +56,51 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 	switch (state)
 	{
 	case Normal:
-		if (!playerReverse) //face to left
+		if (playerReverse) //face to right
 		{
-			_translationToPlayer = { -13,-6,0 };
+			_translationToPlayer = { 13,-6,0 };
 		}
 		else
 		{
-			_translationToPlayer = { 13,-6,0 };
+			_translationToPlayer = { -13,-6,0 };
 		}
 		break;
 	case Shielded:
 		_translationToPlayer = { 0,0,0 };
 		break;
 	case Shield_Upward:
-		if (!playerReverse) //face to left
+		if (playerReverse) //face to right
 		{
-			_translationToPlayer = { -10,-10,0 };
+			_translationToPlayer = { 5,-16,0 };
 		}
 		else
 		{
-			_translationToPlayer = { 10,-20,0 };
+			_translationToPlayer = { -5,-16,0 };
 		}
 		break;
 	case Flying:
-		if (!playerReverse)
+		if (playerReverse)//face to right
 		{
-			vX = SHIELD_FLYING_SPEED_MIN;
+			
 			if (spriteIndex == 0)
 			{
-				_translationToPlayer = { 24,-12,0 };
+				_translationToPlayer = { -25,-13,0 };
 			}
 			else
 			{
-				_translationToPlayer = { -34,3,0 };
+				_translationToPlayer = { 31,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
 			}
 		}
 		else
 		{
-			vX = SHIELD_FLYING_SPEED_MAX;
 			if (spriteIndex == 0)
 			{
-				_translationToPlayer = { -24,-12,0 };
+				_translationToPlayer = { 25,-13,0 };
 			}
 			else
 			{
-				_translationToPlayer = { 34,3,0 };
+				_translationToPlayer = { -31,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
 			}
 		}
@@ -119,13 +129,15 @@ void Shield::Update(float deltaTime)
 		posX = posX + vX * deltaTime;
 		posY = posY + vY * deltaTime;
 		//set reverse velocity
-		if (isReverse)
+		if (isReverse) //face to right
 		{
-			vX += 10;
+			vX -= 10;
+			vX = vX <= SHIELD_FLYING_SPEED_MIN ? SHIELD_FLYING_SPEED_MIN : vX;
 		}
 		else
 		{
-			vX -= 10;
+			vX += 10;
+			vX = vX >= SHIELD_FLYING_SPEED_MAX ? SHIELD_FLYING_SPEED_MAX : vX;
 		}
 	}
 }

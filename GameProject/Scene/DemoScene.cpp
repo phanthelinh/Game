@@ -28,6 +28,7 @@ void DemoScene::Draw()
 void DemoScene::OnKeyDown(int keyCode)
 {
 	keys[keyCode] = true;
+	PLAYER->OnKeyDown(keyCode);
 	if (keyCode == VK_RETURN)
 	{
 		SCENES->ChangeScene(new TitleScene());
@@ -37,6 +38,7 @@ void DemoScene::OnKeyDown(int keyCode)
 void DemoScene::OnKeyUp(int keyCode)
 {
 	keys[keyCode] = false;
+	PLAYER->OnKeyUp(keyCode);
 }
 
 void DemoScene::ReleaseAll()

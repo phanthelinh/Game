@@ -21,6 +21,7 @@ Animation::Animation(const char * filePath, int totalFrames, int rows, int colum
 	_rect.right = _frameWidth;
 	_rect.bottom = _frameHeight;
 	_sourceRect = _rect;
+	_isFlipHor = true;
 	_isFinished = false;
 }
 

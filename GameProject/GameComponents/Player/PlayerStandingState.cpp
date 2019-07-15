@@ -24,6 +24,16 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 	{
 		PLAYER->ChangeState(new PlayerAttackingState());
 	}
+	if (keys[VK_UP])
+	{
+		PLAYER->currentAnim = PLAYER->animations[LookUpward];
+		PLAYER->shield->SetState(ShieldState::Shield_Upward);
+	}
+	else
+	{
+		PLAYER->currentAnim = PLAYER->animations[Standing];
+		PLAYER->shield->SetState(ShieldState::Normal);
+	}
 }
 
 StateName PlayerStandingState::GetState()

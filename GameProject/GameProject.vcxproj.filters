@@ -90,6 +90,18 @@
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerKickingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerSpinningState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -153,6 +165,18 @@
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerFallingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerJumpingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerKickingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerSpinningState.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>

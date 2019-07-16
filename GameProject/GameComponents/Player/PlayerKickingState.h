@@ -2,10 +2,10 @@
 #include "Player.h"
 #include "PlayerState.h"
 
-class PlayerRunningState : public PlayerState
+class PlayerKickingState : public PlayerState
 {
 public:
-	PlayerRunningState();
+	PlayerKickingState();
 	// Inherited via PlayerState
 	virtual void Update(float deltaTime) override;
 

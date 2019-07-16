@@ -1,21 +1,21 @@
-#include "PlayerRunningState.h"
+#include "PlayerKickingState.h"
 
 #define PLAYER_RUNNING_SPEED 80.0f
 
-PlayerRunningState::PlayerRunningState()
+PlayerKickingState::PlayerKickingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = true;
 	PLAYER->vY = 0;
 }
 
-void PlayerRunningState::Update(float deltaTime)
+void PlayerKickingState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 }
 
-void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys)
 {
 	if (keys[VK_LEFT])
 	{
@@ -36,7 +36,7 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
 	}
 }
 
-StateName PlayerRunningState::GetState()
+StateName PlayerKickingState::GetState()
 {
-	return Running;
+	return Kicking;
 }

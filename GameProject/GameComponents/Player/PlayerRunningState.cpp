@@ -17,6 +17,10 @@ void PlayerRunningState::Update(float deltaTime)
 
 void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
 {
+	if (keys[VK_SPACE])
+	{
+		PLAYER->ChangeState(new PlayerJumpingState());
+	}
 	if (keys[VK_LEFT])
 	{
 		PLAYER->isReverse = true;

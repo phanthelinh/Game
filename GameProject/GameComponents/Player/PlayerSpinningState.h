@@ -1,11 +1,13 @@
 #pragma once
 #include "Player.h"
 #include "PlayerState.h"
+#include "PlayerStandingState.h"
+#include "PlayerKickingState.h"
 
-class PlayerRunningState : public PlayerState
+class PlayerSpinningState : public PlayerState
 {
 public:
-	PlayerRunningState();
+	PlayerSpinningState();
 	// Inherited via PlayerState
 	virtual void Update(float deltaTime) override;
 

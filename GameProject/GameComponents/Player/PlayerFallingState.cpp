@@ -1,42 +1,40 @@
-#include "PlayerRunningState.h"
+#include "PlayerFallingState.h"
 
+#define PLAYER_FALLING_SPEED 230.0f
 #define PLAYER_RUNNING_SPEED 80.0f
+#define GRAVITY 10.0f
 
-PlayerRunningState::PlayerRunningState()
+PlayerFallingState::PlayerFallingState()
 {
 	PLAYER->allow[Attacking] = true;
-	PLAYER->allow[Jumping] = true;
-	PLAYER->vY = 0;
+	PLAYER->allow[Jumping] = false;
+	PLAYER->vY = PLAYER_FALLING_SPEED;
 }
 
-void PlayerRunningState::Update(float deltaTime)
+void PlayerFallingState::Update(float deltaTime)
 {
+	if (PLAYER->vY == 0)
+		PLAYER->ChangeState(new PlayerStandingState());
+	PLAYER->vY -= GRAVITY;
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 }
 
-void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys)
 {
 	if (keys[VK_LEFT])
 	{
 		PLAYER->isReverse = true;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
-	else
+	if (keys[VK_RIGHT])
 	{
-		if (keys[VK_RIGHT])
-		{
-			PLAYER->isReverse = false;
-			PLAYER->vX = PLAYER_RUNNING_SPEED;
-		}
-		else
-		{
-			PLAYER->ChangeState(new PlayerStandingState());
-		}
+		PLAYER->isReverse = false;
+		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
 }
 
-StateName PlayerRunningState::GetState()
+StateName PlayerFallingState::GetState()
 {
-	return Running;
+	return Falling;
 }

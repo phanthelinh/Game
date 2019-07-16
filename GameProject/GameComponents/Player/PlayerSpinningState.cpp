@@ -1,42 +1,27 @@
-#include "PlayerRunningState.h"
+#include "PlayerSpinningState.h"
 
 #define PLAYER_RUNNING_SPEED 80.0f
 
-PlayerRunningState::PlayerRunningState()
+PlayerSpinningState::PlayerSpinningState()
 {
 	PLAYER->allow[Attacking] = true;
-	PLAYER->allow[Jumping] = true;
+	PLAYER->allow[Jumping] = false;
 	PLAYER->vY = 0;
 }
 
-void PlayerRunningState::Update(float deltaTime)
+void PlayerSpinningState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 }
 
-void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerSpinningState::HandleKeyboard(std::map<int, bool> keys)
 {
-	if (keys[VK_LEFT])
-	{
-		PLAYER->isReverse = true;
-		PLAYER->vX = -PLAYER_RUNNING_SPEED;
-	}
-	else
-	{
-		if (keys[VK_RIGHT])
-		{
-			PLAYER->isReverse = false;
-			PLAYER->vX = PLAYER_RUNNING_SPEED;
-		}
-		else
-		{
-			PLAYER->ChangeState(new PlayerStandingState());
-		}
-	}
+	PLAYER->isReverse = !PLAYER->isReverse;
+	PLAYER->vX = -PLAYER_RUNNING_SPEED;
 }
 
-StateName PlayerRunningState::GetState()
+StateName PlayerSpinningState::GetState()
 {
-	return Running;
+	return Spinning;
 }

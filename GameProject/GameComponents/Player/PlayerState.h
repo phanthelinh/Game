@@ -9,6 +9,8 @@ enum StateName
 	Running,
 	Falling,
 	Jumping,
+	Spinning,
+	Kicking,
 	Attacking,
 	Die
 };

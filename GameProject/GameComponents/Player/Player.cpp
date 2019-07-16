@@ -11,6 +11,9 @@ Player::Player()
 	animations[Spinning] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
 	animations[Kicking] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
 	currentAnim = animations[Standing];
+	LastKeyState[Z] = false;
+	LastKeyState[X] = false;
+	LastKeyState[C] = false;
 	posX = 16;
 	posY = 416;
 }

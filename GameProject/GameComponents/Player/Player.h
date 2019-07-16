@@ -8,6 +8,12 @@
 
 #define PLAYER	Player::GetInstance()
 
+enum Button
+{
+	Z,
+	X,
+	C
+};
 
 class Player
 	:public GameObject
@@ -16,7 +22,7 @@ public:
 	Player();
 
 	static Player* GetInstance();
-
+	std::unordered_map<Button, bool> LastKeyState; //save laststate of a key to handle input: true means last state it is helddown
 	void Update(float deltaTime);
 
 	void Draw();

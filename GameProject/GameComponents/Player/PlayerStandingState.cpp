@@ -20,9 +20,18 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 	{
 		PLAYER->ChangeState(new PlayerRunningState());
 	}
-	if (keys[VK_SPACE])
+	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->ChangeState(new PlayerJumpingState());
+		PLAYER->LastKeyState[X] = true;
+	}
+	if (GetKeyState('X') < 0)
+	{
+		PLAYER->LastKeyState[X] = true;
+	}
+	else
+	{
+		PLAYER->LastKeyState[X] = false;
 	}
 }
 

@@ -11,14 +11,19 @@ PlayerSpinningState::PlayerSpinningState()
 
 void PlayerSpinningState::Update(float deltaTime)
 {
-	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
-	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 }
 
 void PlayerSpinningState::HandleKeyboard(std::map<int, bool> keys)
 {
 	PLAYER->isReverse = !PLAYER->isReverse;
-	PLAYER->vX = -PLAYER_RUNNING_SPEED;
+	if (GetKeyState('X') < 0)
+	{
+		PLAYER->LastKeyState[X] = true;
+	}
+	else
+	{
+		PLAYER->LastKeyState[X] = false;
+	}
 }
 
 StateName PlayerSpinningState::GetState()

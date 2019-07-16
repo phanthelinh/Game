@@ -13,11 +13,11 @@ PlayerJumpingState::PlayerJumpingState()
 
 void PlayerJumpingState::Update(float deltaTime)
 {
-	if (PLAYER->vY == 0)
-		PLAYER->ChangeState(new PlayerFallingState());
-	PLAYER->vY += GRAVITY;
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	PLAYER->vY += GRAVITY;
+	if (PLAYER->vY == 0)
+		PLAYER->ChangeState(new PlayerFallingState());
 }
 
 void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys)
@@ -31,6 +31,14 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys)
 	{
 		PLAYER->isReverse = false;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
+	}
+	if (GetKeyState('X') < 0)
+	{
+		PLAYER->LastKeyState[X] = true;
+	}
+	else
+	{
+		PLAYER->LastKeyState[X] = false;
 	}
 }
 

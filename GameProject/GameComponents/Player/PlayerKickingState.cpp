@@ -34,6 +34,14 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys)
 			PLAYER->ChangeState(new PlayerStandingState());
 		}
 	}
+	if (GetKeyState('X') < 0)
+	{
+		PLAYER->LastKeyState[X] = true;
+	}
+	else
+	{
+		PLAYER->LastKeyState[X] = false;
+	}
 }
 
 StateName PlayerKickingState::GetState()

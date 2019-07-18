@@ -38,6 +38,7 @@ public:
 	std::unordered_map<StateName, bool> allow;
 	Animation*		currentAnim;
 	PlayerState*	currentState;
+	StateName PreviousState; //save the laststate of the character
 	int				health, lives;
 	bool			isOnGround, isAttacking;
 private:

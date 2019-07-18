@@ -6,10 +6,10 @@ Player::Player()
 {
 	animations[Running] = new Animation("Resources/simon/run_18_32.png", 2, 1, 2);
 	animations[Standing] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
-	animations[Jumping] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
-	animations[Falling] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
-	animations[Spinning] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
-	animations[Kicking] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
+	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
+	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
+	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 1);
+	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
 	currentAnim = animations[Standing];
 	LastKeyState[Z] = false;
 	LastKeyState[X] = false;
@@ -43,6 +43,8 @@ void Player::Draw()
 
 void Player::ChangeState(PlayerState * newState)
 {
+	if (currentState != nullptr)
+		PreviousState = currentState->GetState(); //save the currentstate's name into the new state's PreviousState variable
 	delete currentState;
 	currentState = newState;
 	currentAnim = animations[currentState->GetState()];

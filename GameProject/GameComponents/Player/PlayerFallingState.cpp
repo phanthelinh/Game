@@ -8,7 +8,8 @@ PlayerFallingState::PlayerFallingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	PLAYER->vY = PLAYER_FALLING_SPEED;
+	//if (PLAYER->PreviousState != Kicking)
+		PLAYER->vY += PLAYER_FALLING_SPEED;
 }
 
 void PlayerFallingState::Update(float deltaTime)
@@ -16,7 +17,7 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
-	if (PLAYER->vY == 0)
+	if (PLAYER->vY <= 0)
 		PLAYER->ChangeState(new PlayerStandingState());
 }
 
@@ -31,6 +32,10 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys)
 	{
 		PLAYER->isReverse = false;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
+	}
+	if (keys['Z'])
+	{
+		PLAYER->ChangeState(new PlayerKickingState());
 	}
 	if (GetKeyState('X') < 0)
 	{

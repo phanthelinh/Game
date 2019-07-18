@@ -17,13 +17,13 @@ void PlayerKickingState::Update(float deltaTime)
 	{
 		PLAYER->vY += GRAVITY;
 		if (PLAYER->vY >= 0)
-			PLAYER->ChangeState(new PlayerFallingState());
+			PLAYER->ChangeState(Falling);
 	}
 	else
 	{
 		PLAYER->vY -= GRAVITY;
 		if (PLAYER->vY <= 0)
-			PLAYER->ChangeState(new PlayerStandingState());
+			PLAYER->ChangeState(Standing);
 	}
 	/*if (PLAYER->currentAnim->_curIndex == PLAYER->currentAnim->_totalFrames - 1)
 	{
@@ -34,7 +34,7 @@ void PlayerKickingState::Update(float deltaTime)
 	}*/
 }
 
-void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	if (keys[VK_LEFT])
 	{
@@ -46,13 +46,10 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys)
 		PLAYER->isReverse = false;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
-	if (GetKeyState('X') < 0)
-	{
-		PLAYER->LastKeyState[X] = true;
-	}
-	else
+	if (GetKeyState('X') >= 0)
 	{
 		PLAYER->LastKeyState[X] = false;
+		PLAYER->KeyHoldTime[X] = 0.0f;
 	}
 }
 

@@ -8,12 +8,18 @@ Player::Player()
 	animations[Standing] = new Animation("Resources/simon/stand_18_32.png", 1, 1, 1);
 	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
-	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 1);
+	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2);
 	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
 	currentAnim = animations[Standing];
 	LastKeyState[Z] = false;
 	LastKeyState[X] = false;
 	LastKeyState[C] = false;
+	LastKeyState[LEFT] = false;
+	LastKeyState[RIGHT] = false;
+	LastPressTime[Z] = LastPressTime[X] = LastPressTime[C] 
+		= LastPressTime[LEFT] = LastPressTime[RIGHT] = 0.0f;
+	KeyHoldTime[Z] = KeyHoldTime[X] = KeyHoldTime[C]
+		= KeyHoldTime[LEFT] = KeyHoldTime[RIGHT] = 0.0f;
 	posX = 16;
 	posY = 416;
 }
@@ -23,7 +29,7 @@ Player * Player::GetInstance()
 	if (instance == NULL)
 	{
 		instance = new Player();
-		instance->ChangeState(new PlayerStandingState());
+		instance->ChangeState(Standing);
 	}
 	return instance;
 }
@@ -41,10 +47,39 @@ void Player::Draw()
 	currentAnim->Draw(posX, posY);
 }
 
-void Player::ChangeState(PlayerState * newState)
+//cach viet nay khong phu hop viet viec phai kiem tra state truoc do la gi
+//void Player::ChangeState(PlayerState * newState)
+//{
+//	delete currentState;
+//	currentState = newState;
+//	currentAnim = animations[currentState->GetState()];
+//}
+void Player::ChangeState(StateName stateName)
 {
 	if (currentState != nullptr)
-		PreviousState = currentState->GetState(); //save the currentstate's name into the new state's PreviousState variable
+		PreviousState = currentState->GetState();
+	PlayerState* newState = nullptr;
+	switch (stateName)
+	{
+	case Standing:
+		newState = new PlayerStandingState();
+		break;
+	case Jumping:
+		newState = new PlayerJumpingState();
+		break;
+	case Falling:
+		newState = new PlayerFallingState();
+		break;
+	case Kicking:
+		newState = new PlayerKickingState();
+		break;
+	case Running:
+		newState = new PlayerRunningState();
+		break;
+	case Spinning:
+		newState = new PlayerSpinningState();
+		break;
+	}
 	delete currentState;
 	currentState = newState;
 	currentAnim = animations[currentState->GetState()];
@@ -54,7 +89,7 @@ void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects)
 {
 }
 
-void Player::HandleKeyboard(std::map<int, bool> keys)
+void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
-	currentState->HandleKeyboard(keys);
+	currentState->HandleKeyboard(keys, deltaTime);
 }

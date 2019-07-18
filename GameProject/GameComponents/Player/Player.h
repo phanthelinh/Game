@@ -12,7 +12,9 @@ enum Button
 {
 	Z,
 	X,
-	C
+	C,
+	LEFT,
+	RIGHT
 };
 
 class Player
@@ -23,15 +25,18 @@ public:
 
 	static Player* GetInstance();
 	std::unordered_map<Button, bool> LastKeyState; //save laststate of a key to handle input: true means last state it is helddown
+	std::unordered_map<Button, float> LastPressTime; //save the deltaTime when the key was pressed last
+	std::unordered_map<Button, float> KeyHoldTime; //calculate the time the key was held down
 	void Update(float deltaTime);
 
 	void Draw();
 
-	void ChangeState(PlayerState* newState);
+	//void ChangeState(PlayerState* newState);
+	void ChangeState(StateName statename);
 
 	void CheckCollision(std::unordered_set<GameObject*> colliableObjects);
 
-	void HandleKeyboard(std::map<int, bool> keys);
+	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 
 
 	std::unordered_map<StateName, Animation*> animations;

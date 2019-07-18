@@ -15,7 +15,7 @@ DemoScene::~DemoScene()
 void DemoScene::Update(float deltaTime)
 {
 	PLAYER->Update(deltaTime);
-	PLAYER->HandleKeyboard(keys);
+	PLAYER->HandleKeyboard(keys, deltaTime);
 }
 
 void DemoScene::Draw()

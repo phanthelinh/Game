@@ -14,24 +14,23 @@ void PlayerStandingState::Update(float deltaTime)
 	
 }
 
-void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	if (keys[VK_LEFT] || keys[VK_RIGHT])
 	{
-		PLAYER->ChangeState(new PlayerRunningState());
+		PLAYER->ChangeState(Running);
 	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
-		PLAYER->ChangeState(new PlayerJumpingState());
 		PLAYER->LastKeyState[X] = true;
+		PLAYER->LastPressTime[X] = deltaTime;
+		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->ChangeState(Jumping);
 	}
-	if (GetKeyState('X') < 0)
-	{
-		PLAYER->LastKeyState[X] = true;
-	}
-	else
+	if (GetKeyState('X') >= 0)
 	{
 		PLAYER->LastKeyState[X] = false;
+		PLAYER->KeyHoldTime[X] = 0.0f;
 	}
 }
 

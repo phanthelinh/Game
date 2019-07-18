@@ -14,7 +14,6 @@ Player::Player()
 	
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 
-	//currentAnim = animations[Standing];
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
@@ -131,6 +130,7 @@ void Player::OnKeyUp(int keyCode)
 	{
 	case VK_Z:
 		allow[Attacking_Shield] = true;
+		 
 		break;
 	case VK_UP:
 		shield->SetState(ShieldState::Normal);

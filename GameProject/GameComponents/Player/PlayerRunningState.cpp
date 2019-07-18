@@ -6,6 +6,7 @@ PlayerRunningState::PlayerRunningState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = true;
+	PLAYER->allow[Sitting] = true;
 	PLAYER->vY = 0;
 }
 

@@ -5,7 +5,7 @@ PlayerStandingState::PlayerStandingState()
 	PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Moving] = true;
-	//sitting?
+	PLAYER->allow[Sitting] = true;
 
 }
 
@@ -25,7 +25,7 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 		PLAYER->currentAnim = PLAYER->animations[LookUpward];
 		PLAYER->shield->SetState(ShieldState::Shield_Upward);
 	}
-	if (keys[VK_DOWN])
+	else if (keys[VK_DOWN])
 	{
 		PLAYER->ChangeState(new PlayerSittingState());
 		PLAYER->shield->SetState(ShieldState::Shielded);

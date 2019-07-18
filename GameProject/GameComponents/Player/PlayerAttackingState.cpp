@@ -15,30 +15,33 @@ PlayerAttackingState::PlayerAttackingState()
 		}
 		else
 		{
+			PLAYER->allow[Sitting] = false;
 			PLAYER->currentAnim = PLAYER->animations[Attacking_StandBump];
-		}
-		
+		}	
 	}
 	else if (prevState == Sitting)
 	{
-		PLAYER->currentAnim = PLAYER->animations[Attacking] = PLAYER->animations[Attacking_SitBump];
+		PLAYER->currentAnim = PLAYER->animations[Attacking_SitBump];
 		PLAYER->shield->SetState(ShieldState::Shielded);
 	}
 	//reset anim
-	//PLAYER->currentAnim->ResetAnim();
+	PLAYER->currentAnim->ResetAnim();
 }
 
 void PlayerAttackingState::Update(float deltaTime)
 {
+	StateName currentState = PLAYER->currentState->GetState();
 	if (PLAYER->currentAnim->_isFinished)
 	{
-		PLAYER->ChangeState(new PlayerStandingState());
+		if (currentState == Attacking_SitBump)
+			PLAYER->ChangeState(new PlayerSittingState());
+		else if(currentState == Attacking_StandBump || currentState == Attacking_Shield)
+			PLAYER->ChangeState(new PlayerStandingState());
 	}
 }
 
 void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys)
 {
-	
 }
 
 StateName PlayerAttackingState::GetState()
@@ -50,9 +53,7 @@ StateName PlayerAttackingState::GetState()
 		else
 			return Attacking_Shield;
 	}
-	else if(prevState == Sitting)
-	{
+	else if (prevState == Sitting)
 		return Attacking_SitBump;
-	}
 	return Attacking;
 }

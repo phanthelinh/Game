@@ -34,6 +34,7 @@ void PlayerAttackingState::Update(float deltaTime)
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		if (currentState == Attacking_SitBump)
+		{
 			PLAYER->posY -= 10;
 			PLAYER->ChangeState(Sitting);
 		}

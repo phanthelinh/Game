@@ -25,6 +25,9 @@
     <Filter Include="GameComponents\Player">
       <UniqueIdentifier>{3c50479e-4d9c-43a1-9248-6504956d35d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\Shield">
+      <UniqueIdentifier>{d1de89d2-1e2d-4183-96b3-8df042be8f64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,7 +93,7 @@
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
-    <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp">
+	<ClCompile Include="GameComponents\Player\PlayerFallingState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp">
@@ -100,6 +103,15 @@
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
     <ClCompile Include="GameComponents\Player\PlayerSpinningState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+	<ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Shield\Shield.cpp">
+      <Filter>GameComponents\Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,7 +179,7 @@
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
-    <ClInclude Include="GameComponents\Player\PlayerFallingState.h">
+	 <ClInclude Include="GameComponents\Player\PlayerFallingState.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerJumpingState.h">
@@ -177,6 +189,15 @@
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerSpinningState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+	<ClInclude Include="GameComponents\Player\PlayerAttackingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Shield\Shield.h">
+      <Filter>GameComponents\Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerSittingState.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>

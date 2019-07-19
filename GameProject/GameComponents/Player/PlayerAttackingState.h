@@ -2,17 +2,16 @@
 #include "Player.h"
 #include "PlayerState.h"
 #include "PlayerStandingState.h"
-#include "PlayerAttackingState.h"
 
-class PlayerRunningState : public PlayerState
+class PlayerAttackingState :public PlayerState
 {
+private:
+	StateName prevState;
 public:
-	PlayerRunningState();
+	PlayerAttackingState();
+
 	// Inherited via PlayerState
 	virtual void Update(float deltaTime) override;
-
-	virtual void HandleKeyboard(std::map<int, bool> keys, float deltaTime) override;
-
+	virtual void HandleKeyboard(std::map<int, bool> keys) override;
 	virtual StateName GetState() override;
-
 };

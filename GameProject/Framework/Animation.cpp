@@ -21,6 +21,8 @@ Animation::Animation(const char * filePath, int totalFrames, int rows, int colum
 	_rect.right = _frameWidth;
 	_rect.bottom = _frameHeight;
 	_sourceRect = _rect;
+	_isFlipHor = true;
+	_isFinished = false;
 }
 
 void Animation::Update(float deltaTime)
@@ -35,7 +37,7 @@ void Animation::Update(float deltaTime)
 
 		if (_curIndex >= _totalFrames) //is finished
 		{
-
+			_isFinished = true;
 		}
 		else
 		{
@@ -60,4 +62,15 @@ void Animation::Update(float deltaTime)
 	{
 		_curTotalTime += deltaTime;
 	}
+}
+
+void Animation::ResetAnim()
+{
+	_curCol = _curIndex = _curRow = 0;
+	_rect.left = 0;
+	_rect.top = 0;
+	_rect.right = _frameWidth;
+	_rect.bottom = _frameHeight;
+	_sourceRect = _rect;
+	_isFinished = false;
 }

@@ -5,6 +5,9 @@
 #include "PlayerStandingState.h"
 #include <unordered_map>
 #include <unordered_set>
+#include "../Shield/Shield.h"
+#include "../../Framework/Global.h"
+#include "../../Framework/Collision.h"
 
 #define PLAYER	Player::GetInstance()
 
@@ -38,6 +41,11 @@ public:
 
 	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 
+	void OnKeyDown(int keyCode);
+
+	void OnKeyUp(int keyCode);
+
+	virtual BoundingBox GetBoundingBox();
 
 	std::unordered_map<StateName, Animation*> animations;
 	std::unordered_map<StateName, bool> allow;
@@ -45,7 +53,10 @@ public:
 	PlayerState*	currentState;
 	StateName PreviousState; //save the laststate of the character
 	int				health, lives;
-	bool			isOnGround, isAttacking;
+	bool			isOnGround, isAttacking, shieldFlying;
+	Shield*			shield;
 private:
 	static Player*	instance;
+
+	bool startcheck = false;
 };

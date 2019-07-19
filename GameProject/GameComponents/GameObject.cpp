@@ -30,11 +30,17 @@ D3DXVECTOR3 GameObject::GetPosition()
 	return D3DXVECTOR3(posX, posY, 0);
 }
 
+void GameObject::SetPosition(D3DXVECTOR3 pos)
+{
+	posX = pos.x;
+	posY = pos.y;
+}
+
 RECT GameObject::GetBound()
 {
 	RECT bound;
 
-	bound.left = posX - width / 2;
+	bound.left = (posX - width / 2);
 	bound.top = posY - height / 2;
 	bound.right = posX + width / 2;
 	bound.bottom = posY + height / 2;
@@ -50,6 +56,7 @@ void GameObject::Update(float deltaTime)
 
 bool GameObject::IsCollide(RECT r)
 {
-	return false;
+	RECT b1 = GetBound();
+	return !(b1.right < r.left || b1.left > r.right || b1.top > r.bottom || b1.bottom < r.top);
 }
 

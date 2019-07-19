@@ -14,11 +14,25 @@ void PlayerStandingState::Update(float deltaTime)
 	
 }
 
-void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
+void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys)
 {
 	if (keys[VK_LEFT] || keys[VK_RIGHT])
 	{
 		PLAYER->ChangeState(Running);
+	}
+	else if (keys[VK_UP])
+	{
+		PLAYER->currentAnim = PLAYER->animations[LookUpward];
+		PLAYER->shield->SetState(ShieldState::Shield_Upward);
+	}
+	else if (keys[VK_DOWN])
+	{
+		PLAYER->ChangeState(new PlayerSittingState());
+		PLAYER->shield->SetState(ShieldState::Shielded);
+	}
+	else
+	{
+		PLAYER->currentAnim = PLAYER->animations[Standing];
 	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
@@ -32,7 +46,6 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 		PLAYER->LastKeyState[X] = false;
 		PLAYER->KeyHoldTime[X] = 0.0f;
 		PLAYER->LastPressTime[X] = 0.0f;
-	}
 }
 
 StateName PlayerStandingState::GetState()

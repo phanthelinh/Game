@@ -1,11 +1,12 @@
 #include "PlayerRunningState.h"
 
-#define PLAYER_RUNNING_SPEED 80.0f
+#define PLAYER_RUNNING_SPEED 5.5f
 
 PlayerRunningState::PlayerRunningState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = true;
+	PLAYER->allow[Sitting] = true;
 	PLAYER->vY = 0;
 }
 
@@ -17,13 +18,6 @@ void PlayerRunningState::Update(float deltaTime)
 
 void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
-	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
-	{
-		PLAYER->LastKeyState[X] = true;
-		PLAYER->LastPressTime[X] = deltaTime;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->ChangeState(Jumping);
-	}
 	if (keys[VK_LEFT])
 	{
 		PLAYER->isReverse = true;

@@ -2,7 +2,7 @@
 
 bool Cell::IsContain(RECT r)
 {
-	return !((x + cellSize < r.left) || (x > r.left + r.right) || (y < r.top + r.bottom) || (y + cellSize > r.top));
+	return !((x + cellSize < r.left) || (x > r.right) || (y > r.bottom) || (y + cellSize < r.top));
 }
 
 Cell::Cell(int x, int y, int cellSize)

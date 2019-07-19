@@ -11,7 +11,13 @@ enum StateName
 	Jumping,
 	Spinning,
 	Kicking,
+	LookUpward,
 	Attacking,
+	Attacking_Jump,
+	Attacking_SitBump,
+	Attacking_Shield,
+	Attacking_StandBump,
+	Sitting,
 	Die
 };
 

@@ -7,6 +7,7 @@
 #include "PlayerJumpingState.h"
 class PlayerStandingState : public PlayerState
 {
+	StateName prevState;
 public:
 	PlayerStandingState();
 	// Inherited via PlayerState

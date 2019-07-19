@@ -35,7 +35,7 @@ void GameMap::RenderMap()
 	int columnsDraw = CAMERA->camWidth / tileWidth;
 	int rowsDraw = CAMERA->camHeight / tileHeight;
 
-	for (int y = 0; y < rowsDraw; y++)
+	for (int y = 0; y <= rowsDraw; y++)
 	{
 		for (int x = 0; x <= columnsDraw; x++)
 		{

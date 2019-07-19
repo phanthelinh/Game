@@ -64,5 +64,7 @@ StateName PlayerAttackingState::GetState()
 	}
 	else if (prevState == Sitting)
 		return Attacking_SitBump;
-	return Attacking;
+	else if (prevState == Attacking_StandBump)
+		return Attacking_StandBump;
+	return Standing;
 }

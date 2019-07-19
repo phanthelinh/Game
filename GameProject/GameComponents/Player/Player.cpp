@@ -12,12 +12,13 @@ Player::Player()
 	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
 	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2);
 
-	animations[Attacking_Shield] = animations[Attacking] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
-	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
+	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
+	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
 	animations[Attacking_SitBump] = new Animation("Resources/player/player_sitbump_80_32.png", 2, 1, 2, false);
 
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 	currentAnim = animations[Standing];
+	allow[Attacking_Shield] = true;
 	LastKeyState[Z] = false;
 	LastKeyState[X] = false;
 	LastKeyState[C] = false;
@@ -156,6 +157,10 @@ void Player::ChangeState(StateName stateName)
 		newState = new PlayerSittingState();
 		break;
 	case Attacking:
+	case Attacking_Shield:
+	case Attacking_SitBump:
+	case Attacking_StandBump:
+
 		newState = new PlayerAttackingState();
 		break;
 	}

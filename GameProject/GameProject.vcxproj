@@ -137,6 +137,7 @@
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerStandingState.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
     <ClInclude Include="GameComponents\Player\PlayerAttackingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h" />
     <ClInclude Include="GameComponents\Player\PlayerSittingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerStandingState.h" />

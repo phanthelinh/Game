@@ -16,7 +16,7 @@ enum StateName
 	Attacking_Shield,
 	Attacking_StandBump,
 	Sitting,
-	Die
+	Died
 };
 
 class PlayerState

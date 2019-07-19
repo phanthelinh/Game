@@ -13,7 +13,7 @@ Player::Player()
 	animations[Attacking_SitBump] = new Animation("Resources/player/player_sitbump_80_32.png", 2, 1, 2, false);
 	
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
-
+	//animations[Died] = new Animation
 	currentAnim = animations[Standing];
 	isReverse = true;
 	shield = new Shield();

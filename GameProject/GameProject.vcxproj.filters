@@ -102,6 +102,9 @@
     <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -174,6 +177,9 @@
       <Filter>GameComponents\Shield</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerSittingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerDiedState.h">
       <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>

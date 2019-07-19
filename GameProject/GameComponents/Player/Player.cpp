@@ -130,7 +130,6 @@ void Player::OnKeyUp(int keyCode)
 	{
 	case VK_Z:
 		allow[Attacking_Shield] = true;
-		 
 		break;
 	case VK_UP:
 		shield->SetState(ShieldState::Normal);

@@ -34,14 +34,20 @@ void PlayerAttackingState::Update(float deltaTime)
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		if (currentState == Attacking_SitBump)
-			PLAYER->ChangeState(new PlayerSittingState());
+			PLAYER->ChangeState(Sitting);
 		else if(currentState == Attacking_StandBump || currentState == Attacking_Shield)
-			PLAYER->ChangeState(new PlayerStandingState());
+			PLAYER->ChangeState(Standing);
 	}
 }
 
-void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
+	if (!keys['X'])
+	{
+		PLAYER->LastKeyState[X] = false;
+		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
+	}
 }
 
 StateName PlayerAttackingState::GetState()

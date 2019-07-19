@@ -1,8 +1,8 @@
 #include "PlayerFallingState.h"
 
-#define PLAYER_FALLING_SPEED 250.0f
-#define PLAYER_RUNNING_SPEED 80.0f
-#define GRAVITY 10.0f
+#define PLAYER_FALLING_SPEED 25.0f
+#define PLAYER_RUNNING_SPEED 8.0f
+#define GRAVITY 1.0f
 
 PlayerFallingState::PlayerFallingState()
 {
@@ -11,7 +11,7 @@ PlayerFallingState::PlayerFallingState()
 	//if (PLAYER->PreviousState != Kicking)
 	if (PLAYER->PreviousState == Spinning)
 	{
-		PLAYER->vY += PLAYER_FALLING_SPEED + 90.0f;
+		PLAYER->vY += PLAYER_FALLING_SPEED + 7.0f;
 	}
 	else
 	{
@@ -34,12 +34,12 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 {
 	if (keys[VK_LEFT])
 	{
-		PLAYER->isReverse = true;
+		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
 	if (keys[VK_RIGHT])
 	{
-		PLAYER->isReverse = false;
+		PLAYER->isReverse = true;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
 	if (keys['Z'])

@@ -13,15 +13,21 @@ void PlayerSittingState::Update(float deltaTime)
 	
 }
 
-void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys)
+void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	if (!keys[VK_DOWN])
 	{
 		PLAYER->posY -= 10;
 		if(keys[VK_LEFT] || keys[VK_RIGHT])
-			PLAYER->ChangeState(new PlayerRunningState());
+			PLAYER->ChangeState(Running);
 		else
-			PLAYER->ChangeState(new PlayerStandingState());
+			PLAYER->ChangeState(Standing);
+	}
+	if (!keys['X'])
+	{
+		PLAYER->LastKeyState[X] = false;
+		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

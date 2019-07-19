@@ -7,6 +7,10 @@ Player::Player()
 	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4, true, 0.65);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
+	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
+	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
+	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
+	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2);
 
 	animations[Attacking_Shield] = animations[Attacking] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
@@ -148,6 +152,12 @@ void Player::ChangeState(StateName stateName)
 	case Spinning:
 		newState = new PlayerSpinningState();
 		break;
+	case Sitting:
+		newState = new PlayerSittingState();
+		break;
+	case Attacking:
+		newState = new PlayerAttackingState();
+		break;
 	}
 	delete currentState;
 	currentState = newState;
@@ -171,10 +181,10 @@ void Player::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		if (allow[Attacking_Shield])
+		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
 		{
 			allow[Attacking_Shield] = false;
-			ChangeState(new PlayerAttackingState());
+			ChangeState(Attacking);
 		}
 		break;
 	default:
@@ -187,7 +197,8 @@ void Player::OnKeyUp(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		allow[Attacking_Shield] = true;
+		if (currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
+			allow[Attacking_Shield] = true;
 		break;
 	case VK_UP:
 		shield->SetState(ShieldState::Normal);

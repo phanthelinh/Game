@@ -20,20 +20,27 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 {
 	if (keys[VK_LEFT])
 	{
-		PLAYER->isReverse = true;
+		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
 	else
 	{
 		if (keys[VK_RIGHT])
 		{
-			PLAYER->isReverse = false;
+			PLAYER->isReverse = true;
 			PLAYER->vX = PLAYER_RUNNING_SPEED;
 		}
 		else
 		{
 			PLAYER->ChangeState(Standing);
 		}
+	}
+	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
+	{
+		PLAYER->LastKeyState[X] = true;
+		PLAYER->LastPressTime[X] = deltaTime;
+		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])
 	{

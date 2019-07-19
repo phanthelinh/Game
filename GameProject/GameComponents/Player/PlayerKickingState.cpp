@@ -1,7 +1,7 @@
 #include "PlayerKickingState.h"
 
-#define PLAYER_RUNNING_SPEED 80.0f
-#define GRAVITY 10.0f
+#define PLAYER_RUNNING_SPEED 8.0f
+#define GRAVITY 1.0f
 
 PlayerKickingState::PlayerKickingState()
 {
@@ -38,12 +38,12 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 {
 	if (keys[VK_LEFT])
 	{
-		PLAYER->isReverse = true;
+		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
 	if (keys[VK_RIGHT])
 	{
-		PLAYER->isReverse = false;
+		PLAYER->isReverse = true;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
 	if (!keys['X'])

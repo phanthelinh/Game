@@ -15,13 +15,13 @@ PlayerAttackingState::PlayerAttackingState()
 		}
 		else
 		{
-			PLAYER->allow[Sitting] = false;
 			PLAYER->currentAnim = PLAYER->animations[Attacking_StandBump];
 		}	
 	}
 	else if (prevState == Sitting)
 	{
 		PLAYER->currentAnim = PLAYER->animations[Attacking_SitBump];
+		PLAYER->allow[Attacking_SitBump] = true;
 		PLAYER->shield->SetState(ShieldState::Shielded);
 	}
 	//reset anim
@@ -34,7 +34,9 @@ void PlayerAttackingState::Update(float deltaTime)
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		if (currentState == Attacking_SitBump)
+			PLAYER->posY -= 10;
 			PLAYER->ChangeState(Sitting);
+		}
 		else if(currentState == Attacking_StandBump || currentState == Attacking_Shield)
 			PLAYER->ChangeState(Standing);
 	}

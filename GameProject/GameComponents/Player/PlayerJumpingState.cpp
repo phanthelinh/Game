@@ -36,7 +36,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->ChangeState(Kicking);
 	}
-	if (GetKeyState('X') < 0)
+	if (keys['X'])
 	{
 		if (PLAYER->LastKeyState[X] == true)
 		{
@@ -53,6 +53,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->LastKeyState[X] = false;
 		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

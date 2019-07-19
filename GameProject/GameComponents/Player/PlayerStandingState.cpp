@@ -27,10 +27,11 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 		PLAYER->KeyHoldTime[X] = 0.0f;
 		PLAYER->ChangeState(Jumping);
 	}
-	if (GetKeyState('X') >= 0)
+	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
 		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

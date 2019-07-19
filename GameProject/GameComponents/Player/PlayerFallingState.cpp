@@ -11,7 +11,7 @@ PlayerFallingState::PlayerFallingState()
 	//if (PLAYER->PreviousState != Kicking)
 	if (PLAYER->PreviousState == Spinning)
 	{
-		PLAYER->vY += PLAYER_FALLING_SPEED + 100.0f;
+		PLAYER->vY += PLAYER_FALLING_SPEED + 90.0f;
 	}
 	else
 	{
@@ -46,10 +46,11 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->ChangeState(Kicking);
 	}
-	if (GetKeyState('X') >= 0)
+	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
 		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

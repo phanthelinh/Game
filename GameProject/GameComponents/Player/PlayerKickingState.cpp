@@ -46,10 +46,11 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 		PLAYER->isReverse = false;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
-	if (GetKeyState('X') >= 0)
+	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
 		PLAYER->KeyHoldTime[X] = 0.0f;
+		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

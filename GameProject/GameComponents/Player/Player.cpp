@@ -121,13 +121,6 @@ void Player::Draw()
 	shield->Draw();
 }
 
-//cach viet nay khong phu hop viet viec phai kiem tra state truoc do la gi
-//void Player::ChangeState(PlayerState * newState)
-//{
-//	delete currentState;
-//	currentState = newState;
-//	currentAnim = animations[currentState->GetState()];
-//}
 void Player::ChangeState(StateName stateName)
 {
 	if (currentState != nullptr)

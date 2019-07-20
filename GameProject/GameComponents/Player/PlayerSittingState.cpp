@@ -21,7 +21,10 @@ void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 		if(keys[VK_LEFT] || keys[VK_RIGHT])
 			PLAYER->ChangeState(Running);
 		else
+		{
 			PLAYER->ChangeState(Standing);
+			PLAYER->shield->SetState(ShieldState::Normal);
+		}
 	}
 	if (!keys['X'])
 	{

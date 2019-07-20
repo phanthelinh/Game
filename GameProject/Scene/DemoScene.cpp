@@ -5,7 +5,9 @@
 DemoScene::DemoScene()
 {
 	PLAYER; //get instance
-	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
+	//map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");//
+	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_cut.png", "Resources/map/Charleston_1_1.csv");
+	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
 }
 
 DemoScene::~DemoScene()

@@ -5,7 +5,7 @@ Camera* Camera::instance = NULL;
 Camera::Camera()
 {
 	camPosition.x = GLOBAL->g_ScreenWidth / 2;
-	camPosition.y = (GLOBAL->g_ScreenHeight / 2 + GLOBAL->g_GameUIArea / 2) +GLOBAL->g_ScreenHeight;
+	camPosition.y = (GLOBAL->g_ScreenHeight / 2 + GLOBAL->g_GameUIArea / 2);
 	camPosition.z = 0;
 	camWidth = GLOBAL->g_ScreenWidth;
 	camHeight = GLOBAL->g_ScreenHeight - GLOBAL->g_GameUIArea;

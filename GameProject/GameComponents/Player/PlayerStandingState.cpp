@@ -31,7 +31,6 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	else if (keys[VK_DOWN])
 	{
 		PLAYER->ChangeState(Sitting);
-		PLAYER->shield->SetState(ShieldState::Shielded);
 	}
 	else
 	{

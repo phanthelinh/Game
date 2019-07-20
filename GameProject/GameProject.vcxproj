@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -143,14 +143,14 @@
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
-       <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
-	<ClCompile Include="GameComponents\Player\PlayerFallingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerKickingState.cpp" />
-	<ClCompile Include="GameComponents\Player\PlayerRunningState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerSpinningState.cpp" />
-	<ClCompile Include="GameComponents\Player\PlayerSittingState.cpp" />
-	<ClCompile Include="GameComponents\Player\PlayerStandingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerStandingState.cpp" />
     <ClCompile Include="GameComponents\Shield\Shield.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\DemoScene.cpp" />
@@ -176,11 +176,11 @@
     <ClInclude Include="GameComponents\Player\PlayerFallingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerJumpingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerKickingState.h" />
-	 <ClInclude Include="GameComponents\Player\PlayerAttackingState.h" />
-	<ClInclude Include="GameComponents\Player\PlayerRunningState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerAttackingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerRunningState.h" />
     <ClInclude Include="GameComponents\Player\PlayerSittingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerSpinningState.h" />
-	<ClInclude Include="GameComponents\Player\PlayerStandingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerStandingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerState.h" />
     <ClInclude Include="GameComponents\Shield\Shield.h" />
     <ClInclude Include="Scene\DemoScene.h" />

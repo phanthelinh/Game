@@ -16,6 +16,7 @@ void Shield::SetState(ShieldState state)
 	switch (curState)
 	{
 	case Normal:
+	case Normal_Sit:
 		shield->_sourceRect = { 2,0,10,16 };
 		shield->_textureWidth = width = 8;
 		shield->_textureHeight = height = 16;
@@ -63,6 +64,16 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 		else
 		{
 			_translationToPlayer = { -13,-6,0 };
+		}
+		break;
+	case Normal_Sit:
+		if (playerReverse) //face to right
+		{
+			_translationToPlayer = { 13,5,0 };
+		}
+		else
+		{
+			_translationToPlayer = { -13,5,0 };
 		}
 		break;
 	case Shielded:

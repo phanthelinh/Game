@@ -8,7 +8,8 @@ enum ShieldState
 	Normal,
 	Shielded,
 	Shield_Upward,
-	Flying
+	Flying,
+	Normal_Sit
 };
 
 class Shield :public GameObject

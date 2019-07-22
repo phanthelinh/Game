@@ -9,6 +9,7 @@ Camera::Camera()
 	camPosition.z = 0;
 	camWidth = GLOBAL->g_ScreenWidth;
 	camHeight = GLOBAL->g_ScreenHeight - GLOBAL->g_GameUIArea;
+	isFollowY = false;
 }
 
 Camera::Camera(int x, int y, int width, int height)
@@ -18,6 +19,7 @@ Camera::Camera(int x, int y, int width, int height)
 	camPosition.x = x;
 	camPosition.y = y;
 	camPosition.z = 0;
+	isFollowY = false;
 }
 
 
@@ -78,6 +80,18 @@ void Camera::UpdateCamera(D3DXVECTOR3 playerPosition)
 	//
 	//set for y
 	//
+	if (!isFollowY)
+	{
+		if (camPosition.y + GLOBAL->g_ScreenHeight / 2 >= GLOBAL->g_WorldMapHeight)
+		{
+			camPosition.y = GLOBAL->g_WorldMapHeight - GLOBAL->g_ScreenHeight / 2;
+		}
+		if (camPosition.y < 0)
+		{
+			camPosition.y = GLOBAL->g_ScreenHeight / 2;
+		}
+		return;
+	}
 	if (playerPosition.y > camPosition.y)
 	{
 		camPosition.y += playerPosition.y - camPosition.y;

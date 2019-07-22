@@ -4,6 +4,8 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
+	tag = Tag::Captain;
+
 	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4, true, 0.65);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
@@ -17,6 +19,7 @@ Player::Player()
 	animations[Attacking_SitBump] = new Animation("Resources/player/player_sitbump_80_28.png", 2, 1, 2, false);
 
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
+	animations[Die] = new Animation("Resources/player/player_died_64_32.png", 2, 1, 2, false, 0.95);
 	currentAnim = animations[Standing];
 	allow[Attacking_Shield] = true;
 	LastKeyState[Z] = false;
@@ -31,8 +34,9 @@ Player::Player()
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
-	posX = 16;
+	posX = 40;
 	posY = 416;
+	CAMERA->camPosition = GetPosition();
 }
 
 Player * Player::GetInstance()
@@ -149,6 +153,9 @@ void Player::ChangeState(StateName stateName)
 	case Sitting:
 		newState = new PlayerSittingState();
 		break;
+	case Die:
+		newState = new PlayeDiedState();
+		break;
 	case Attacking:
 	case Attacking_Shield:
 	case Attacking_SitBump:
@@ -179,11 +186,15 @@ void Player::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
+		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && 
+			currentState->GetState() != Spinning)
 		{
 			allow[Attacking_Shield] = false;
 			ChangeState(Attacking);
 		}
+		break;
+	case VK_RETURN:
+		ChangeState(StateName::Die);
 		break;
 	default:
 		break;
@@ -195,7 +206,8 @@ void Player::OnKeyUp(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		if (currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
+		if (currentState->GetState() != Jumping && currentState->GetState() != Falling && 
+			currentState->GetState() != Spinning && currentState->GetState() != Die)
 			allow[Attacking_Shield] = true;
 		break;
 	case VK_UP:

@@ -15,9 +15,9 @@ namespace CreateTile
         public Dictionary<int, Bitmap> lstTileSet = new Dictionary<int, Bitmap>();
         public static string enviroment = System.Environment.CurrentDirectory;
         public string projectDirectory = Directory.GetParent(enviroment).Parent.FullName;
-        public static string CSVNAME = "Pittsburgh_1_1.csv";
-        public static string InputFilName = "Pittsburgh_1_1.png";
-        public static string OutputFileName = "Pittsburgh_cut.png";
+        public static string CSVNAME = "temp.csv";
+        public static string InputFilName = "temp.png";
+        public static string OutputFileName = "temp_cut.png";
         public bool IsEqual(Bitmap bmp1, Bitmap bmp2)
         {
             if (object.Equals(bmp1, bmp2))
@@ -132,7 +132,7 @@ namespace CreateTile
             }
             //end write to file
             StreamWriter streamWriter = new StreamWriter(Path.Combine(projectDirectory, "Resources/"+CSVNAME));
-            streamWriter.Write(String.Join(", ", lstId));
+            streamWriter.Write(String.Join("\n", lstId));
             streamWriter.Close();
             //draw to image
             //calculate szie of image

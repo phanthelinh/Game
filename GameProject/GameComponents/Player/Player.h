@@ -3,6 +3,7 @@
 #include "PlayerState.h"
 #include "../GameObject.h"
 #include "PlayerStandingState.h"
+#include "PlayerDiedState.h"
 #include <unordered_map>
 #include <unordered_set>
 #include "../Shield/Shield.h"

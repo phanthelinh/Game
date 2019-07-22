@@ -1,7 +1,13 @@
 #pragma once
 #include "../Framework/Global.h"
 
-enum Tag{ Simon, Enemy, Ground };
+enum Tag{ 
+	Captain,
+	Enemy,
+	Ground,
+	Weapon,
+	ItemContainerTag
+};
 struct BoundingBox 
 { 
 	float left, top, right, bottom;

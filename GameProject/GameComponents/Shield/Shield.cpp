@@ -8,6 +8,8 @@ Shield::Shield()
 {
 	shield = new Sprite("Resources/shield/shield_60_16.png");
 	SetState(ShieldState::Normal);
+	tag = Tag::Weapon;
+	isDead = false;
 }
 
 void Shield::SetState(ShieldState state)

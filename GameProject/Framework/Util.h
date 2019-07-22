@@ -10,4 +10,6 @@ class Util
 	
 public:
 	static std::vector<int> GetMapDataFromFile(const char* filePath);
+	static std::vector<RECT> GetObjectDataFromFile(const char* filePath);
+
 };

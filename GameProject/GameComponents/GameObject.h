@@ -1,12 +1,15 @@
 #pragma once
 #include "../Framework/Global.h"
 
-enum Tag{ 
+enum Tag {
 	Captain,
 	Enemy,
 	Ground,
 	Weapon,
-	ItemContainerTag
+	ItemContainerTag,
+	HeartTag,
+	ExitGemTag,
+	DiamonTag
 };
 struct BoundingBox 
 { 

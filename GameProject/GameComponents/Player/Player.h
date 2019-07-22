@@ -1,11 +1,12 @@
 #pragma once
+#include <unordered_map>
+#include <unordered_set>
+#include <exception>
 #include "../../Framework/Animation.h"
 #include "PlayerState.h"
 #include "../GameObject.h"
 #include "PlayerStandingState.h"
 #include "PlayerDiedState.h"
-#include <unordered_map>
-#include <unordered_set>
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
@@ -47,6 +48,8 @@ public:
 	void OnKeyUp(int keyCode);
 
 	virtual BoundingBox GetBoundingBox();
+
+	void Release();
 
 	std::unordered_map<StateName, Animation*> animations;
 	std::unordered_map<StateName, bool> allow;

@@ -141,7 +141,11 @@
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
     <ClCompile Include="Framework\Util.cpp" />
+    <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
+    <ClCompile Include="GameComponents\Items\Diamon.cpp" />
+    <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
+    <ClCompile Include="GameComponents\Items\Heart.cpp" />
     <ClCompile Include="GameComponents\Items\ItemsContainer.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
@@ -173,7 +177,11 @@
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />
     <ClInclude Include="Framework\Util.h" />
+    <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
+    <ClInclude Include="GameComponents\Items\Diamon.h" />
+    <ClInclude Include="GameComponents\Items\ExitGem.h" />
+    <ClInclude Include="GameComponents\Items\Heart.h" />
     <ClInclude Include="GameComponents\Items\ItemsContainer.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
     <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />

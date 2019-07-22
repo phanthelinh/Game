@@ -56,3 +56,13 @@ void GameMap::RenderMap()
 		}
 	}
 }
+
+void GameMap::Release()
+{
+	if (tileSet != nullptr)
+	{
+		tileSet->Release();
+		delete tileSet;
+	}
+	data.clear();
+}

@@ -1,21 +1,15 @@
 #pragma once
 #include "../GameObject.h"
-#include "../../Framework/Sprite.h"
+#include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
-#include <unordered_set>
 
-class ItemsContainer :public GameObject
+class Heart : public GameObject
 {
 private:
-	Sprite** sprites;
-	Sprite* curSprite;
-	bool	isStartFallingItems;
-	DWORD	startTime;
+	Animation*	heart;
 public:
-	std::unordered_set<GameObject*> listItems;
-
-	ItemsContainer(int left, int top, int width, int height);
-	ItemsContainer(RECT rect);
+	Heart(int left, int top, int width, int height);
+	Heart(RECT rect);
 
 	void ExecuteCollision(GameObject* object);
 	void Update(float deltaTime);

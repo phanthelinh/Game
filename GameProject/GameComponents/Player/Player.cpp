@@ -34,7 +34,7 @@ Player::Player()
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
-	posX = 40;
+	posX = 120;
 	posY = 416;
 	CAMERA->camPosition = GetPosition();
 }
@@ -228,4 +228,29 @@ BoundingBox Player::GetBoundingBox()
 	b.vX = vX;
 	b.vY = vY;
 	return b;
+}
+
+void Player::Release()
+{
+	if (animations.size() > 0)
+	{
+		for (auto anim : animations)
+		{
+			if (&anim.second != NULL && anim.first != Attacking_StandBump)
+			{
+				delete anim.second;
+			}
+		}
+		animations.clear();
+		
+	}
+	if (allow.size() > 0)
+	{
+		allow.clear();
+	}
+	if (shield != nullptr)
+		delete shield;
+	LastKeyState.clear();
+	LastPressTime.clear(); 
+	KeyHoldTime.clear();
 }

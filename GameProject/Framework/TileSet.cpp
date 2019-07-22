@@ -25,12 +25,8 @@ void TileSet::DrawTile(int tileId, D3DXVECTOR3 posToDraw, D3DXVECTOR3 cameraPos)
 
 void TileSet::Release()
 {
-	if (tileSet)
+	if (tileSet != nullptr)
 	{
-		tileSet = nullptr;
-	}
-	if (tile)
-	{
-		tile = nullptr;
+		delete tileSet;
 	}
 }

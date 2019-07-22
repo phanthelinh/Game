@@ -28,7 +28,6 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	
-
 	////check collision
 	//if (!PLAYER->shield->isDead)
 	//{
@@ -38,12 +37,12 @@ void DemoScene::Update(float deltaTime)
 
 void DemoScene::Draw()
 {
-	//back->Draw(128,120);
 	map->RenderMap();
 	for (auto i : itemsContainer)
 	{
 		i->Draw();
 	}
+	
 	PLAYER->Draw();
 }
 
@@ -61,4 +60,22 @@ void DemoScene::OnKeyUp(int keyCode)
 
 void DemoScene::ReleaseAll()
 {
+	PLAYER->Release();
+	if (PLAYER)
+	{
+		delete PLAYER;
+	}
+	if (CAMERA)
+	{
+		delete CAMERA;
+	}
+	if (COLLISION)
+	{
+		delete COLLISION;
+	}
+	if (map != nullptr)
+	{
+		map->Release();
+		delete map;
+	}
 }

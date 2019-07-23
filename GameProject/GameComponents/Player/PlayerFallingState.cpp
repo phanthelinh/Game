@@ -1,8 +1,8 @@
 #include "PlayerFallingState.h"
 
-#define PLAYER_FALLING_SPEED 40.0f
+#define PLAYER_FALLING_SPEED 30.0f
 #define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 4.0f
+#define GRAVITY 3.0f
 
 PlayerFallingState::PlayerFallingState()
 {
@@ -11,7 +11,7 @@ PlayerFallingState::PlayerFallingState()
 	//if (PLAYER->PreviousState != Kicking)
 	if (PLAYER->PreviousState == Spinning)
 	{
-		PLAYER->vY += PLAYER_FALLING_SPEED + 16.0f;
+		PLAYER->vY += PLAYER_FALLING_SPEED + 13.0f;
 	}
 	else
 	{

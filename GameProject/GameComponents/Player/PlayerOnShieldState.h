@@ -5,8 +5,6 @@
 class PlayerOnShieldState : public PlayerState
 {
 public:
-	int Gravity;
-	float StartJumpDeltaTime = 0.0f; //the time player starts to jump
 	PlayerOnShieldState();
 	// Inherited via PlayerState
 	virtual void Update(float deltaTime) override;

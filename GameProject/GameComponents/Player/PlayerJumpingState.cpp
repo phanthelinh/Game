@@ -17,8 +17,10 @@ void PlayerJumpingState::Update(float deltaTime)
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY += GRAVITY;
-	if (PLAYER->vY >= 0)
+	if (PLAYER->vY >= 0 & PLAYER->LastKeyState[X] == false)
+	{
 		PLAYER->ChangeState(Falling);
+	}
 }
 
 void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -39,22 +41,15 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys['X'])
 	{
-		if (PLAYER->LastKeyState[X] == true)
+		if (PLAYER->vY == 0)
 		{
-			PLAYER->KeyHoldTime[X] += deltaTime - PLAYER->LastPressTime[X];
-			PLAYER->LastPressTime[X] = deltaTime;
-			if (PLAYER->KeyHoldTime[X] >= 0.019)
-			{
-				PLAYER->ChangeState(Spinning);
-			}
-		}	
+			PLAYER->ChangeState(Spinning);
+		}
 		PLAYER->LastKeyState[X] = true;
 	}
 	else
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

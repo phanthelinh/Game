@@ -13,7 +13,7 @@ Player::Player()
 	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
 	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2, true);
-	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1, true);
+	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1);
 	animations[Dashing] = new Animation("Resources/simon/Dashing.png", 3, 1, 3, false, 0.5);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
@@ -29,10 +29,6 @@ Player::Player()
 	LastKeyState[C] = false;
 	LastKeyState[LEFT] = false;
 	LastKeyState[RIGHT] = false;
-	LastPressTime[Z] = LastPressTime[X] = LastPressTime[C]
-		= LastPressTime[LEFT] = LastPressTime[RIGHT] = 0.0f;
-	KeyHoldTime[Z] = KeyHoldTime[X] = KeyHoldTime[C]
-		= KeyHoldTime[LEFT] = KeyHoldTime[RIGHT] = 0.0f;
 	isReverse = true;
 	shield = new Shield();
 	shieldFlying = false;
@@ -259,6 +255,4 @@ void Player::Release()
 	if (shield != nullptr)
 		delete shield;
 	LastKeyState.clear();
-	LastPressTime.clear(); 
-	KeyHoldTime.clear();
 }

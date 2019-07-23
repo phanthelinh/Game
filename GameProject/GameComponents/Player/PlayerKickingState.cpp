@@ -26,13 +26,6 @@ void PlayerKickingState::Update(float deltaTime)
 		if (PLAYER->vY <= 0)
 			PLAYER->ChangeState(Standing);
 	}
-	/*if (PLAYER->currentAnim->_curIndex == PLAYER->currentAnim->_totalFrames - 1)
-	{
-		if (PLAYER->PreviousState == Jumping)
-			PLAYER->ChangeState(new PlayerJumpingState());
-		else
-			PLAYER->ChangeState(new PlayerFallingState());
-	}*/
 }
 
 void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -50,8 +43,6 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

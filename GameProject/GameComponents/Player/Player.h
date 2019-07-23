@@ -31,8 +31,6 @@ public:
 
 	static Player* GetInstance();
 	std::unordered_map<Button, bool> LastKeyState; //save laststate of a key to handle input: true means last state it is helddown
-	std::unordered_map<Button, float> LastPressTime; //save the deltaTime when the key was pressed last
-	std::unordered_map<Button, float> KeyHoldTime; //calculate the time the key was held down
 	void Update(float deltaTime);
 
 	void Draw();

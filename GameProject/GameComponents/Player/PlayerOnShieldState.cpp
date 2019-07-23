@@ -1,22 +1,35 @@
 #include "PlayerOnShieldState.h"
 
+#define PLAYER_FALLING_SPEED 100.0f
 #define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 4.0f
 
 PlayerOnShieldState::PlayerOnShieldState()
 {
 	PLAYER->allow[Attacking] = true;
-	PLAYER->allow[Jumping] = true;
+	PLAYER->allow[Jumping] = false;
 	PLAYER->shield->isVisible = false;
+	int a = PLAYER->vY;
+	if (a % 2 == 0)
+	{
+		Gravity = 4;
+	}
+	else
+	{
+		Gravity = 1;
+	}
+	PLAYER->vY = PLAYER_FALLING_SPEED + -PLAYER->vY;
+	
 }
 
 void PlayerOnShieldState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
-	PLAYER->vY += GRAVITY;
-	if (PLAYER->vY == 0)
+	PLAYER->vY -= Gravity;
+	if (PLAYER->vY <= 0)
+	{
 		PLAYER->vY = 0;
+	}
 }
 
 void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -33,22 +46,18 @@ void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	{
 		PLAYER->ChangeState(Attacking);
 	}
-	if (keys[VK_DOWN])
+	if (!keys[VK_DOWN])
 	{
 		PLAYER->ChangeState(Standing);
 	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;
-		PLAYER->LastPressTime[X] = deltaTime;
-		PLAYER->KeyHoldTime[X] = 0.0f;
 		PLAYER->ChangeState(Jumping);
 	}
 	else
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

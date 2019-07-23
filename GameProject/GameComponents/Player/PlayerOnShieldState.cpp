@@ -7,14 +7,7 @@ PlayerOnShieldState::PlayerOnShieldState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	float a = 0.0f;
-	if (PLAYER->vY < 0)
-		a = PLAYER->vY;
-	else
-		a = 33 - PLAYER->vY;
-	PLAYER->vY = PLAYER_FALLING_SPEED + a;
 	PLAYER->shield->isVisible = false;
-	
 }
 
 void PlayerOnShieldState::Update(float deltaTime)
@@ -23,9 +16,7 @@ void PlayerOnShieldState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
 	if (PLAYER->vY <= 0)
-	{
 		PLAYER->vY = 0;
-	}
 }
 
 void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

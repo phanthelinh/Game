@@ -1,7 +1,7 @@
 #include "PlayerSpinningState.h"
 
 #define SPINNING_BOOST -30.0f
-#define PLAYER_RUNNING_SPEED 8.0f
+#define PLAYER_RUNNING_SPEED 5.5f
 #define GRAVITY 3.0f
 
 PlayerSpinningState::PlayerSpinningState()

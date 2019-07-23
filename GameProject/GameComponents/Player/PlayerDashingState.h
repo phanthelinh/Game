@@ -1,8 +1,6 @@
 #pragma once
 #include "Player.h"
 #include "PlayerState.h"
-#include "PlayerFallingState.h"
-#include "PlayerSpinningState.h"
 
 class PlayerDashingState : public PlayerState
 {

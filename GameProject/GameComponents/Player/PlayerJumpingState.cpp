@@ -43,7 +43,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 		{
 			PLAYER->KeyHoldTime[X] += deltaTime - PLAYER->LastPressTime[X];
 			PLAYER->LastPressTime[X] = deltaTime;
-			if (PLAYER->KeyHoldTime[X] >= 0.016)
+			if (PLAYER->KeyHoldTime[X] >= 0.019)
 			{
 				PLAYER->ChangeState(Spinning);
 			}

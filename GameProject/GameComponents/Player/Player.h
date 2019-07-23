@@ -7,6 +7,7 @@
 #include "../GameObject.h"
 #include "PlayerStandingState.h"
 #include "PlayerDiedState.h"
+#include "PlayerDashingState.h"
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"

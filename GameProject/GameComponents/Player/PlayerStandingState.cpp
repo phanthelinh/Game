@@ -36,6 +36,10 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	{
 		PLAYER->currentAnim = PLAYER->animations[Standing];
 	}
+	if (keys['C'])
+	{
+		PLAYER->ChangeState(Dashing);
+	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;

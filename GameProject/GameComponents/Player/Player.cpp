@@ -12,7 +12,9 @@ Player::Player()
 	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
-	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2);
+	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2, true);
+	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1, true);
+	animations[Dashing] = new Animation("Resources/simon/Dashing.png", 3, 1, 3, false, 0.5);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
@@ -152,6 +154,12 @@ void Player::ChangeState(StateName stateName)
 		break;
 	case Sitting:
 		newState = new PlayerSittingState();
+		break;
+	case Dashing:
+		newState = new PlayerDashingState();
+		break;
+	case OnShield:
+		newState = new PlayerOnShieldState();
 		break;
 	case Die:
 		newState = new PlayeDiedState();

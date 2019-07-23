@@ -138,6 +138,15 @@
     <ClCompile Include="GameComponents\Effect\Explode.cpp">
       <Filter>GameComponents\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Items\Life.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Health.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Five.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -241,6 +250,15 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Effect\Explode.h">
       <Filter>GameComponents\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Life.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Health.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Five.h">
+      <Filter>GameComponents\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

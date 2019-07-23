@@ -7,7 +7,7 @@
 #include "../GameComponents/Player/Player.h"
 #include "../GameComponents/Items/ItemsContainer.h"
 #include "../Framework/Util.h"
-#include "../GameComponents/Effect/Explode.h"
+#include "../GameComponents/Items/Life.h"
 
 class DemoScene:public Scene
 {
@@ -15,7 +15,7 @@ private:
 	GameMap*	map;
 	std::unordered_set<ItemsContainer*> itemsContainer;
 	std::vector<RECT> lstItemContainerRect;
-	
+	Life*	life;
 public:
 	DemoScene();
 	~DemoScene();

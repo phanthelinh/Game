@@ -145,8 +145,11 @@
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Items\Diamon.cpp" />
     <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
+    <ClCompile Include="GameComponents\Items\Five.cpp" />
+    <ClCompile Include="GameComponents\Items\Health.cpp" />
     <ClCompile Include="GameComponents\Items\Heart.cpp" />
     <ClCompile Include="GameComponents\Items\ItemsContainer.cpp" />
+    <ClCompile Include="GameComponents\Items\Life.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp" />
@@ -181,8 +184,11 @@
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Items\Diamon.h" />
     <ClInclude Include="GameComponents\Items\ExitGem.h" />
+    <ClInclude Include="GameComponents\Items\Five.h" />
+    <ClInclude Include="GameComponents\Items\Health.h" />
     <ClInclude Include="GameComponents\Items\Heart.h" />
     <ClInclude Include="GameComponents\Items\ItemsContainer.h" />
+    <ClInclude Include="GameComponents\Items\Life.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
     <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />
     <ClInclude Include="GameComponents\Player\PlayerFallingState.h" />

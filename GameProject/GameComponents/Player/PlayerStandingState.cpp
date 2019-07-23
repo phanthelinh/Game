@@ -5,7 +5,7 @@ PlayerStandingState::PlayerStandingState()
 	PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Moving] = true;
-
+	PLAYER->shield->isVisible = true;
 	//sitting?
 }
 

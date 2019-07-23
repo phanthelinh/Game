@@ -3,6 +3,7 @@
 
 PlayerAttackingState::PlayerAttackingState()
 {
+	PLAYER->shield->isVisible = true;
 	prevState = PLAYER->currentState->GetState();
 	if (prevState == Standing || prevState == Running)
 	{

@@ -1,8 +1,8 @@
 #include "PlayerFallingState.h"
 
-#define PLAYER_FALLING_SPEED 25.0f
+#define PLAYER_FALLING_SPEED 40.0f
 #define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 1.0f
+#define GRAVITY 4.0f
 
 PlayerFallingState::PlayerFallingState()
 {
@@ -17,7 +17,7 @@ PlayerFallingState::PlayerFallingState()
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED;
 	}
-	
+	PLAYER->shield->isVisible = false;
 	
 }
 
@@ -26,7 +26,7 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
-	if (PLAYER->vY == 0)
+	if (PLAYER->vY <= 0)
 		PLAYER->ChangeState(Standing);
 }
 

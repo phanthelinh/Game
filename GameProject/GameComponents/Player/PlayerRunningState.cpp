@@ -8,6 +8,7 @@ PlayerRunningState::PlayerRunningState()
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Sitting] = true;
 	PLAYER->vY = 0;
+	PLAYER->shield->isVisible = true;
 }
 
 void PlayerRunningState::Update(float deltaTime)

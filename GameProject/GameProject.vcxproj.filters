@@ -147,6 +147,12 @@
     <ClCompile Include="GameComponents\Items\Five.cpp">
       <Filter>GameComponents\Items</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerDashingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -259,6 +265,12 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Items\Five.h">
       <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerDashingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerOnShieldState.h">
+      <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

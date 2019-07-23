@@ -1,18 +1,18 @@
-#include "PlayerJumpingState.h"
+#include "PlayerOnShieldState.h"
 
-#define PLAYER_JUMPING_SPEED -40.0f
+#define PLAYER_JUMPING_SPEED -25.0f
 #define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 4.0f
+#define GRAVITY 1.0f
 
-PlayerJumpingState::PlayerJumpingState()
+PlayerOnShieldState::PlayerOnShieldState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += PLAYER_JUMPING_SPEED;
-	PLAYER->shield->isVisible = false;
+	PLAYER->shield->isVisible = true;
 }
 
-void PlayerJumpingState::Update(float deltaTime)
+void PlayerOnShieldState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
@@ -21,7 +21,7 @@ void PlayerJumpingState::Update(float deltaTime)
 		PLAYER->ChangeState(Falling);
 }
 
-void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
+void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	if (keys[VK_LEFT])
 	{
@@ -58,7 +58,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 }
 
-StateName PlayerJumpingState::GetState()
+StateName PlayerOnShieldState::GetState()
 {
-	return Jumping;
+	return OnShield;
 }

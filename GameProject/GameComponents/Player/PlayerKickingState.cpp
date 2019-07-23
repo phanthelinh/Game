@@ -1,12 +1,13 @@
 #include "PlayerKickingState.h"
 
 #define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 1.0f
+#define GRAVITY 4.0f
 
 PlayerKickingState::PlayerKickingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
+	PLAYER->shield->isVisible = false;
 }
 
 void PlayerKickingState::Update(float deltaTime)

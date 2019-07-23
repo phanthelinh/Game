@@ -9,6 +9,7 @@ PlayerSpinningState::PlayerSpinningState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += SPINNING_BOOST;
+	PLAYER->shield->isVisible = false;
 }
 
 void PlayerSpinningState::Update(float deltaTime)

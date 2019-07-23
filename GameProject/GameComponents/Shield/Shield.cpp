@@ -10,6 +10,7 @@ Shield::Shield()
 	SetState(ShieldState::Normal);
 	tag = Tag::Weapon;
 	isDead = false;
+	isVisible = true;
 }
 
 void Shield::SetState(ShieldState state)
@@ -132,6 +133,7 @@ void Shield::Draw()
 void Shield::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	shield->_isFlipHor = isReverse;
+	if (isVisible == true)
 	shield->Draw(position, cameraPosition, sourceRect, center);
 }
 

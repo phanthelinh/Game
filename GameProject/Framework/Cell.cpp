@@ -2,14 +2,13 @@
 
 bool Cell::IsContain(RECT r)
 {
-	return !((x + cellSize < r.left) || (x > r.right) || (y > r.bottom) || (y + cellSize < r.top));
+	return !((x + CELL_WIDTH < r.left) || (x > r.right) || (y > r.bottom) || (y + CELL_HEIGHT < r.top));
 }
 
-Cell::Cell(int x, int y, int cellSize)
+Cell::Cell(int x, int y)
 {
 	this->x = x;
 	this->y = y;
-	this->cellSize = cellSize;
 }
 
 void Cell::Add(GameObject * obj)
@@ -33,8 +32,8 @@ RECT Cell::GetCellBound()
 	RECT r;
 	r.left = x;
 	r.top = y;
-	r.right = r.left + cellSize;
-	r.bottom = r.top + cellSize;
+	r.right = r.left + CELL_WIDTH;
+	r.bottom = r.top + CELL_HEIGHT;
 	return r;
 }
 
@@ -42,6 +41,6 @@ void Cell::Release()
 {
 	for (auto i = objects.begin(); i != objects.end(); ++i)
 	{
-		objects.erase(i);
+		i = objects.erase(i);
 	}
 }

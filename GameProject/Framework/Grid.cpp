@@ -1,16 +1,29 @@
 #include "Grid.h"
 
-Grid::Grid(int numCols, int numRows, int cellSize)
+Grid::Grid()
+{
+	numCols = GLOBAL->g_WorldMapWidth / CELL_WIDTH;
+	numRows = GLOBAL->g_WorldMapHeight / CELL_HEIGHT;
+
+	for (int i = 0; i < numRows; i++)
+	{
+		for (int j = 0; j < numCols; j++)
+		{
+			cells[i][j] = new Cell(i*CELL_WIDTH, j*CELL_HEIGHT);
+		}
+	}
+}
+
+Grid::Grid(int numCols, int numRows)
 {
 	this->numCols = numCols;
 	this->numRows = numRows;
-	this->cellSize = cellSize;
 
-	for (int i = 0; i < numCols; i++)
+	for (int i = 0; i < numRows; i++)
 	{
-		for (int j = 0; j < numRows; j++)
+		for (int j = 0; j < numCols; j++)
 		{
-			cells[i][j] = new Cell(i*cellSize, j*cellSize, cellSize);
+			cells[i][j] = new Cell(i*CELL_WIDTH, j*CELL_HEIGHT);
 		}
 	}
 }
@@ -30,10 +43,10 @@ void Grid::InsertToGrid(std::unordered_set<GameObject*> objects)
 	{
 		RECT objBound = (*it)->GetBound();
 		//calculate which cell is valid
-		int startX = floor(objBound.left / cellSize);
-		int endX = floor(objBound.right / cellSize);
-		int startY = floor(objBound.top / cellSize);
-		int endY = floor(objBound.bottom / cellSize);
+		int startX = floor(objBound.left / CELL_WIDTH);
+		int endX = floor(objBound.right / CELL_WIDTH);
+		int startY = floor(objBound.top / CELL_HEIGHT);
+		int endY = floor(objBound.bottom / CELL_HEIGHT);
 
 		if (endX >= numCols || endY >= numRows)
 			continue;
@@ -53,10 +66,10 @@ void Grid::AddObject(GameObject * object)
 		return;
 	auto objBound = object->GetBound();
 	//calculate which cell is valid
-	int startX = floor(objBound.left / cellSize);
-	int endX = floor(objBound.right / cellSize);
-	int startY = floor(objBound.top / cellSize);
-	int endY = floor(objBound.bottom / cellSize);
+	int startX = floor(objBound.left / CELL_WIDTH);
+	int endX = floor(objBound.right / CELL_WIDTH);
+	int startY = floor(objBound.top / CELL_HEIGHT);
+	int endY = floor(objBound.bottom / CELL_HEIGHT);
 
 	for (int i = startX; i <= endX; i++)
 	{
@@ -73,10 +86,10 @@ void Grid::RemoveObject(GameObject * object)
 		return;
 	auto objBound = object->GetBound();
 	//calculate which cell is valid
-	int startX = floor(objBound.left / cellSize);
-	int endX = floor(objBound.right / cellSize);
-	int startY = floor(objBound.top / cellSize);
-	int endY = floor(objBound.bottom / cellSize);
+	int startX = floor(objBound.left / CELL_WIDTH);
+	int endX = floor(objBound.right / CELL_WIDTH);
+	int startY = floor(objBound.top / CELL_HEIGHT);
+	int endY = floor(objBound.bottom / CELL_HEIGHT);
 
 	for (int i = startX; i <= endX; i++)
 	{
@@ -90,8 +103,8 @@ void Grid::RemoveObject(GameObject * object)
 void Grid::UpdateVisibleCells()
 {
 	visibleCells.clear();
-	int startX = floor(CAMERA->GetBound().left / cellSize);
-	int endX = ceil(CAMERA->GetBound().right / cellSize);
+	int startX = floor(CAMERA->GetBound().left / CELL_WIDTH);
+	int endX = ceil(CAMERA->GetBound().right / CELL_HEIGHT);
 
 	for (int i = startX; i <= endX; i++)
 	{
@@ -113,10 +126,10 @@ std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * targe
 
 	auto targetBound = target->GetBound();
 	
-	int startX = floor(targetBound.left / cellSize);
-	int endX = floor(targetBound.right / cellSize);
-	int startY = floor(targetBound.top / cellSize);
-	int endY = floor(targetBound.bottom / cellSize);
+	int startX = floor(targetBound.left / CELL_WIDTH);
+	int endX = floor(targetBound.right / CELL_WIDTH);
+	int startY = floor(targetBound.top / CELL_HEIGHT);
+	int endY = floor(targetBound.bottom / CELL_HEIGHT);
 	//iterate for each cell in range
 	for (int j = startY; j < endY; j++)
 	{

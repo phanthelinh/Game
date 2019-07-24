@@ -2,18 +2,18 @@
 #include <unordered_set>
 #include "../GameComponents/GameObject.h"
 
+#define CELL_WIDTH		GLOBAL->g_ScreenWidth >> 1
+#define CELL_HEIGHT		GLOBAL->g_ScreenHeight >> 1
 class Cell
 {
 private:
 	int		x, y;
-	int		cellSize;
 	
-
 	bool IsContain(RECT r);
 public:
 	std::unordered_set<GameObject*> objects;
 
-	Cell(int x, int y, int cellSize);
+	Cell(int x, int y);
 	//Add an object to a cell, if it is contained in this cell
 	void Add(GameObject* obj);
 	//Remove an object from a cell

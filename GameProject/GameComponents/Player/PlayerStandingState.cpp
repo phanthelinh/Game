@@ -55,3 +55,7 @@ StateName PlayerStandingState::GetState()
 {
 	return Standing;
 }
+
+void PlayerStandingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
+}

@@ -44,3 +44,7 @@ StateName PlayerSpinningState::GetState()
 {
 	return Spinning;
 }
+
+void PlayerSpinningState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
+}

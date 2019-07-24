@@ -6,6 +6,15 @@ GameObject::GameObject()
 {
 }
 
+GameObject::GameObject(float posX, float posY, float width, float height, Tag tag)
+{
+	this->posX = posX;
+	this->posY = posY;
+	this->width = width;
+	this->height = height;
+	this->tag = tag;
+}
+
 
 GameObject::~GameObject()
 {

@@ -3,6 +3,7 @@
 #include "PlayerState.h"
 #include "PlayerFallingState.h"
 #include "PlayerSpinningState.h"
+#include <unordered_set>
 
 class PlayerJumpingState : public PlayerState
 {
@@ -15,5 +16,5 @@ public:
 	virtual void HandleKeyboard(std::map<int, bool> keys, float deltaTime) override;
 
 	virtual StateName GetState() override;
-
+	virtual void OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime);
 };

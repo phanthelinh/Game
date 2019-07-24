@@ -3,6 +3,7 @@
 PlayerSittingState::PlayerSittingState()
 {
 	PLAYER->allow[Jumping] = false;
+	PLAYER->isOnGround = true;
 	PLAYER->allow[Attacking_SitBump] = true;
 	PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->shield->SetState(ShieldState::Normal_Sit);
@@ -38,4 +39,8 @@ void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 StateName PlayerSittingState::GetState()
 {
 	return Sitting;
+}
+
+void PlayerSittingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
 }

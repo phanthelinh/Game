@@ -40,3 +40,7 @@ std::vector<RECT> Util::GetObjectDataFromFile(const char * filePath)
 	}
 	return data;
 }
+
+void Util::GetObjectInforFromFile(const char* filePath, std::vector<GameObject*>& list, Tag tag, bool isLeft)
+{
+}

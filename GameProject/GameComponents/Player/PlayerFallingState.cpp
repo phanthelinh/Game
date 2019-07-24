@@ -8,6 +8,7 @@ PlayerFallingState::PlayerFallingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
+	PLAYER->isOnGround = false;
 	//if (PLAYER->PreviousState != Kicking)
 	if (PLAYER->PreviousState == Spinning)
 	{
@@ -57,4 +58,9 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 StateName PlayerFallingState::GetState()
 {
 	return Falling;
+}
+
+void PlayerFallingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
+
 }

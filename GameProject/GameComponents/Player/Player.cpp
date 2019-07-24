@@ -32,6 +32,7 @@ Player::Player()
 	KeyHoldTime[Z] = KeyHoldTime[X] = KeyHoldTime[C]
 		= KeyHoldTime[LEFT] = KeyHoldTime[RIGHT] = 0.0f;
 	isReverse = true;
+	isOnGround = false;
 	shield = new Shield();
 	shieldFlying = false;
 	posX = 40;
@@ -172,8 +173,9 @@ void Player::ChangeState(StateName stateName)
 	currentAnim->ResetAnim();
 }
 
-void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects)
+void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
 {
+	currentState->OnCollision(colliableObjects, deltaTime);
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

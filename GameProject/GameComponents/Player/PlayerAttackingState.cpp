@@ -3,6 +3,7 @@
 
 PlayerAttackingState::PlayerAttackingState()
 {
+	PLAYER->isOnGround = true;
 	prevState = PLAYER->currentState->GetState();
 	if (prevState == Standing || prevState == Running)
 	{
@@ -68,4 +69,8 @@ StateName PlayerAttackingState::GetState()
 	else if (prevState == Attacking_StandBump)
 		return Attacking_StandBump;
 	return Standing;
+}
+
+void PlayerAttackingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
 }

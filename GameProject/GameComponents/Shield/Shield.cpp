@@ -101,7 +101,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			}
 			else
 			{
-				_translationToPlayer = { 31,0,0 };
+				_translationToPlayer = { 25,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
 			}
 		}
@@ -113,7 +113,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			}
 			else
 			{
-				_translationToPlayer = { -31,0,0 };
+				_translationToPlayer = { -25,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
 			}
 		}

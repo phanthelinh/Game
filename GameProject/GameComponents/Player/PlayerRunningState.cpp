@@ -8,6 +8,7 @@ PlayerRunningState::PlayerRunningState()
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Sitting] = true;
 	PLAYER->vY = 0;
+	PLAYER->isOnGround = true;
 }
 
 void PlayerRunningState::Update(float deltaTime)
@@ -53,4 +54,8 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 StateName PlayerRunningState::GetState()
 {
 	return Running;
+}
+
+void PlayerRunningState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
 }

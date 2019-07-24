@@ -9,6 +9,7 @@ PlayerJumpingState::PlayerJumpingState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += PLAYER_JUMPING_SPEED;
+	PLAYER->isOnGround = false;
 }
 
 void PlayerJumpingState::Update(float deltaTime)
@@ -60,4 +61,8 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 StateName PlayerJumpingState::GetState()
 {
 	return Jumping;
+}
+
+void PlayerJumpingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
 }

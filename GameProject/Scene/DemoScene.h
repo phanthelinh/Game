@@ -3,12 +3,18 @@
 #include "../Framework/Animation.h"
 #include "../Framework/GameMap.h"
 #include "../GameComponents/Player/Player.h"
+#include <vector>
+#include "../Framework/Grid.h"
+#include<vector>
+#include "../Framework/Animation.h"
 
 class DemoScene:public Scene
 {
 private:
 	Sprite*		back;
 	GameMap*	map;
+	Grid* grid;
+	std::vector<GameObject*> listObject;
 public:
 	DemoScene();
 	~DemoScene();
@@ -23,5 +29,5 @@ public:
 	virtual void OnKeyUp(int keyCode) override;
 
 	virtual void ReleaseAll() override;
-
+	void CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime);
 };

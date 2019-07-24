@@ -20,3 +20,7 @@ std::vector<int> Util::GetMapDataFromFile(const char * filePath)
 	}
 	return data;
 }
+
+void Util::GetObjectInforFromFile(const char* filePath, std::vector<GameObject*>& list, Tag tag, bool isLeft)
+{
+}

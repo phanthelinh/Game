@@ -13,9 +13,9 @@
 
 enum Button
 {
-	Z,
-	X,
-	C,
+	Z, //jump
+	X, //attack or jump down
+	C, //dash
 	LEFT,
 	RIGHT
 };
@@ -37,7 +37,7 @@ public:
 	//void ChangeState(PlayerState* newState);
 	void ChangeState(StateName statename);
 
-	void CheckCollision(std::unordered_set<GameObject*> colliableObjects);
+	void CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime);
 
 	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 

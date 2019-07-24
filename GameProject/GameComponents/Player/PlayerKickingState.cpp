@@ -7,6 +7,7 @@ PlayerKickingState::PlayerKickingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
+	PLAYER->isOnGround = true;
 }
 
 void PlayerKickingState::Update(float deltaTime)
@@ -57,4 +58,8 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 StateName PlayerKickingState::GetState()
 {
 	return Kicking;
+}
+
+void PlayerKickingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+{
 }

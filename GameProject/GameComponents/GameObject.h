@@ -12,6 +12,7 @@ class GameObject
 {
 public:
 	GameObject();
+	GameObject(float posX, float posY, float width, float height, Tag tag);
 	virtual ~GameObject();
 
 	Tag tag;									

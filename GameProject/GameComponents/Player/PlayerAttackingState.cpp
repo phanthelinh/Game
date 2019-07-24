@@ -4,6 +4,7 @@
 PlayerAttackingState::PlayerAttackingState()
 {
 	PLAYER->isOnGround = true;
+	PLAYER->shield->isVisible = true;
 	prevState = PLAYER->currentState->GetState();
 	if (prevState == Standing || prevState == Running)
 	{
@@ -50,8 +51,6 @@ void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys, float deltaT
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

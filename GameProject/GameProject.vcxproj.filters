@@ -31,6 +31,9 @@
     <Filter Include="GameComponents\Items">
       <UniqueIdentifier>{7d66b7fc-7793-4f28-8715-785d4ee8dca8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\Effect">
+      <UniqueIdentifier>{085cbd9b-a351-485e-892e-ab667a581727}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -123,6 +126,33 @@
     <ClCompile Include="GameComponents\Items\ItemsContainer.cpp">
       <Filter>GameComponents\Items</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Items\Heart.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\ExitGem.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Diamon.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Effect\Explode.cpp">
+      <Filter>GameComponents\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Life.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Health.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Five.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerDashingState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -214,6 +244,33 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Items\ItemsContainer.h">
       <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Heart.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\ExitGem.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Diamon.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Effect\Explode.h">
+      <Filter>GameComponents\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Life.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Health.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Five.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerDashingState.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerOnShieldState.h">
+      <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

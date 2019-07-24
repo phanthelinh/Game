@@ -69,3 +69,7 @@ bool GameObject::IsCollide(RECT r)
 	return !(b1.right < r.left || b1.left > r.right || b1.top > r.bottom || b1.bottom < r.top);
 }
 
+void GameObject::Release()
+{
+}
+

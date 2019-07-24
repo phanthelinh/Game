@@ -282,5 +282,10 @@ void Game::GameRun()
 
 void Game::GameEnd()
 {
-
+	
+	if (SCENES != nullptr)
+	{
+		SCENES->GetCurrentScene()->ReleaseAll();
+		delete SCENES;
+	}
 }

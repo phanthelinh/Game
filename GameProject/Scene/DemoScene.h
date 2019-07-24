@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include <unordered_set>
 #include "Scene.h"
 #include "../Framework/Animation.h"
 #include "../Framework/GameMap.h"
@@ -8,15 +10,16 @@
 #include <unordered_set>
 #include "../Framework/Animation.h"
 #include "../Framework/Util.h"
+#include "../GameComponents/Items/Life.h"
 
 class DemoScene:public Scene
 {
 private:
-	Sprite*		back;
 	GameMap*	map;
 	std::unordered_set<ItemsContainer*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
+	Life*	life;
 public:
 	DemoScene();
 	~DemoScene();

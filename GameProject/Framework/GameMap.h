@@ -19,4 +19,5 @@ public:
 	void RenderMap();
 	//Update map along with player
 	void UpdateMap(D3DXVECTOR3 playerPos);
+	void Release();
 };

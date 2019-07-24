@@ -66,3 +66,20 @@ BoundingBox ItemsContainer::GetBoundingBox()
 	b.vX = b.vY = 0;
 	return b;
 }
+
+void ItemsContainer::Release()
+{
+	if (sprites != nullptr)
+	{
+		delete sprites[0];
+		delete sprites[1];
+		delete[] sprites;
+	}
+	if (listItems.size() > 0)
+	{
+		for (auto item : listItems)
+		{
+			listItems.erase(item);
+		}
+	}
+}

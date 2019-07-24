@@ -1,8 +1,8 @@
 #include "PlayerJumpingState.h"
 
-#define PLAYER_JUMPING_SPEED -25.0f
-#define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 1.0f
+#define PLAYER_JUMPING_SPEED -30.0f
+#define PLAYER_RUNNING_SPEED 5.5f
+#define GRAVITY 3.0f
 
 PlayerJumpingState::PlayerJumpingState()
 {
@@ -10,6 +10,7 @@ PlayerJumpingState::PlayerJumpingState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += PLAYER_JUMPING_SPEED;
 	PLAYER->isOnGround = false;
+	PLAYER->shield->isVisible = false;
 }
 
 void PlayerJumpingState::Update(float deltaTime)
@@ -17,8 +18,10 @@ void PlayerJumpingState::Update(float deltaTime)
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY += GRAVITY;
-	if (PLAYER->vY >= 0)
+	if (PLAYER->vY >= 0 && PLAYER->LastKeyState[X] == false)
+	{
 		PLAYER->ChangeState(Falling);
+	}
 }
 
 void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -39,22 +42,15 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys['X'])
 	{
-		if (PLAYER->LastKeyState[X] == true)
+		if (PLAYER->vY == 0)
 		{
-			PLAYER->KeyHoldTime[X] += deltaTime - PLAYER->LastPressTime[X];
-			PLAYER->LastPressTime[X] = deltaTime;
-			if (PLAYER->KeyHoldTime[X] >= 0.016)
-			{
-				PLAYER->ChangeState(Spinning);
-			}
-		}	
+			PLAYER->ChangeState(Spinning);
+		}
 		PLAYER->LastKeyState[X] = true;
 	}
 	else
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

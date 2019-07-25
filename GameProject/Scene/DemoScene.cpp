@@ -21,7 +21,7 @@ void DemoScene::Update(float deltaTime)
 {
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	CheckCollision(PLAYER->GetBoundingBox(), listObject, deltaTime);
+	//CheckCollision(PLAYER->GetBoundingBox(), listObject, deltaTime);
 }
 
 void DemoScene::Draw()

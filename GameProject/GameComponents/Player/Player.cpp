@@ -17,7 +17,7 @@ Player::Player()
 	animations[Attacking_SitBump] = new Animation("Resources/player/player_sitbump_80_28.png", 2, 1, 2, false);
 
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
-	currentAnim = animations[Standing];
+	currentAnim = animations[Falling];
 	allow[Attacking_Shield] = true;
 	LastKeyState[Z] = false;
 	LastKeyState[X] = false;

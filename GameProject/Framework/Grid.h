@@ -6,7 +6,7 @@
 class Grid
 {
 private:
-	std::vector<std::vector<Cell*>> cells;
+	Cell*** cells;
 	std::unordered_set<GameObject*> objects;
 	int numCols, numRows;
 	

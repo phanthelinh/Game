@@ -2,8 +2,8 @@
 #include <unordered_set>
 #include "../GameComponents/GameObject.h"
 
-#define CELL_WIDTH		GLOBAL->g_ScreenWidth >> 1
-#define CELL_HEIGHT		GLOBAL->g_ScreenHeight >> 1
+#define CELL_WIDTH		(GLOBAL->g_ScreenWidth/2)
+#define CELL_HEIGHT		(GLOBAL->g_ScreenHeight/2)
 class Cell
 {
 private:

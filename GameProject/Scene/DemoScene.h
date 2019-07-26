@@ -7,19 +7,17 @@
 #include "../GameComponents/Player/Player.h"
 #include "../GameComponents/Items/ItemsContainer.h"
 #include "../Framework/Grid.h"
-#include <unordered_set>
-#include "../Framework/Animation.h"
 #include "../Framework/Util.h"
-#include "../GameComponents/Items/Life.h"
+#include "../Framework/Grid.h"
 
 class DemoScene:public Scene
 {
 private:
 	GameMap*	map;
-	std::unordered_set<ItemsContainer*> itemsContainer;
+	std::unordered_set<GameObject*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-	Life*	life;
+	Grid *	grid;
 public:
 	DemoScene();
 	~DemoScene();

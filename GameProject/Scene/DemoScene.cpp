@@ -4,11 +4,10 @@
 
 DemoScene::DemoScene()
 {
-	PLAYER; //get instance
-	//map = new GameMap(16, 16, 128, 15, "Resources/map/temp_cut.png", "Resources/map/temp.csv");//
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_cut.png", "Resources/map/Charleston_1_1.csv");
 	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-	life = new Life(128, 300, 8, 16);
+
+	//Get items container
 	lstItemContainerRect = Util::GetObjectDataFromFile("Resources/items/itemcontainer.txt");
 	if (lstItemContainerRect.size() > 0)
 	{
@@ -17,13 +16,20 @@ DemoScene::DemoScene()
 			itemsContainer.insert(new ItemsContainer(r));
 		}
 	}
+	//init for Player
+	PLAYER; //get instance
 	PLAYER->posX = 16;
 	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
-	//map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
+
+	//ground objects
 	GameObject* ground = new GameObject(0, 436, 96, 12, Tag::Ground);
 	listObject.push_back(ground);
+	//implement grid
+	grid = new Grid();
+	grid->InsertToGrid(itemsContainer);
+	grid->AddObject(PLAYER->shield);
 }
 
 DemoScene::~DemoScene()
@@ -34,23 +40,39 @@ void DemoScene::Update(float deltaTime)
 {
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	//CheckCollision(PLAYER->GetBoundingBox(), listObject, deltaTime);
-	life->Update(deltaTime);
-	////check collision
-	//if (!PLAYER->shield->isDead)
-	//{
-	//	itemsContainer->ExecuteCollision(PLAYER->shield);
-	//}
+	grid->UpdateGrid();
+	//update object
+	for (auto cell : grid->visibleCells)
+	{
+		for (auto obj : cell->objects)
+		{
+			obj->Update(deltaTime);
+		}
+	}
+	//get list colliable objects
+	auto lstCollideable = grid->GetColliableObjectsWith(PLAYER);
+	//player check collision
+	PLAYER->CheckCollision(lstCollideable, deltaTime);
+	//objects check collision
+	for (auto obj : lstCollideable)
+	{
+		obj->OnCollision(PLAYER, deltaTime);
+	}
 }
 
 void DemoScene::Draw()
 {
+	//render map
 	map->RenderMap();
-	for (auto i : itemsContainer)
+	//draw visible objects
+	for (auto cell : grid->visibleCells)
 	{
-		i->Draw();
+		for (auto obj : cell->objects)
+		{
+			obj->Draw();
+		}
 	}
-	life->Draw();
+	//render player
 	PLAYER->Draw();
 }
 

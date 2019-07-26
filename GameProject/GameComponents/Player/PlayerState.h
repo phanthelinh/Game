@@ -12,6 +12,8 @@ enum StateName
 	Falling,
 	Jumping,
 	Spinning,
+	OnShield,
+	Dashing,
 	Kicking,
 	LookUpward,
 	Attacking,

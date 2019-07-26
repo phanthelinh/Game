@@ -1,7 +1,19 @@
 #pragma once
 #include "../Framework/Global.h"
 
-enum Tag{ Simon, Enemy, Ground };
+enum Tag {
+	Captain,
+	Enemy,
+	Ground,
+	Weapon,
+	ItemContainerTag,
+	HeartTag,
+	ExitGemTag,
+	DiamonTag,
+	LifeTag,
+	HealthTag,
+	FiveTag
+};
 struct BoundingBox 
 { 
 	float left, top, right, bottom;
@@ -30,4 +42,5 @@ public:
 	virtual void Update(float deltaTime);
 	bool IsCollide(RECT r);
 	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) {};
+	void Release();
 };

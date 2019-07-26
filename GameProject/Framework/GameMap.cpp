@@ -29,11 +29,11 @@ GameMap::GameMap(int tileWidth, int tileHeight, int numTilesWidth, int numTileHe
 void GameMap::RenderMap()
 {
 	//calculating offset
-	int offX = CAMERA->GetBound().left / tileWidth;
-	int offY = CAMERA->GetBound().top / tileHeight;
+	int offX = floor(CAMERA->GetBound().left / tileWidth);
+	int offY = floor(CAMERA->GetBound().top / tileHeight);
 	//calculating number of columns and rows that will be drawn
-	int columnsDraw = CAMERA->camWidth / tileWidth;
-	int rowsDraw = CAMERA->camHeight / tileHeight;
+	int columnsDraw = ceil(CAMERA->camWidth / tileWidth);
+	int rowsDraw = ceil(CAMERA->camHeight / tileHeight);
 
 	for (int y = 0; y <= rowsDraw; y++)
 	{
@@ -49,8 +49,20 @@ void GameMap::RenderMap()
 			{
 				return;
 			}
-			
+			if (tileID == 16) {
+				int kk = 0;
+			}
 			tileSet->DrawTile(tileID, D3DXVECTOR3((x + offX)*tileWidth, (y + offY)*tileHeight, 0), CAMERA->camPosition);
 		}
 	}
+}
+
+void GameMap::Release()
+{
+	if (tileSet != nullptr)
+	{
+		tileSet->Release();
+		delete tileSet;
+	}
+	data.clear();
 }

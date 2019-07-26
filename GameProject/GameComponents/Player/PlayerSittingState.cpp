@@ -8,6 +8,7 @@ PlayerSittingState::PlayerSittingState()
 	PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->shield->SetState(ShieldState::Normal_Sit);
 	PLAYER->posY += 10;		//make sure sprite is sitting on the ground
+	PLAYER->shield->isVisible = true;
 }
 
 void PlayerSittingState::Update(float deltaTime)
@@ -31,8 +32,6 @@ void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

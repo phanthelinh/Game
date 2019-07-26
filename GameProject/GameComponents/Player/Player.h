@@ -1,10 +1,13 @@
 #pragma once
+#include <unordered_map>
+#include <unordered_set>
+#include <exception>
 #include "../../Framework/Animation.h"
 #include "PlayerState.h"
 #include "../GameObject.h"
 #include "PlayerStandingState.h"
-#include <unordered_map>
-#include <unordered_set>
+#include "PlayerDiedState.h"
+#include "PlayerDashingState.h"
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
@@ -28,8 +31,6 @@ public:
 
 	static Player* GetInstance();
 	std::unordered_map<Button, bool> LastKeyState; //save laststate of a key to handle input: true means last state it is helddown
-	std::unordered_map<Button, float> LastPressTime; //save the deltaTime when the key was pressed last
-	std::unordered_map<Button, float> KeyHoldTime; //calculate the time the key was held down
 	void Update(float deltaTime);
 
 	void Draw();
@@ -46,6 +47,8 @@ public:
 	void OnKeyUp(int keyCode);
 
 	virtual BoundingBox GetBoundingBox();
+
+	void Release();
 
 	std::unordered_map<StateName, Animation*> animations;
 	std::unordered_map<StateName, bool> allow;

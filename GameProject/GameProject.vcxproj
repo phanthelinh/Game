@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,12 +141,23 @@
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
     <ClCompile Include="Framework\Util.cpp" />
+    <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
+    <ClCompile Include="GameComponents\Items\Diamon.cpp" />
+    <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
+    <ClCompile Include="GameComponents\Items\Five.cpp" />
+    <ClCompile Include="GameComponents\Items\Health.cpp" />
+    <ClCompile Include="GameComponents\Items\Heart.cpp" />
+    <ClCompile Include="GameComponents\Items\ItemsContainer.cpp" />
+    <ClCompile Include="GameComponents\Items\Life.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerDashingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerKickingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerRunningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerSpinningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp" />
@@ -171,12 +182,23 @@
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />
     <ClInclude Include="Framework\Util.h" />
+    <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
+    <ClInclude Include="GameComponents\Items\Diamon.h" />
+    <ClInclude Include="GameComponents\Items\ExitGem.h" />
+    <ClInclude Include="GameComponents\Items\Five.h" />
+    <ClInclude Include="GameComponents\Items\Health.h" />
+    <ClInclude Include="GameComponents\Items\Heart.h" />
+    <ClInclude Include="GameComponents\Items\ItemsContainer.h" />
+    <ClInclude Include="GameComponents\Items\Life.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
+    <ClInclude Include="GameComponents\Player\PlayerDashingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />
     <ClInclude Include="GameComponents\Player\PlayerFallingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerJumpingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerKickingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerAttackingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerOnShieldState.h" />
     <ClInclude Include="GameComponents\Player\PlayerRunningState.h" />
     <ClInclude Include="GameComponents\Player\PlayerSittingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerSpinningState.h" />

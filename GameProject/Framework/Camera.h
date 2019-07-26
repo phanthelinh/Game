@@ -10,8 +10,9 @@ private:
 public:
 	
 
-	int camWidth, camHeight;
-	D3DXVECTOR3 camPosition; //position is the center of camera view
+	int camWidth,	camHeight;
+	D3DXVECTOR3		camPosition; //position is the center of camera view
+	bool			isFollowY;
 
 	Camera();
 	Camera(int x, int y, int width, int height);

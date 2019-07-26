@@ -1,14 +1,15 @@
 #include "PlayerSpinningState.h"
 
-#define SPINNING_BOOST -9.0f
-#define PLAYER_RUNNING_SPEED 8.0f
-#define GRAVITY 1.0f
+#define SPINNING_BOOST -30.0f
+#define PLAYER_RUNNING_SPEED 5.5f
+#define GRAVITY 3.0f
 
 PlayerSpinningState::PlayerSpinningState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	PLAYER->vY += SPINNING_BOOST;
+	PLAYER->vY = SPINNING_BOOST;
+	PLAYER->shield->isVisible = false;
 }
 
 void PlayerSpinningState::Update(float deltaTime)
@@ -32,11 +33,13 @@ void PlayerSpinningState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 		PLAYER->isReverse = false;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
+	if (keys[VK_DOWN])
+	{
+		PLAYER->ChangeState(OnShield);
+	}
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

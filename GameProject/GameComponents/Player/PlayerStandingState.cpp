@@ -5,7 +5,7 @@ PlayerStandingState::PlayerStandingState()
 	PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Moving] = true;
-
+	PLAYER->shield->isVisible = true;
 	//sitting?
 }
 
@@ -36,18 +36,18 @@ void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	{
 		PLAYER->currentAnim = PLAYER->animations[Standing];
 	}
+	if (keys['C'])
+	{
+		PLAYER->ChangeState(Dashing);
+	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;
-		PLAYER->LastPressTime[X] = deltaTime;
-		PLAYER->KeyHoldTime[X] = 0.0f;
 		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

@@ -5,9 +5,22 @@
 DemoScene::DemoScene()
 {
 	PLAYER; //get instance
+	//map = new GameMap(16, 16, 128, 15, "Resources/map/temp_cut.png", "Resources/map/temp.csv");//
+	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_cut.png", "Resources/map/Charleston_1_1.csv");
+	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
+	life = new Life(128, 300, 8, 16);
+	lstItemContainerRect = Util::GetObjectDataFromFile("Resources/items/itemcontainer.txt");
+	if (lstItemContainerRect.size() > 0)
+	{
+		for (auto r : lstItemContainerRect)
+		{
+			itemsContainer.insert(new ItemsContainer(r));
+		}
+	}
 	PLAYER->posX = 16;
 	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
+	PLAYER->currentState = new PlayerFallingState();
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
 	GameObject* ground = new GameObject(0, 436, 96, 12, Tag::Ground);
 	listObject.push_back(ground);
@@ -22,12 +35,22 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	//CheckCollision(PLAYER->GetBoundingBox(), listObject, deltaTime);
+	life->Update(deltaTime);
+	////check collision
+	//if (!PLAYER->shield->isDead)
+	//{
+	//	itemsContainer->ExecuteCollision(PLAYER->shield);
+	//}
 }
 
 void DemoScene::Draw()
 {
-	//back->Draw(128,120);
 	map->RenderMap();
+	for (auto i : itemsContainer)
+	{
+		i->Draw();
+	}
+	life->Draw();
 	PLAYER->Draw();
 }
 
@@ -35,10 +58,6 @@ void DemoScene::OnKeyDown(int keyCode)
 {
 	keys[keyCode] = true;
 	PLAYER->OnKeyDown(keyCode);
-	if (keyCode == VK_RETURN)
-	{
-		SCENES->ChangeScene(new TitleScene());
-	}
 }
 
 void DemoScene::OnKeyUp(int keyCode)
@@ -49,6 +68,24 @@ void DemoScene::OnKeyUp(int keyCode)
 
 void DemoScene::ReleaseAll()
 {
+	PLAYER->Release();
+	if (PLAYER)
+	{
+		delete PLAYER;
+	}
+	if (CAMERA)
+	{
+		delete CAMERA;
+	}
+	if (COLLISION)
+	{
+		delete COLLISION;
+	}
+	if (map != nullptr)
+	{
+		map->Release();
+		delete map;
+	}
 }
 
 void DemoScene::CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime)

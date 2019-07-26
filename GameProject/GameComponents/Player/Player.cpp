@@ -4,19 +4,24 @@ Player* Player::instance = NULL;
 
 Player::Player()
 {
+	tag = Tag::Captain;
+
 	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4, true, 0.65);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
 	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
-	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2);
+	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2, true);
+	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1);
+	animations[Dashing] = new Animation("Resources/simon/Dashing.png", 3, 1, 3, false, 0.5);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
 	animations[Attacking_SitBump] = new Animation("Resources/player/player_sitbump_80_28.png", 2, 1, 2, false);
 
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
+	animations[Die] = new Animation("Resources/player/player_died_64_32.png", 2, 1, 2, false, 0.95);
 	currentAnim = animations[Falling];
 	allow[Attacking_Shield] = true;
 	LastKeyState[Z] = false;
@@ -24,16 +29,13 @@ Player::Player()
 	LastKeyState[C] = false;
 	LastKeyState[LEFT] = false;
 	LastKeyState[RIGHT] = false;
-	LastPressTime[Z] = LastPressTime[X] = LastPressTime[C]
-		= LastPressTime[LEFT] = LastPressTime[RIGHT] = 0.0f;
-	KeyHoldTime[Z] = KeyHoldTime[X] = KeyHoldTime[C]
-		= KeyHoldTime[LEFT] = KeyHoldTime[RIGHT] = 0.0f;
 	isReverse = true;
 	isOnGround = false;
 	shield = new Shield();
 	shieldFlying = false;
-	/*posX = 16;
-	posY = 416;*/
+	posX = 120;
+	posY = 416;
+	CAMERA->camPosition = GetPosition();
 }
 
 Player * Player::GetInstance()
@@ -122,13 +124,6 @@ void Player::Draw()
 	shield->Draw();
 }
 
-//cach viet nay khong phu hop viet viec phai kiem tra state truoc do la gi
-//void Player::ChangeState(PlayerState * newState)
-//{
-//	delete currentState;
-//	currentState = newState;
-//	currentAnim = animations[currentState->GetState()];
-//}
 void Player::ChangeState(StateName stateName)
 {
 	if (currentState != nullptr)
@@ -156,6 +151,15 @@ void Player::ChangeState(StateName stateName)
 		break;
 	case Sitting:
 		newState = new PlayerSittingState();
+		break;
+	case Dashing:
+		newState = new PlayerDashingState();
+		break;
+	case OnShield:
+		newState = new PlayerOnShieldState();
+		break;
+	case Die:
+		newState = new PlayeDiedState();
 		break;
 	case Attacking:
 	case Attacking_Shield:
@@ -188,11 +192,15 @@ void Player::OnKeyDown(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
+		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && 
+			currentState->GetState() != Spinning)
 		{
 			allow[Attacking_Shield] = false;
 			ChangeState(Attacking);
 		}
+		break;
+	case VK_RETURN:
+		ChangeState(StateName::Die);
 		break;
 	default:
 		break;
@@ -204,7 +212,8 @@ void Player::OnKeyUp(int keyCode)
 	switch (keyCode)
 	{
 	case VK_Z:
-		if (currentState->GetState() != Jumping && currentState->GetState() != Falling && currentState->GetState() != Spinning)
+		if (currentState->GetState() != Jumping && currentState->GetState() != Falling && 
+			currentState->GetState() != Spinning && currentState->GetState() != Die)
 			allow[Attacking_Shield] = true;
 		break;
 	case VK_UP:
@@ -225,4 +234,27 @@ BoundingBox Player::GetBoundingBox()
 	b.vX = vX;
 	b.vY = vY;
 	return b;
+}
+
+void Player::Release()
+{
+	if (animations.size() > 0)
+	{
+		for (auto anim : animations)
+		{
+			if (&anim.second != NULL && anim.first != Attacking_StandBump)
+			{
+				delete anim.second;
+			}
+		}
+		animations.clear();
+		
+	}
+	if (allow.size() > 0)
+	{
+		allow.clear();
+	}
+	if (shield != nullptr)
+		delete shield;
+	LastKeyState.clear();
 }

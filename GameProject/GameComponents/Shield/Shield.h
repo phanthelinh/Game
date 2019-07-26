@@ -21,6 +21,7 @@ public:
 	ShieldState curState;
 	Sprite*		shield;
 	D3DXVECTOR3 _translationToPlayer;
+	bool isVisible;
 
 	Shield();
 

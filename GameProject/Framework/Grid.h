@@ -1,6 +1,7 @@
 #pragma once
 #include "Cell.h"
 #include "Camera.h"
+#include "Collision.h"
 
 class Grid
 {
@@ -8,11 +9,12 @@ private:
 	std::vector<std::vector<Cell*>> cells;
 	std::unordered_set<GameObject*> objects;
 	int numCols, numRows;
-	int	cellSize;
+	
 public:
 	std::vector<Cell*> visibleCells;
 
-	Grid(int numCols, int numRows, int cellSize);
+	Grid();
+	Grid(int numCols, int numRows);
 	//Get the cell at grid[x][y]
 	Cell* GetCell(int x, int y);
 	//Insert all objects to grid

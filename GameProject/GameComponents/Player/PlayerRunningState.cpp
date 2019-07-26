@@ -9,6 +9,7 @@ PlayerRunningState::PlayerRunningState()
 	PLAYER->allow[Sitting] = true;
 	PLAYER->vY = 0;
 	PLAYER->isOnGround = true;
+	PLAYER->shield->isVisible = true;
 }
 
 void PlayerRunningState::Update(float deltaTime)
@@ -39,15 +40,11 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;
-		PLAYER->LastPressTime[X] = deltaTime;
-		PLAYER->KeyHoldTime[X] = 0.0f;
 		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])
 	{
 		PLAYER->LastKeyState[X] = false;
-		PLAYER->KeyHoldTime[X] = 0.0f;
-		PLAYER->LastPressTime[X] = 0.0f;
 	}
 }
 

@@ -9,12 +9,12 @@ Player::Player()
 	animations[Running] = new Animation("Resources/player/player_run_128_48.png", 4, 1, 4, true, 0.65);
 	animations[Standing] = new Animation("Resources/player/player_stand_32_48.png", 1, 1, 1);
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
-	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
-	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
-	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
-	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2, true);
-	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1);
-	animations[Dashing] = new Animation("Resources/simon/Dashing.png", 3, 1, 3, false, 0.5);
+	animations[Jumping] = new Animation("Resources/player/Jumping.png", 1, 1, 1);
+	animations[Falling] = new Animation("Resources/player/Jumping.png", 1, 1, 1);
+	animations[Kicking] = new Animation("Resources/player/Kicking.png", 4, 1, 1);
+	animations[Spinning] = new Animation("Resources/player/Spinning.png", 2, 1, 2, true);
+	animations[OnShield] = new Animation("Resources/player/OnShield.png", 1, 1, 1);
+	animations[Dashing] = new Animation("Resources/player/Dashing.png", 3, 1, 3, false, 0.5);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);

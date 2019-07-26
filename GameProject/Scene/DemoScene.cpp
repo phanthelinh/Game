@@ -21,7 +21,7 @@ DemoScene::DemoScene()
 	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
-	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
+	//map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_1_1.bmp", "Resources/map/Charleston_1_1.csv");
 	GameObject* ground = new GameObject(0, 436, 96, 12, Tag::Ground);
 	listObject.push_back(ground);
 }

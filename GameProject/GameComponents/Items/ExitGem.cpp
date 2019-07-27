@@ -15,7 +15,7 @@ ExitGem::ExitGem(RECT rect):ExitGem(rect.left,rect.top,rect.right-rect.left, rec
 {
 }
 
-void ExitGem::ExecuteCollision(GameObject * object)
+void ExitGem::OnCollision(GameObject * object, float deltaTime)
 {
 	if (isDead)
 		return;

@@ -15,7 +15,7 @@ Health::Health(RECT rect) :Health(rect.left, rect.top, rect.right - rect.left, r
 {
 }
 
-void Health::ExecuteCollision(GameObject * object)
+void Health::OnCollision(GameObject * object, float deltaTime)
 {
 }
 

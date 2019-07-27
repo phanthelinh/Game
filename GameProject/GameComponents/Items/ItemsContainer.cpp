@@ -19,7 +19,7 @@ ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, re
 	
 }
 
-void ItemsContainer::ExecuteCollision(GameObject * object)
+void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 {
 	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox());
 	if (collideRes.isCollide)

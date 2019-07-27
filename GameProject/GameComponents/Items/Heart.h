@@ -11,7 +11,7 @@ public:
 	Heart(int left, int top, int width, int height);
 	Heart(RECT rect);
 
-	void ExecuteCollision(GameObject* object);
+	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position
 	void Draw();

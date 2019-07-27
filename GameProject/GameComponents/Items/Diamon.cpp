@@ -23,7 +23,7 @@ Diamon::Diamon(RECT rect, bool isSmallType) :Diamon(rect.left, rect.top, rect.ri
 {
 }
 
-void Diamon::ExecuteCollision(GameObject * object)
+void Diamon::OnCollision(GameObject * object, float deltaTime)
 {
 	if (!isDead)
 	{

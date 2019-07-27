@@ -118,7 +118,7 @@ void Grid::UpdateVisibleCells()
 {
 	visibleCells.clear();
 	int startX = floor(CAMERA->GetBound().left / CELL_WIDTH);
-	int endX = floor(CAMERA->GetBound().right / CELL_HEIGHT);
+	int endX = floor(CAMERA->GetBound().right / CELL_WIDTH);
 	int startY = floor(CAMERA->GetBound().top / CELL_HEIGHT);
 	int endY = floor(CAMERA->GetBound().bottom / CELL_HEIGHT);
 	for (int i = startY; i <= endY; i++)

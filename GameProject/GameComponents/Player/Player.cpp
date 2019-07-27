@@ -11,7 +11,7 @@ Player::Player()
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
 	animations[Jumping] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
 	animations[Falling] = new Animation("Resources/simon/Jumping.png", 1, 1, 1);
-	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 4, 1, 1);
+	animations[Kicking] = new Animation("Resources/simon/Kicking.png", 1, 1, 1);
 	animations[Spinning] = new Animation("Resources/simon/Spinning.png", 2, 1, 2, true);
 	animations[OnShield] = new Animation("Resources/simon/OnShield.png", 1, 1, 1);
 	animations[Dashing] = new Animation("Resources/simon/Dashing.png", 3, 1, 3, false, 0.5);
@@ -34,8 +34,9 @@ Player::Player()
 	shield = new Shield();
 	shieldFlying = false;
 	posX = 120;
-	posY = 416;
+	posY = 316;
 	CAMERA->camPosition = GetPosition();
+	CAMERA->isFollowY = true;
 }
 
 Player * Player::GetInstance()

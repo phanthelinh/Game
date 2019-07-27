@@ -8,8 +8,8 @@ PlayerKickingState::PlayerKickingState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = true;
-	if (!PLAYER->shieldFlying)
-		PLAYER->shield->isVisible = false;
+	if (PLAYER->shieldFlying == false)
+		PLAYER->shield->SetState(ShieldState::OnKick);
 }
 
 void PlayerKickingState::Update(float deltaTime)
@@ -26,7 +26,10 @@ void PlayerKickingState::Update(float deltaTime)
 	{
 		PLAYER->vY -= GRAVITY;
 		if (PLAYER->vY <= 0)
+		{
+			PLAYER->shield->SetState(ShieldState::Normal);
 			PLAYER->ChangeState(Standing);
+		}
 	}
 }
 

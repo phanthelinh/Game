@@ -9,7 +9,7 @@ PlayerSpinningState::PlayerSpinningState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY = SPINNING_BOOST;
-	if(!PLAYER->shieldFlying)
+	if (PLAYER->shieldFlying == false)
 		PLAYER->shield->isVisible = false;
 }
 

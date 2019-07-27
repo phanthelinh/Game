@@ -8,7 +8,9 @@ enum ShieldState
 	Shielded,
 	Shield_Upward,
 	Flying,
-	Normal_Sit
+	Normal_Sit,
+	OnJump,
+	OnKick
 };
 
 class Shield :public GameObject

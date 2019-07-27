@@ -21,12 +21,14 @@ void Shield::SetState(ShieldState state)
 	{
 	case Normal:
 	case Normal_Sit:
+	case OnKick:
 		shield->_sourceRect = { 2,0,10,16 };
 		shield->_textureWidth = width = 8;
 		shield->_textureHeight = height = 16;
 		vX = vY = 0;
 		break;
 	case Shielded:
+	case OnJump:
 		shield->_sourceRect = { 18,0,34,16 };
 		shield->_textureWidth = width = 16;
 		shield->_textureHeight = height = 16;
@@ -60,6 +62,28 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 {
 	switch (state)
 	{
+	case OnJump:
+		if (playerReverse) //face to right
+		{
+			_translationToPlayer = { -4, -6, 0 };
+		}
+		else
+		{
+			_translationToPlayer = { 4, -6, 0 };
+		}
+		SetPosition(GetPosition() + _translationToPlayer);
+		break;
+	case OnKick:
+		if (playerReverse) //face to right
+		{
+			_translationToPlayer = { -17, -1, 0 };
+		}
+		else
+		{
+			_translationToPlayer = { 17, 1, 0 };
+		}
+		SetPosition(GetPosition() + _translationToPlayer);
+		break;
 	case Normal:
 		if (playerReverse) //face to right
 		{
@@ -138,9 +162,12 @@ void Shield::Draw()
 
 void Shield::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
-	shield->_isFlipHor = isReverse;
+	if (curState == ShieldState::OnKick)
+		shield->_isFlipHor = !isReverse;
+	else
+		shield->_isFlipHor = isReverse;
 	if (isVisible == true)
-	shield->Draw(position, cameraPosition, sourceRect, center);
+		shield->Draw(position, cameraPosition, sourceRect, center);
 }
 
 void Shield::Update(float deltaTime)

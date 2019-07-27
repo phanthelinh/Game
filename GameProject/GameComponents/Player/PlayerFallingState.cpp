@@ -17,7 +17,6 @@ PlayerFallingState::PlayerFallingState()
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED;
 	}
-	//PLAYER->shield->isVisible = false;
 	
 }
 
@@ -27,7 +26,10 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
 	if (PLAYER->vY <= 0)
+	{ 
+		PLAYER->shield->SetState(ShieldState::Normal);
 		PLAYER->ChangeState(Standing);
+	}
 }
 
 void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

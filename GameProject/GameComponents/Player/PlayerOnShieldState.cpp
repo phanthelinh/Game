@@ -7,7 +7,8 @@ PlayerOnShieldState::PlayerOnShieldState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	//PLAYER->shield->isVisible = false;
+	if (PLAYER->shieldFlying == false)
+		PLAYER->shield->isVisible = false;
 }
 
 void PlayerOnShieldState::Update(float deltaTime)

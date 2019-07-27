@@ -83,18 +83,21 @@ void Player::Update(float deltaTime)
 			if (colRes.isCollide)
 			{
 				startcheck = true;
+				shield->Update(colRes.entryTime);
+				shieldFlying = false;
+				startcheck = false;
+				shield->SetState(ShieldState::Normal);
 			}
 			else
 			{
 				shield->Update(deltaTime);
-				shield->playerVy = posY;
+				shield->playerPos = GetPosition();
 			}
 			if (startcheck)
 			{
 				if (IsCollide(shield->GetBound()))
 				{
 					//
-					//shield->SetPosition(D3DXVECTOR3(shield->posX + shield->vX*colRes.entryTime, shield->posY + shield->vY*colRes.entryTime, 0));
 					shieldFlying = false;
 					startcheck = false;
 					shield->SetState(ShieldState::Normal);
@@ -128,6 +131,7 @@ void Player::Draw()
 	}
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
+	auto x = shield->GetBound();
 }
 
 void Player::ChangeState(StateName stateName)
@@ -192,6 +196,11 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 {
 	if (object->tag != Ground)
 		return;
+	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+	if (colRes.isCollide)
+	{
+		
+	}
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

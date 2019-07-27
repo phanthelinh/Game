@@ -21,7 +21,7 @@ public:
 	Sprite*		shield;
 	D3DXVECTOR3 _translationToPlayer;
 	bool isVisible;
-	float playerVy;
+	D3DXVECTOR3 playerPos;
 
 	Shield();
 

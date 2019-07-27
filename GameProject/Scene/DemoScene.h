@@ -17,7 +17,7 @@ private:
 	std::unordered_set<GameObject*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-	Grid *	grid;
+
 public:
 	DemoScene();
 	~DemoScene();

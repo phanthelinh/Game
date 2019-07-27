@@ -39,6 +39,8 @@ public:
 	void ChangeState(StateName statename);
 
 	void CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime);
+	//Used for check collision with Ground
+	void OnCollision(GameObject* object, float deltaTime = 0);
 
 	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 

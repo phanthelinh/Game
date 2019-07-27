@@ -13,6 +13,7 @@ GameObject::GameObject(float posX, float posY, float width, float height, Tag ta
 	this->width = width;
 	this->height = height;
 	this->tag = tag;
+	vY = vX = 0;
 }
 
 
@@ -24,10 +25,10 @@ BoundingBox GameObject::GetBoundingBox()
 {
 	BoundingBox bound;
 
-	bound.left = posX - width / 2;
-	bound.top = posY - height / 2;
-	bound.right = posX + width / 2;
-	bound.bottom = posY + height / 2;
+	bound.left = posX ;
+	bound.top = posY;
+	bound.right = posX + width ;
+	bound.bottom = posY + height;
 	bound.vX = this->vX;
 	bound.vY = this->vY;
 

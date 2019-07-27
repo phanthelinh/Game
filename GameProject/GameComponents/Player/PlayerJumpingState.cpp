@@ -10,7 +10,7 @@ PlayerJumpingState::PlayerJumpingState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += PLAYER_JUMPING_SPEED;
 	PLAYER->isOnGround = false;
-	PLAYER->shield->isVisible = false;
+	//PLAYER->shield->isVisible = false;
 }
 
 void PlayerJumpingState::Update(float deltaTime)

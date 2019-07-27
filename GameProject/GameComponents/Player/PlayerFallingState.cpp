@@ -18,7 +18,7 @@ PlayerFallingState::PlayerFallingState()
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED;
 	}
-	PLAYER->shield->isVisible = false;
+	//PLAYER->shield->isVisible = false;
 	
 }
 

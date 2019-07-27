@@ -8,7 +8,7 @@ class Five :public GameObject
 public:
 	Five(int left, int top, int width, int height);
 	Five(RECT rect);
-	void ExecuteCollision(GameObject* object);
+	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position
 	void Draw();

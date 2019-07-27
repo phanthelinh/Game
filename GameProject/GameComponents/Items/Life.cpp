@@ -15,7 +15,7 @@ Life::Life(RECT rect) :Life(rect.left, rect.top, rect.right - rect.left, rect.bo
 {
 }
 
-void Life::ExecuteCollision(GameObject * object)
+void Life::OnCollision(GameObject * object, float deltaTime)
 {
 }
 

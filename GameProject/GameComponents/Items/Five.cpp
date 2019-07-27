@@ -15,7 +15,7 @@ Five::Five(RECT rect):Five(rect.left, rect.top, rect.right - rect.left, rect.bot
 {
 }
 
-void Five::ExecuteCollision(GameObject * object)
+void Five::OnCollision(GameObject * object, float deltaTime)
 {
 }
 

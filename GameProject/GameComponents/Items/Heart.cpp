@@ -15,7 +15,7 @@ Heart::Heart(RECT rect):Heart(rect.left,rect.top, rect.right-rect.left,rect.bott
 {
 }
 
-void Heart::ExecuteCollision(GameObject * object)
+void Heart::OnCollision(GameObject * object, float deltaTime)
 {
 	if (isDead)
 		return;

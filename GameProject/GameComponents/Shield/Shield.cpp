@@ -1,7 +1,7 @@
 #include "Shield.h"
 
-#define SHIELD_FLYING_SPEED_MIN -60.0f
-#define SHIELD_FLYING_SPEED_MAX  60.0f
+#define SHIELD_FLYING_SPEED_MIN -40.0f
+#define SHIELD_FLYING_SPEED_MAX  40.0f
 
 
 Shield::Shield()
@@ -11,7 +11,7 @@ Shield::Shield()
 	tag = Tag::Weapon;
 	isDead = false;
 	isVisible = true;
-	playerVy = 0;
+	playerPos = { 0,0,0 };
 }
 
 void Shield::SetState(ShieldState state)
@@ -69,6 +69,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 		{
 			_translationToPlayer = { -13,-6,0 };
 		}
+		SetPosition(GetPosition() + _translationToPlayer);
 		break;
 	case Normal_Sit:
 		if (playerReverse) //face to right
@@ -79,6 +80,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 		{
 			_translationToPlayer = { -13,5,0 };
 		}
+		SetPosition(GetPosition() + _translationToPlayer);
 		break;
 	case Shielded:
 		_translationToPlayer = { 0,0,0 };
@@ -92,6 +94,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 		{
 			_translationToPlayer = { -5,-18,0 };
 		}
+		SetPosition(GetPosition() + _translationToPlayer);
 		break;
 	case Flying:
 		if (playerReverse)//face to right
@@ -105,6 +108,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			{
 				_translationToPlayer = { 31,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
+				SetPosition(startingPos);
 			}
 		}
 		else
@@ -117,6 +121,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			{
 				_translationToPlayer = { -31,0,0 };
 				startingPos = GetPosition() + _translationToPlayer;
+				SetPosition(startingPos);
 			}
 		}
 		break;
@@ -127,7 +132,7 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 
 void Shield::Draw()
 {
-	Draw(GetPosition() + _translationToPlayer, CAMERA->camPosition);
+	Draw(GetPosition(), CAMERA->camPosition);
 
 }
 
@@ -147,20 +152,37 @@ void Shield::Update(float deltaTime)
 		//set reverse velocity
 		if (isReverse) //face to right
 		{
-			vX -= 8;
+			vX -= 5;
 			vX = vX <= SHIELD_FLYING_SPEED_MIN ? SHIELD_FLYING_SPEED_MIN : vX;
 			if (vX <= 0)
 			{
-				posY = playerVy;
+				posY = playerPos.y;
 			}
 		}
 		else
 		{
-			vX += 8;
+			vX += 5;
 			vX = vX >= SHIELD_FLYING_SPEED_MAX ? SHIELD_FLYING_SPEED_MAX : vX;
 			if (vX >= 0)
 			{
-				posY = playerVy;
+				posY = playerPos.y;
+			}
+		}
+		//check for whether shield goes over player or not
+		if (isReverse)
+		{
+			if (posX <= CAMERA->GetBound().left)
+			{
+				vX = SHIELD_FLYING_SPEED_MIN;
+				isReverse = !isReverse;
+			}
+		}
+		else
+		{
+			if (posX >= CAMERA->GetBound().right)
+			{
+				vX = SHIELD_FLYING_SPEED_MAX;
+				isReverse = !isReverse;
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 #include "ItemsContainer.h"
+#include <time.h>
+#include <stdlib.h>
 
-ItemsContainer::ItemsContainer(int left, int top, int width, int height)
+ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool hasExit)
 {
 	sprites = new Sprite*[2];
 	sprites[0] = curSprite = new Sprite("Resources/items/itemcontainer_32_16.png", { 0,0,16,16 });
@@ -12,6 +14,38 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height)
 	this->height = height;
 	this->isReverse = false;
 	this->tag = Tag::ItemContainerTag;
+	canThrowItem = false;
+	maxItemsNum = 3;
+	//init list items up to 3 items
+	for (int i = 0; i < 1; i++) {
+		srand(time(0));
+		int rnd = rand() % 5 + 1;
+		GameObject* obj = NULL;
+		/*switch (rnd)
+		{
+		case 1:
+			obj = new Diamon(left, top, width, height, true);
+			break;
+		case 2:
+			obj = new Five(left, top, width, height);
+			break;
+		case 3:
+			obj = new Health(left, top, width, height);
+			break;
+		case 4:
+			obj = new Heart(left, top, width, height);
+			break;
+		case 5:
+			obj = new Life(left, top, width, height);
+			break;
+		default:
+			break;
+		}*/
+		obj = new Diamon(left + width/2, top + height/2, 16, 16, true);
+		if(obj != NULL)
+			listItems.insert(obj);
+	}
+	listItems.insert(new Diamon(left, top + height / 2, 16, 16, true));
 }
 
 ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
@@ -26,7 +60,15 @@ void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 	{
 		//start falling down other items objects
 		isStartFallingItems = true;
+		canThrowItem = true;
 		startTime = GetTickCount() + collideRes.entryTime;
+		if (listItems.size() > 0 && canThrowItem)
+		{
+			auto item = listItems.begin();
+			listDrawItems.insert(*item);
+			listItems.erase(*item);
+			canThrowItem = false;
+		}
 	}
 }
 
@@ -36,13 +78,22 @@ void ItemsContainer::Update(float deltaTime)
 	{
 		curSprite = sprites[1];
 		auto now = GetTickCount();
-		if (now - startTime >= 0.3)
+		if ((now - startTime)/1000.0 >= 0.3)
 		{
 			curSprite = sprites[0];
 			isStartFallingItems = false;
 			startTime = 0;
-		}
 
+		}
+	}
+	for (auto it : listDrawItems)
+	{
+		it->Update(deltaTime);
+		//collision items and ground
+		for (auto g : GRID->GetVisibleGround())
+		{
+			it->OnCollision(g, deltaTime);
+		}
 	}
 }
 
@@ -54,6 +105,10 @@ void ItemsContainer::Draw()
 void ItemsContainer::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	curSprite->Draw(position, cameraPosition, sourceRect, center);
+	for (auto it : listDrawItems)
+	{
+		it->Draw();
+	}
 }
 
 BoundingBox ItemsContainer::GetBoundingBox()

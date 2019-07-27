@@ -2,6 +2,9 @@
 #include "Cell.h"
 #include "Camera.h"
 #include "Collision.h"
+#include "../GameComponents/GameObject.h"
+
+#define GRID	Grid::GetInstance()
 
 class Grid
 {
@@ -9,10 +12,13 @@ private:
 	Cell*** cells;
 	std::unordered_set<GameObject*> objects;
 	int numCols, numRows;
-	
+	static Grid*	instance;
+
 public:
 	std::vector<Cell*> visibleCells;
+	std::vector<GameObject*> listGround;
 
+	static Grid* GetInstance();
 	Grid();
 	Grid(int numCols, int numRows);
 	//Get the cell at grid[x][y]
@@ -29,4 +35,6 @@ public:
 	void UpdateGrid();
 	//Get objects that have ability to collide with a target Game object
 	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target);
+	//Get object Ground in visual viewport
+	std::vector<GameObject*> GetVisibleGround();
 };

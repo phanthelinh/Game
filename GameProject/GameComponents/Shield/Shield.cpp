@@ -1,7 +1,7 @@
 #include "Shield.h"
 
-#define SHIELD_FLYING_SPEED_MIN -70.0f
-#define SHIELD_FLYING_SPEED_MAX  70.0f
+#define SHIELD_FLYING_SPEED_MIN -60.0f
+#define SHIELD_FLYING_SPEED_MAX  60.0f
 
 
 Shield::Shield()
@@ -11,6 +11,7 @@ Shield::Shield()
 	tag = Tag::Weapon;
 	isDead = false;
 	isVisible = true;
+	playerVy = 0;
 }
 
 void Shield::SetState(ShieldState state)
@@ -142,17 +143,25 @@ void Shield::Update(float deltaTime)
 	if (curState == ShieldState::Flying)
 	{
 		posX = posX + vX * deltaTime;
-		posY = posY + vY * deltaTime;
+		//posY = posY + vY * deltaTime;
 		//set reverse velocity
 		if (isReverse) //face to right
 		{
-			vX -= 10;
+			vX -= 8;
 			vX = vX <= SHIELD_FLYING_SPEED_MIN ? SHIELD_FLYING_SPEED_MIN : vX;
+			if (vX <= 0)
+			{
+				posY = playerVy;
+			}
 		}
 		else
 		{
-			vX += 10;
+			vX += 8;
 			vX = vX >= SHIELD_FLYING_SPEED_MAX ? SHIELD_FLYING_SPEED_MAX : vX;
+			if (vX >= 0)
+			{
+				posY = playerVy;
+			}
 		}
 	}
 }

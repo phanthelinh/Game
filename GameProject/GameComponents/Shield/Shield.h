@@ -2,7 +2,6 @@
 #include "../GameObject.h"
 #include "../../Framework/Sprite.h"
 
-
 enum ShieldState
 {
 	Normal,
@@ -22,6 +21,7 @@ public:
 	Sprite*		shield;
 	D3DXVECTOR3 _translationToPlayer;
 	bool isVisible;
+	float playerVy;
 
 	Shield();
 

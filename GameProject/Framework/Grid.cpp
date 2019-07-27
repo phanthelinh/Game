@@ -1,5 +1,14 @@
 #include "Grid.h"
 
+Grid* Grid::instance = NULL;
+
+Grid * Grid::GetInstance()
+{
+	if (instance == NULL)
+		instance = new Grid();
+	return instance;
+}
+
 Grid::Grid()
 {
 	numCols = GLOBAL->g_WorldMapWidth / CELL_WIDTH;
@@ -172,4 +181,18 @@ std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * targe
 		}
 	}
 	return res;
+}
+
+std::vector<GameObject*> Grid::GetVisibleGround()
+{
+	std::vector<GameObject*> rs;
+	for (auto g : listGround)
+	{
+		if (g->IsCollide(CAMERA->GetBound()))
+		{
+			rs.push_back(g);
+		}
+	}
+	
+	return rs;
 }

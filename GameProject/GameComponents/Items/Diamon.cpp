@@ -2,11 +2,11 @@
 
 Diamon::Diamon(int left, int top, int width, int height, bool isSmallType)
 {
-	posX = left;
-	posY = top;
+	posX = left - width/2;
+	posY = top - height/2;
 	this->width = width;
 	this->height = height;
-	vY = 12.0f;
+	vY = -12.0f;
 	this->isSmallType = isSmallType;
 	if (isSmallType)
 	{
@@ -27,11 +27,19 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 {
 	if (!isDead)
 	{
-		if (object->tag != Tag::Captain || object->tag != Tag::Ground)
+		if (object->tag != Tag::Captain && object->tag != Tag::Ground)
 		{
 			return;
 		}
-		auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+		CollisionResult collideRes;
+		if (object->tag == Ground)
+		{
+			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+		}
+		else
+		{
+			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+		}
 		if (collideRes.isCollide)
 		{
 			switch (object->tag)
@@ -45,7 +53,7 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 			}
 		}
 		//if collide with captain america
-		isDead = true;
+		//isDead = true;
 		//display EXIT item
 		//..
 	}
@@ -57,13 +65,14 @@ void Diamon::Update(float deltaTime)
 	{
 		curDiamon->Update(deltaTime);
 		posY += deltaTime * vY;
+		vY += 2;
 	}
 }
 
 void Diamon::Draw()
 {
 	if (!isDead)
-		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
+		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT());//center is like player
 }
 
 void Diamon::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
@@ -75,8 +84,8 @@ void Diamon::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceR
 BoundingBox Diamon::GetBoundingBox()
 {
 	BoundingBox b;
-	b.left = posX;
-	b.top = posY;
+	b.left = posX + width/2;
+	b.top = posY + height/2;
 	b.right = b.left + width;
 	b.bottom = b.top + height;
 	b.vX = 0;

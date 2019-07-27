@@ -18,18 +18,17 @@ DemoScene::DemoScene()
 	}
 	//init for Player
 	PLAYER; //get instance
-	PLAYER->posX = 16;
-	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
 	//ground objects
-	GameObject* ground = new GameObject(0, 436, 96, 12, Tag::Ground);
+	GameObject* ground = new GameObject(0, 436, 1000, 16, Tag::Ground);
 	listObject.push_back(ground);
 	//implement grid
-	grid = new Grid();
-	grid->InsertToGrid(itemsContainer);
-	grid->AddObject(PLAYER->shield);
+	GRID;
+	GRID->InsertToGrid(itemsContainer);
+	GRID->AddObject(PLAYER->shield);
+	GRID->listGround = listObject;
 }
 
 DemoScene::~DemoScene()
@@ -40,17 +39,25 @@ void DemoScene::Update(float deltaTime)
 {
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	grid->UpdateGrid();
+	GRID->UpdateGrid();
 	//update object
-	for (auto cell : grid->visibleCells)
+	for (auto cell : GRID->visibleCells)
 	{
 		for (auto obj : cell->objects)
 		{
 			obj->Update(deltaTime);
 		}
 	}
-	//get list colliable objects
-	auto lstCollideable = grid->GetColliableObjectsWith(PLAYER);
+	//
+	//COLLISION
+	//
+	//check collision Ground <> Player
+	for (auto g : GRID->GetVisibleGround())
+	{
+		PLAYER->OnCollision(g, deltaTime);
+	}
+	//get list colliable objects with player
+	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER);
 	//player check collision
 	PLAYER->CheckCollision(lstCollideable, deltaTime);
 	//objects check collision
@@ -65,7 +72,7 @@ void DemoScene::Draw()
 	//render map
 	map->RenderMap();
 	//draw visible objects
-	for (auto cell : grid->visibleCells)
+	for (auto cell : GRID->visibleCells)
 	{
 		for (auto obj : cell->objects)
 		{

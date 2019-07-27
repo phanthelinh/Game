@@ -2,19 +2,28 @@
 #include "../GameObject.h"
 #include "../../Framework/Sprite.h"
 #include "../../Framework/Collision.h"
+#include "../../Framework/Grid.h"
 #include <unordered_set>
+#include "Diamon.h"
+#include "ExitGem.h"
+#include "Five.h"
+#include "Health.h"
+#include "Heart.h"
+#include "Life.h"
 
 class ItemsContainer :public GameObject
 {
 private:
 	Sprite** sprites;
 	Sprite* curSprite;
-	bool	isStartFallingItems;
+	bool	isStartFallingItems, canThrowItem;
 	DWORD	startTime;
+	std::unordered_set<GameObject*> listDrawItems;
+	int		maxItemsNum;
 public:
 	std::unordered_set<GameObject*> listItems;
 
-	ItemsContainer(int left, int top, int width, int height);
+	ItemsContainer(int left, int top, int width, int height, bool hasExit = false);
 	ItemsContainer(RECT rect);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);

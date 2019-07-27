@@ -33,8 +33,8 @@ Player::Player()
 	isOnGround = false;
 	shield = new Shield();
 	shieldFlying = false;
-	posX = 120;
-	posY = 316;
+	posX = 16;
+	posY = 360;
 	CAMERA->camPosition = GetPosition();
 	CAMERA->isFollowY = true;
 }
@@ -51,7 +51,7 @@ Player * Player::GetInstance()
 
 void Player::Update(float deltaTime)
 {
-	CAMERA->UpdateCamera(D3DXVECTOR3(PLAYER->posX, PLAYER->posY, 0));
+	CAMERA->UpdateCamera(D3DXVECTOR3(posX, posY, 0));
 	currentState->Update(deltaTime);
 	currentAnim->Update(deltaTime);
 	//player to end of map
@@ -87,6 +87,7 @@ void Player::Update(float deltaTime)
 			else
 			{
 				shield->Update(deltaTime);
+				shield->playerVy = posY;
 			}
 			if (startcheck)
 			{
@@ -112,6 +113,10 @@ void Player::Update(float deltaTime)
 		shield->SetPosition(GetPosition());
 		shield->SetTranslationToPlayer(isReverse, shield->curState);
 	}
+	//
+	//COLLISION
+	//
+	
 }
 
 void Player::Draw()
@@ -181,6 +186,12 @@ void Player::ChangeState(StateName stateName)
 void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
 {
 	currentState->OnCollision(colliableObjects, deltaTime);
+}
+
+void Player::OnCollision(GameObject * object, float deltaTime)
+{
+	if (object->tag != Ground)
+		return;
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

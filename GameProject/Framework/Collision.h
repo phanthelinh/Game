@@ -19,6 +19,7 @@ struct CollisionResult
 	float entryTime;
 	int sideX, sideY;
 	CollisionSide sideCollided;
+	CollisionResult() { isCollide = false; entryTime = 1.0f; sideX = sideY = 0; sideCollided = CollisionSide::Unknown_; }
 };
 
 class Collision

@@ -13,7 +13,7 @@ PlayerDashingState::PlayerDashingState()
 		PLAYER->vX += PLAYER_DASHING_SPEED;
 	else
 		PLAYER->vX -= PLAYER_DASHING_SPEED;
-	PLAYER->shield->isVisible = false;
+	//PLAYER->shield->isVisible = false;
 }
 
 void PlayerDashingState::Update(float deltaTime)

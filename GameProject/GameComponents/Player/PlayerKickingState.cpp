@@ -8,7 +8,8 @@ PlayerKickingState::PlayerKickingState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = true;
-	PLAYER->shield->isVisible = false;
+	if (!PLAYER->shieldFlying)
+		PLAYER->shield->isVisible = false;
 }
 
 void PlayerKickingState::Update(float deltaTime)

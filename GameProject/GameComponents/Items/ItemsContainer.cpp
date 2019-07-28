@@ -41,11 +41,11 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 		default:
 			break;
 		}*/
-		obj = new Diamon(left + width/2, top + height/2, 16, 16, true);
+		obj = new PowerStone(left + width/2, top + height/2, 16, 16, true);
 		if(obj != NULL)
 			listItems.insert(obj);
 	}
-	listItems.insert(new Diamon(left, top + height / 2, 16, 16, true));
+	listItems.insert(new PowerStone(left, top + height / 2, 16, 16, true));
 }
 
 ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)

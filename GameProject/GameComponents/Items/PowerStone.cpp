@@ -1,6 +1,6 @@
-#include "Diamon.h"
+#include "PowerStone.h"
 
-Diamon::Diamon(int left, int top, int width, int height, bool isSmallType)
+PowerStone::PowerStone(int left, int top, int width, int height, bool isSmallType)
 {
 	posX = left - width/2;
 	posY = top - height/2;
@@ -19,11 +19,11 @@ Diamon::Diamon(int left, int top, int width, int height, bool isSmallType)
 	tag = Tag::DiamonTag;
 }
 
-Diamon::Diamon(RECT rect, bool isSmallType) :Diamon(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, isSmallType)
+PowerStone::PowerStone(RECT rect, bool isSmallType) :PowerStone(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, isSmallType)
 {
 }
 
-void Diamon::OnCollision(GameObject * object, float deltaTime)
+void PowerStone::OnCollision(GameObject * object, float deltaTime)
 {
 	if (!isDead)
 	{
@@ -59,7 +59,7 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 	}
 }
 
-void Diamon::Update(float deltaTime)
+void PowerStone::Update(float deltaTime)
 {
 	if (!isDead)
 	{
@@ -69,19 +69,19 @@ void Diamon::Update(float deltaTime)
 	}
 }
 
-void Diamon::Draw()
+void PowerStone::Draw()
 {
 	if (!isDead)
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT());//center is like player
 }
 
-void Diamon::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+void PowerStone::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if (!isDead)
 		curDiamon->Draw(position, cameraPosition, sourceRect, center);
 }
 
-BoundingBox Diamon::GetBoundingBox()
+BoundingBox PowerStone::GetBoundingBox()
 {
 	BoundingBox b;
 	b.left = posX + width/2;
@@ -93,7 +93,7 @@ BoundingBox Diamon::GetBoundingBox()
 	return b;
 }
 
-void Diamon::Release()
+void PowerStone::Release()
 {
 	if (curDiamon != nullptr)
 		delete curDiamon;

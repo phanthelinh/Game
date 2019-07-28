@@ -1,16 +1,14 @@
 #pragma once
 #include "../GameObject.h"
-#include "../../Framework/Animation.h"
-#include "../../Framework/Collision.h"
+#include "../../Framework/Sprite.h"
 
-class Diamon :public GameObject
+class OneUp :public GameObject
 {
 private:
-	bool isSmallType;
-	Animation*	curDiamon;
+	Sprite*		oneup;
 public:
-	Diamon(int left, int top, int width, int height, bool isSmallType);
-	Diamon(RECT rect, bool isSmallType);
+	OneUp(int left, int top, int width, int height);
+	OneUp(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

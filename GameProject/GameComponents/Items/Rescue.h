@@ -1,16 +1,13 @@
 #pragma once
 #include "../GameObject.h"
-#include "../../Framework/Animation.h"
-#include "../../Framework/Collision.h"
+#include "../../Framework/Sprite.h"
 
-class Heart : public GameObject
+class Rescue :public GameObject
 {
-private:
-	Animation*	heart;
+	Sprite*	rescue;
 public:
-	Heart(int left, int top, int width, int height);
-	Heart(RECT rect);
-
+	Rescue(int left, int top, int width, int height);
+	Rescue(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

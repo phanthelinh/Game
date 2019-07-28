@@ -3,13 +3,14 @@
 #include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
 
-class ExitGem :public GameObject
+class Energy : public GameObject
 {
 private:
-	Animation*		exitGem;
+	Animation*	energy;
 public:
-	ExitGem(int left, int top, int width, int height);
-	ExitGem(RECT rect);
+	Energy(int left, int top, int width, int height);
+	Energy(RECT rect);
+
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

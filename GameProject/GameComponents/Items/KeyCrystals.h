@@ -1,13 +1,15 @@
 #pragma once
 #include "../GameObject.h"
-#include "../../Framework/Sprite.h"
+#include "../../Framework/Animation.h"
+#include "../../Framework/Collision.h"
 
-class Health :public GameObject
+class KeyCrystals :public GameObject
 {
-	Sprite*	health;
+private:
+	Animation*		crystals;
 public:
-	Health(int left, int top, int width, int height);
-	Health(RECT rect);
+	KeyCrystals(int left, int top, int width, int height);
+	KeyCrystals(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

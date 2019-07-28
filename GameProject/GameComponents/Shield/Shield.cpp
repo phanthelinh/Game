@@ -148,7 +148,7 @@ void Shield::Update(float deltaTime)
 	if (curState == ShieldState::Flying)
 	{
 		posX = posX + vX * deltaTime;
-		//posY = posY + vY * deltaTime;
+		posY = posY + vY * deltaTime;
 		//set reverse velocity
 		if (isReverse) //face to right
 		{
@@ -156,7 +156,15 @@ void Shield::Update(float deltaTime)
 			vX = vX <= SHIELD_FLYING_SPEED_MIN ? SHIELD_FLYING_SPEED_MIN : vX;
 			if (vX <= 0)
 			{
-				posY = playerPos.y;
+				if (posY != playerPos.y)
+				{
+					vY -= 5.0f;
+				}
+				else
+				{
+					posY = playerPos.y;
+					vY = 0;
+				}
 			}
 		}
 		else
@@ -165,7 +173,15 @@ void Shield::Update(float deltaTime)
 			vX = vX >= SHIELD_FLYING_SPEED_MAX ? SHIELD_FLYING_SPEED_MAX : vX;
 			if (vX >= 0)
 			{
-				posY = playerPos.y;
+				if (posY != playerPos.y)
+				{
+					vY -= 5.0f;
+				}
+				else
+				{
+					posY = playerPos.y;
+					vY = 0;
+				}
 			}
 		}
 		//check for whether shield goes over player or not

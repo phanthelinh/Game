@@ -1,21 +1,21 @@
-#include "Heart.h"
+#include "Energy.h"
 
-Heart::Heart(int left, int top, int width, int height)
+Energy::Energy(int left, int top, int width, int height)
 {
 	posX = left;
 	posY = top;
 	this->width = width;
 	this->height = height;
 	vY = 12.0f;
-	heart = new Animation("Resources/items/heart_24_12.png", 2, 1, 2, true, 0.5);
+	energy = new Animation("Resources/items/heart_24_12.png", 2, 1, 2, true, 0.5);
 	tag = Tag::HeartTag;
 }
 
-Heart::Heart(RECT rect):Heart(rect.left,rect.top, rect.right-rect.left,rect.bottom-rect.top)
+Energy::Energy(RECT rect):Energy(rect.left,rect.top, rect.right-rect.left,rect.bottom-rect.top)
 {
 }
 
-void Heart::OnCollision(GameObject * object, float deltaTime)
+void Energy::OnCollision(GameObject * object, float deltaTime)
 {
 	if (isDead)
 		return;
@@ -42,28 +42,28 @@ void Heart::OnCollision(GameObject * object, float deltaTime)
 	//..
 }
 
-void Heart::Update(float deltaTime)
+void Energy::Update(float deltaTime)
 {
 	if (!isDead)
 	{
-		heart->Update(deltaTime);
+		energy->Update(deltaTime);
 		posY += vY * deltaTime;
 	}
 }
 
-void Heart::Draw()
+void Energy::Draw()
 {
 	if(!isDead)
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
 }
 
-void Heart::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+void Energy::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if(!isDead)
-		heart->Draw(position, cameraPosition, sourceRect, center);
+		energy->Draw(position, cameraPosition, sourceRect, center);
 }
 
-BoundingBox Heart::GetBoundingBox()
+BoundingBox Energy::GetBoundingBox()
 {
 	BoundingBox b;
 	b.left = posX;
@@ -75,10 +75,10 @@ BoundingBox Heart::GetBoundingBox()
 	return b;
 }
 
-void Heart::Release()
+void Energy::Release()
 {
-	if (heart != nullptr)
+	if (energy != nullptr)
 	{
-		delete heart;
+		delete energy;
 	}
 }

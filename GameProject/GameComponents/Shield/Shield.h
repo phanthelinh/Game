@@ -22,7 +22,7 @@ public:
 	D3DXVECTOR3 _translationToPlayer;
 	bool isVisible;
 	D3DXVECTOR3 playerPos;
-
+	float		playerVy;
 	Shield();
 
 	void SetState(ShieldState state);

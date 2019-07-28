@@ -1,21 +1,21 @@
-#include "ExitGem.h"
+#include "KeyCrystals.h"
 
-ExitGem::ExitGem(int left, int top, int width, int height)
+KeyCrystals::KeyCrystals(int left, int top, int width, int height)
 {
 	posX = left;
 	posY = top;
 	this->width = width;
 	this->height = height;
 	vY = 12.0f;
-	exitGem = new Animation("Resources/items/exitgem_32_16.png", 2, 1, 2, true, 0.5);
+	crystals = new Animation("Resources/items/exitgem_32_16.png", 2, 1, 2, true, 0.5);
 	tag = Tag::ExitGemTag;
 }
 
-ExitGem::ExitGem(RECT rect):ExitGem(rect.left,rect.top,rect.right-rect.left, rect.bottom-rect.top)
+KeyCrystals::KeyCrystals(RECT rect):KeyCrystals(rect.left,rect.top,rect.right-rect.left, rect.bottom-rect.top)
 {
 }
 
-void ExitGem::OnCollision(GameObject * object, float deltaTime)
+void KeyCrystals::OnCollision(GameObject * object, float deltaTime)
 {
 	if (isDead)
 		return;
@@ -42,28 +42,28 @@ void ExitGem::OnCollision(GameObject * object, float deltaTime)
 	//..
 }
 
-void ExitGem::Update(float deltaTime)
+void KeyCrystals::Update(float deltaTime)
 {
 	if (!isDead)
 	{
-		exitGem->Update(deltaTime);
+		crystals->Update(deltaTime);
 		posY += deltaTime * vY;
 	}
 }
 
-void ExitGem::Draw()
+void KeyCrystals::Draw()
 {
 	if (!isDead)
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
 }
 
-void ExitGem::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+void KeyCrystals::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if (!isDead)
-		exitGem->Draw(position, cameraPosition, sourceRect, center);
+		crystals->Draw(position, cameraPosition, sourceRect, center);
 }
 
-BoundingBox ExitGem::GetBoundingBox()
+BoundingBox KeyCrystals::GetBoundingBox()
 {
 	BoundingBox b;
 	b.left = posX;
@@ -75,10 +75,10 @@ BoundingBox ExitGem::GetBoundingBox()
 	return b;
 }
 
-void ExitGem::Release()
+void KeyCrystals::Release()
 {
-	if (exitGem != nullptr)
+	if (crystals != nullptr)
 	{
-		delete exitGem;
+		delete crystals;
 	}
 }

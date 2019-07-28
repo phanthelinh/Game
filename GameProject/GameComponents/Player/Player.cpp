@@ -90,8 +90,9 @@ void Player::Update(float deltaTime)
 			}
 			else
 			{
-				shield->Update(deltaTime);
+				shield->playerVy = vY;
 				shield->playerPos = GetPosition();
+				shield->Update(deltaTime);
 			}
 			if (startcheck)
 			{
@@ -104,6 +105,7 @@ void Player::Update(float deltaTime)
 				}
 				else
 				{
+					shield->playerPos = GetPosition();
 					shield->Update(deltaTime);
 				}
 				

@@ -4,13 +4,7 @@
 #include "../../Framework/Collision.h"
 #include "../../Framework/Grid.h"
 #include <unordered_set>
-#include "Diamon.h"
-#include "ExitGem.h"
-#include "Five.h"
-#include "Health.h"
-#include "Heart.h"
-#include "Life.h"
-
+#include "PowerStone.h"
 class ItemsContainer :public GameObject
 {
 private:

@@ -70,6 +70,6 @@ StateName PlayerAttackingState::GetState()
 	return Standing;
 }
 
-void PlayerAttackingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerAttackingState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

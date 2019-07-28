@@ -38,7 +38,7 @@ public:
 	//void ChangeState(PlayerState* newState);
 	void ChangeState(StateName statename);
 
-	void CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime);
+	void CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime);
 
 	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 

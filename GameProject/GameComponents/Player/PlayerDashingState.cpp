@@ -58,6 +58,6 @@ StateName PlayerDashingState::GetState()
 	return Dashing;
 }
 
-void PlayerDashingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerDashingState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

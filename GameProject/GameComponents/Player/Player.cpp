@@ -33,8 +33,8 @@ Player::Player()
 	isOnGround = false;
 	shield = new Shield();
 	shieldFlying = false;
-	posX = 120;
-	posY = 316;
+	/*posX = 120;
+	posY = 316;*/
 	CAMERA->camPosition = GetPosition();
 	CAMERA->isFollowY = true;
 }
@@ -178,9 +178,12 @@ void Player::ChangeState(StateName stateName)
 	currentAnim->ResetAnim();
 }
 
-void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime)
 {
-	currentState->OnCollision(colliableObjects, deltaTime);
+	for (auto entity = lstCollideable.begin(); entity != lstCollideable.end(); ++entity)
+	{
+		currentState->OnCollision((*entity), deltaTime);
+	}
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

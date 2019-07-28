@@ -6,6 +6,14 @@ GameObject::GameObject()
 {
 }
 
+GameObject::GameObject(RECT r)
+{
+	this->posX = r.left;
+	this->posY = r.top;
+	this->width = r.right - r.left;
+	this->height = r.bottom - r.top;
+}
+
 GameObject::GameObject(float posX, float posY, float width, float height, Tag tag)
 {
 	this->posX = posX;
@@ -34,6 +42,18 @@ BoundingBox GameObject::GetBoundingBox()
 	return bound;
 }
 
+BoundingBox GameObject::GetBoundingBoxFromCorner()
+{
+	BoundingBox r;
+	r.left = posX;
+	r.top = posY;
+	r.right = posX + width;
+	r.bottom = posY + height;
+	r.vX = vX;
+	r.vY = vY;
+	return r;
+}
+
 void GameObject::OnCollision(GameObject * object, float deltaTime)
 {
 }
@@ -59,6 +79,16 @@ RECT GameObject::GetBound()
 	bound.bottom = posY + height / 2;
 
 	return bound;
+}
+
+RECT GameObject::GetBoundFromCorner()
+{
+	RECT r;
+	r.left = posX;
+	r.top = posY;
+	r.right = posX + width;
+	r.bottom = posY + height;
+	return r;
 }
 
 void GameObject::Update(float deltaTime)

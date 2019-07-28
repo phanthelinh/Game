@@ -48,6 +48,6 @@ StateName PlayerOnShieldState::GetState()
 	return OnShield;
 }
 
-void PlayerOnShieldState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

@@ -143,6 +143,7 @@
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
+    <ClCompile Include="GameComponents\Ground.cpp" />
     <ClCompile Include="GameComponents\Items\Diamon.cpp" />
     <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
     <ClCompile Include="GameComponents\Items\Five.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Framework\Util.h" />
     <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
+    <ClInclude Include="GameComponents\Ground.h" />
     <ClInclude Include="GameComponents\Items\Diamon.h" />
     <ClInclude Include="GameComponents\Items\ExitGem.h" />
     <ClInclude Include="GameComponents\Items\Five.h" />

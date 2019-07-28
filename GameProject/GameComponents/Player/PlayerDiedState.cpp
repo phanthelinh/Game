@@ -25,6 +25,6 @@ StateName PlayeDiedState::GetState()
 	return StateName::Die;
 }
 
-void PlayeDiedState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayeDiedState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

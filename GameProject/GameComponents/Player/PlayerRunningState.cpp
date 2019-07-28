@@ -53,6 +53,6 @@ StateName PlayerRunningState::GetState()
 	return Running;
 }
 
-void PlayerRunningState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerRunningState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

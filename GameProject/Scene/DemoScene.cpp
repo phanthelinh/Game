@@ -16,6 +16,7 @@ DemoScene::DemoScene()
 			itemsContainer.insert(new ItemsContainer(r));
 		}
 	}
+	
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 16;
@@ -23,13 +24,11 @@ DemoScene::DemoScene()
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
-	//ground objects
-	GameObject* ground = new GameObject(0, 436, 96, 12, Tag::Ground);
-	listObject.push_back(ground);
 	//implement grid
 	grid = new Grid();
 	grid->InsertToGrid(itemsContainer);
 	grid->AddObject(PLAYER->shield);
+	
 }
 
 DemoScene::~DemoScene()
@@ -110,21 +109,12 @@ void DemoScene::ReleaseAll()
 	}
 }
 
-void DemoScene::CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime)
+void DemoScene::CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime)
 {
-	float collisionTime;
-	float normalX, normalY;
-	
-	Collision* collision = new Collision();
-	for (auto i = 0; i < listObj.size(); i++) 
+	/*for (auto i = listObj.begin(); i != listObj.end(); ++i) 
 	{
-		CollisionResult res = collision->SweptAABB(player, listObj[i]->GetBoundingBox(), deltaTime);
-		if (res.entryTime > 0.0f && res.entryTime < 1.0f)
-		{
-			PLAYER->isOnGround = true;
-			PLAYER->vY = 0;
-		}
-	}
+		PLAYER->CheckCollision((*i), deltaTime);
+	}*/
 	//
 	//if (!PLAYER->isOnGround)
 	//	PLAYER->vY += 10;

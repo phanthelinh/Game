@@ -4,7 +4,7 @@
 enum Tag {
 	Captain,
 	Enemy,
-	Ground,
+	GroundTag,
 	Weapon,
 	ItemContainerTag,
 	HeartTag,
@@ -24,6 +24,7 @@ class GameObject
 {
 public:
 	GameObject();
+	GameObject(RECT r);
 	GameObject(float posX, float posY, float width, float height, Tag tag);
 	virtual ~GameObject();
 
@@ -39,7 +40,9 @@ public:
 	virtual D3DXVECTOR3 GetPosition();
 	virtual void SetPosition(D3DXVECTOR3 pos);
 	virtual RECT GetBound();
+	virtual RECT GetBoundFromCorner();
 	virtual BoundingBox GetBoundingBox();
+	virtual BoundingBox GetBoundingBoxFromCorner();
 	virtual void Update(float deltaTime);
 	bool IsCollide(RECT r);
 	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) {};

@@ -1,4 +1,5 @@
 #include "Util.h"
+#include "../GameComponents/GameObject.h"
 
 std::vector<int> Util::GetMapDataFromFile(const char * filePath)
 {
@@ -37,6 +38,27 @@ std::vector<RECT> Util::GetObjectDataFromFile(const char * filePath)
 			data.push_back(r);
 		}
 		file.close();
+	}
+	return data;
+}
+
+std::vector<RECT> Util::GetAllObjectFromFile(Tag tag, int level)
+{
+	std::vector<RECT> data = std::vector<RECT>();
+	switch (tag)
+	{
+	case ItemContainerTag:
+		if (level == 1)
+			data = GetObjectDataFromFile("Resources/items/itemcontainer.txt");
+		else
+			data = GetObjectDataFromFile("Resources/items/itemcontainer2.txt");
+		break;
+	case GroundTag:
+		if (level == 1)
+			data = GetObjectDataFromFile("Resources/map/lv1_gameobject_ground.txt");
+		else
+			data = GetObjectDataFromFile("Resources/map/lv2_gameobject_ground.txt");
+		break;
 	}
 	return data;
 }

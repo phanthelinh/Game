@@ -9,6 +9,7 @@
 #include "../Framework/Grid.h"
 #include "../Framework/Util.h"
 #include "../Framework/Grid.h"
+#include "../GameComponents/Ground.h"
 
 class DemoScene:public Scene
 {
@@ -17,6 +18,8 @@ private:
 	std::unordered_set<GameObject*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
+	std::vector<RECT> lstGroundRect;
+	std::unordered_set<GameObject*> lstGround;
 	Grid *	grid;
 public:
 	DemoScene();
@@ -32,5 +35,5 @@ public:
 	virtual void OnKeyUp(int keyCode) override;
 
 	virtual void ReleaseAll() override;
-	void CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime);
+	void CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime);
 };

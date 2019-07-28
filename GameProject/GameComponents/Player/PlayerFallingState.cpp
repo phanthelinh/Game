@@ -63,7 +63,18 @@ StateName PlayerFallingState::GetState()
 	return Falling;
 }
 
-void PlayerFallingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 {
-
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnGround = true;
+		//PLAYER->vY = 0;
+		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		PLAYER->ChangeState(Standing);
+	}
+	else
+	{
+		PLAYER->ChangeState(Falling);
+	}
 }

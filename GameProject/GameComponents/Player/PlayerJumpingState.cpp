@@ -60,6 +60,6 @@ StateName PlayerJumpingState::GetState()
 	return Jumping;
 }
 
-void PlayerJumpingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

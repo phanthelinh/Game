@@ -19,7 +19,7 @@ void Heart::OnCollision(GameObject * object, float deltaTime)
 {
 	if (isDead)
 		return;
-	if (object->tag != Tag::Captain || object->tag != Tag::Ground)
+	if (object->tag != Tag::Captain || object->tag != Tag::GroundTag)
 	{
 		return;
 	}
@@ -28,7 +28,7 @@ void Heart::OnCollision(GameObject * object, float deltaTime)
 	{
 		switch (object->tag)
 		{
-		case Tag::Ground:
+		case Tag::GroundTag:
 			posY += vY * collideRes.entryTime;
 			vY = 0;
 			break;

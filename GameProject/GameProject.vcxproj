@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -143,6 +143,7 @@
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
+    <ClCompile Include="GameComponents\Ground.cpp" />
     <ClCompile Include="GameComponents\Items\Diamon.cpp" />
     <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
     <ClCompile Include="GameComponents\Items\Five.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Framework\Util.h" />
     <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
+    <ClInclude Include="GameComponents\Ground.h" />
     <ClInclude Include="GameComponents\Items\Diamon.h" />
     <ClInclude Include="GameComponents\Items\ExitGem.h" />
     <ClInclude Include="GameComponents\Items\Five.h" />

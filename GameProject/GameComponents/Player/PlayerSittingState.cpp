@@ -40,6 +40,6 @@ StateName PlayerSittingState::GetState()
 	return Sitting;
 }
 
-void PlayerSittingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerSittingState::OnCollision(GameObject* entity, float deltaTime) 
 {
 }

@@ -32,5 +32,5 @@ public:
 	virtual void OnKeyUp(int keyCode) override;
 
 	virtual void ReleaseAll() override;
-	void CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime);
+	void CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime);
 };

@@ -13,6 +13,7 @@ Grid::Grid()
 {
 	numCols = GLOBAL->g_WorldMapWidth / CELL_WIDTH;
 	numRows = GLOBAL->g_WorldMapHeight / CELL_HEIGHT;
+	std::vector<RECT> grounds;
 
 	cells = new Cell**[numRows];
 	for (int i = 0; i < numRows; i++)
@@ -21,6 +22,29 @@ Grid::Grid()
 		for (int j = 0; j < numCols; j++)
 		{
 			cells[i][j] = new Cell(j*CELL_WIDTH, i*CELL_HEIGHT);
+		}
+	}
+	//add ground from file to cell
+	grounds = Util::GetAllObjectFromFile(GroundTag, 1);
+
+	for (auto it = grounds.begin(); it != grounds.end(); ++it)
+	{
+		//calculate which cell is valid
+		int startX = floor((*it).left / CELL_WIDTH);
+		int endX = floor((*it).right / CELL_WIDTH);
+		int startY = floor((*it).top / CELL_HEIGHT);
+		int endY = floor((*it).bottom / CELL_HEIGHT);
+
+		if (endX >= numCols || endY >= numRows)
+			continue;
+		for (int i = startY; i <= endY; i++)
+		{
+			if (cells[i] == NULL)
+				continue;
+			for (int j = startX; j <= endX; j++)
+			{
+				cells[i][j]->Add(new Ground(*it));
+			}
 		}
 	}
 }

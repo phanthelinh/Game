@@ -56,6 +56,6 @@ StateName PlayerKickingState::GetState()
 	return Kicking;
 }
 
-void PlayerKickingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime) 
 {
 }

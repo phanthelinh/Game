@@ -32,5 +32,5 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void HandleKeyboard(std::map<int, bool>keys, float deltaTime) = 0;
 	virtual StateName GetState() = 0;
-	virtual void OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime) = 0;
+	virtual void OnCollision(GameObject* entity, float deltaTime) = 0;
 };

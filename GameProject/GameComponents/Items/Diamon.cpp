@@ -27,12 +27,12 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 {
 	if (!isDead)
 	{
-		if (object->tag != Tag::Captain && object->tag != Tag::Ground)
+		if (object->tag != Tag::Captain && object->tag != Tag::GroundTag)
 		{
 			return;
 		}
 		CollisionResult collideRes;
-		if (object->tag == Ground)
+		if (object->tag == GroundTag)
 		{
 			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
 		}
@@ -44,7 +44,7 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 		{
 			switch (object->tag)
 			{
-			case Tag::Ground:
+			case Tag::GroundTag:
 				posY += vY * collideRes.entryTime;
 				vY = 0;
 				break;

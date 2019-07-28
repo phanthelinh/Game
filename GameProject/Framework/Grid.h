@@ -3,6 +3,8 @@
 #include "Camera.h"
 #include "Collision.h"
 #include "../GameComponents/GameObject.h"
+#include "Util.h"
+#include "../GameComponents/Ground.h"
 
 #define GRID	Grid::GetInstance()
 

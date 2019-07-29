@@ -38,18 +38,16 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
+	GRID->UpdateGrid();
+	//update object
+	visibleObject.clear();
+	visibleObject = GRID->GetVisibleObjects();
+	for (auto obj : visibleObject)
+	{
+		obj->Update(deltaTime);
+	}
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	//update object
-	for (auto cell : GRID->visibleCells)
-	{
-		for (auto obj : cell->objects)
-		{
-			obj->Update(deltaTime);
-		}
-	}
-	GRID->UpdateGrid();
-	//domesto->Update(deltaTime);
 	
 	//
 	//COLLISION
@@ -75,14 +73,10 @@ void DemoScene::Draw()
 	//render map
 	map->RenderMap();
 	//draw visible objects
-	for (auto cell : GRID->visibleCells)
+	for (auto obj : visibleObject)
 	{
-		for (auto obj : cell->objects)
-		{
-			obj->Draw();
-		}
+		obj->Draw();
 	}
-	domesto->Draw();
 	//render player
 	PLAYER->Draw();
 }

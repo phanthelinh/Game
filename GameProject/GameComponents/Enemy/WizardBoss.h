@@ -1,22 +1,21 @@
 #pragma once
-#include "../../GameObject.h"
-#include "../../../Framework/Animation.h"
-#include <unordered_map>
-#include <unordered_set>
+#include "Enemy.h"
 
-class Enemy;
-class Weapon : public GameObject
+enum WizardState {
+	StandingWizard,
+	RunningWizard,
+	AttackingWizard,	//on ground attack
+	FlyAttackWizard,	//on air attack
+	InjuringWizard,
+	DieWizard
+};
+
+class WizardBoss :public Enemy
 {
-protected:
-	static Enemy*	currEnemy;
-	Animation*		currAnim;
 public:
-	float weaponDamage;
-
-	Weapon();
-	//posX, posY is the left, top of weapon
-	Weapon(float posX, float posY, float width, float height);
-	Weapon(RECT r);
+	WizardBoss();
+	WizardBoss(float posX, float posY, float width, float height);
+	WizardBoss(RECT r);
 
 	virtual void OnCollision(GameObject* object, float deltaTime = 0);
 	virtual RECT GetBound();
@@ -26,4 +25,6 @@ public:
 	//Draw at its position
 	virtual void Draw();
 	virtual void Release();
+private:
+	std::unordered_map<WizardState, Animation*> animations;
 };

@@ -168,6 +168,15 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp">
       <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\WizardBoss.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Domesto.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Weapon\Missile.cpp">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -294,6 +303,15 @@
       <Filter>GameComponents\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\WizardBoss.h">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Domesto.h">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Weapon\Missile.h">
       <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,38 +1,27 @@
 #pragma once
 #include "../GameObject.h"
 #include "../Player/Player.h"
-#include "Weapon.h"
-#include <unordered_map>
-#include <unordered_set>
+#include "Weapon/Weapon.h"
 
 class Enemy: public GameObject
 {
-private:
-	static Player*	currPlayer;
-
 public:
 	Animation*		currentAnim;
-	PlayerState*	currentState;
 	float			maxHealth, currHealth;
-	Weapon* weaponType;
-
-	std::unordered_map<StateName, Animation*> animations;
+	Weapon*			enemyWeapon;
+	float			point;
 
 	Enemy();
-
-	virtual void Update(float deltaTime);
-
-	virtual void Draw();
-
-	virtual void SetState(StateName statename);
-
-	virtual void CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime);
+	//posX, posY is the left, top of enemies
+	Enemy(float posX, float posY, float width, float height);
+	Enemy(RECT r);
 
 	virtual void OnCollision(GameObject* object, float deltaTime = 0);
-
-
+	virtual RECT GetBound();
 	virtual BoundingBox GetBoundingBox();
-
+	virtual void Update(float deltaTime);
+	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) {};
+	//Draw at its position
+	virtual void Draw();
 	virtual void Release();
-
 };

@@ -8,7 +8,7 @@ Shield::Shield()
 {
 	shield = new Sprite("Resources/shield/shield_60_16.png");
 	SetState(ShieldState::Normal);
-	tag = Tag::Weapon;
+	tag = Tag::ShieldTag;
 	isDead = false;
 	isVisible = true;
 	playerPos = { 0,0,0 };

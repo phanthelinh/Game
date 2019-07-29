@@ -3,6 +3,7 @@
 
 enum Tag {
 	Captain,
+	ShieldTag,
 	EnemyTag,
 	WeaponTag,
 	GroundTag,
@@ -36,16 +37,16 @@ public:
 	bool isReverse;			//is flip sprite vertically				
 	bool isDead;
 
+	bool IsCollide(RECT r);
 	virtual void OnCollision(GameObject* object, float deltaTime = 0);
 	virtual D3DXVECTOR3 GetPosition();
 	virtual void SetPosition(D3DXVECTOR3 pos);
 	virtual RECT GetBound();
 	virtual BoundingBox GetBoundingBox();
 	virtual void Update(float deltaTime);
-	bool IsCollide(RECT r);
 	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) {};
 	virtual void Draw();
-	void Release();
+	virtual void Release();
 
 	//get bound from (0, 0)
 	virtual RECT GetBoundFromCorner();

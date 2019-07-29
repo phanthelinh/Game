@@ -1,9 +1,9 @@
 #include "PowerStone.h"
 
-PowerStone::PowerStone(int left, int top, int width, int height, bool isSmallType)
+PowerStone::PowerStone(int x, int y, int width, int height, bool isSmallType)
 {
-	posX = left - width/2;
-	posY = top - height/2;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	vY = -12.0f;
@@ -16,7 +16,7 @@ PowerStone::PowerStone(int left, int top, int width, int height, bool isSmallTyp
 	{
 		curDiamon = new Animation("Resources/items/diamonlarge_32_16.png", 2, 1, 2, true, 0.5);
 	}
-	tag = Tag::DiamonTag;
+	tag = Tag::PowerStoneTag;
 }
 
 PowerStone::PowerStone(RECT rect, bool isSmallType) :PowerStone(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, isSmallType)
@@ -34,11 +34,11 @@ void PowerStone::OnCollision(GameObject * object, float deltaTime)
 		CollisionResult collideRes;
 		if (object->tag == Ground)
 		{
-			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		}
 		else
 		{
-			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
 		}
 		if (collideRes.isCollide)
 		{
@@ -47,6 +47,7 @@ void PowerStone::OnCollision(GameObject * object, float deltaTime)
 			case Tag::Ground:
 				posY += vY * collideRes.entryTime;
 				vY = 0;
+				firstTimeCollideGround = GetTickCount();
 				break;
 			default:
 				break;
@@ -65,7 +66,12 @@ void PowerStone::Update(float deltaTime)
 	{
 		curDiamon->Update(deltaTime);
 		posY += deltaTime * vY;
-		vY += 2;
+		vY = vY == 0 ? 0 : vY + 2;
+		auto now = GetTickCount();
+		if ((now - firstTimeCollideGround) / 1000.0f >= 3.0f)
+		{
+			//start to flashing
+		}
 	}
 }
 

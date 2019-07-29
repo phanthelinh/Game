@@ -57,7 +57,7 @@ void DemoScene::Update(float deltaTime)
 		PLAYER->OnCollision(g, deltaTime);
 	}
 	//get list colliable objects with player
-	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER);
+	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision
 	PLAYER->CheckCollision(lstCollideable, deltaTime);
 	//objects check collision

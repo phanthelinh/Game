@@ -6,7 +6,7 @@ class Five :public GameObject
 {
 	Sprite*	five;
 public:
-	Five(int left, int top, int width, int height);
+	Five(int x, int y, int width, int height);
 	Five(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

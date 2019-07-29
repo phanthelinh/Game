@@ -1,14 +1,14 @@
 #include "Energy.h"
 
-Energy::Energy(int left, int top, int width, int height)
+Energy::Energy(int x, int y, int width, int height)
 {
-	posX = left;
-	posY = top;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	vY = 12.0f;
 	energy = new Animation("Resources/items/heart_24_12.png", 2, 1, 2, true, 0.5);
-	tag = Tag::HeartTag;
+	tag = Tag::EnergyTag;
 }
 
 Energy::Energy(RECT rect):Energy(rect.left,rect.top, rect.right-rect.left,rect.bottom-rect.top)
@@ -23,7 +23,7 @@ void Energy::OnCollision(GameObject * object, float deltaTime)
 	{
 		return;
 	}
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
 	if (collideRes.isCollide)
 	{
 		switch (object->tag)

@@ -10,7 +10,7 @@ class ItemsContainer :public GameObject
 private:
 	Sprite** sprites;
 	Sprite* curSprite;
-	bool	isStartFallingItems, canThrowItem;
+	bool	isStartFallingItems;
 	DWORD	startTime;
 	std::unordered_set<GameObject*> listDrawItems;
 	int		maxItemsNum;

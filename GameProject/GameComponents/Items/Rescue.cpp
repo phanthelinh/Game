@@ -1,13 +1,13 @@
 #include "Rescue.h"
 
-Rescue::Rescue(int left, int top, int width, int height)
+Rescue::Rescue(int x, int y, int width, int height)
 {
-	posX = left;
-	posY = top;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	rescue = new Sprite("Resources/items/life_health_five_24_16.png", { 8,0,16,16 });
-	tag = Tag::HealthTag;
+	tag = Tag::RescueTag;
 	vY = 12.0f;
 }
 

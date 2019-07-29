@@ -1,14 +1,14 @@
 #include "KeyCrystals.h"
 
-KeyCrystals::KeyCrystals(int left, int top, int width, int height)
+KeyCrystals::KeyCrystals(int x, int y, int width, int height)
 {
-	posX = left;
-	posY = top;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	vY = 12.0f;
 	crystals = new Animation("Resources/items/exitgem_32_16.png", 2, 1, 2, true, 0.5);
-	tag = Tag::ExitGemTag;
+	tag = Tag::KeyCrystalsTag;
 }
 
 KeyCrystals::KeyCrystals(RECT rect):KeyCrystals(rect.left,rect.top,rect.right-rect.left, rect.bottom-rect.top)
@@ -23,7 +23,7 @@ void KeyCrystals::OnCollision(GameObject * object, float deltaTime)
 	{
 		return;
 	}
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
 	if (collideRes.isCollide)
 	{
 		switch (object->tag)

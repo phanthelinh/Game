@@ -6,7 +6,7 @@ class Rescue :public GameObject
 {
 	Sprite*	rescue;
 public:
-	Rescue(int left, int top, int width, int height);
+	Rescue(int x, int y, int width, int height);
 	Rescue(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

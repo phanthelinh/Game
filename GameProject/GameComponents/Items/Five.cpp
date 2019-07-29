@@ -1,10 +1,10 @@
 #include "Five.h"
 
-Five::Five(int left, int top, int width, int height)
+Five::Five(int x, int y, int width, int height)
 {
 	tag = Tag::FiveTag;
-	posX = left;
-	posY = top;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	five = new Sprite("Resources/items/life_health_five_24_16.png", { 16,0,24,16 });

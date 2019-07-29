@@ -8,8 +8,9 @@ class PowerStone :public GameObject
 private:
 	bool isSmallType;
 	Animation*	curDiamon;
+	DWORD	firstTimeCollideGround;
 public:
-	PowerStone(int left, int top, int width, int height, bool isSmallType);
+	PowerStone(int x, int y, int width, int height, bool isSmallType);
 	PowerStone(RECT rect, bool isSmallType);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

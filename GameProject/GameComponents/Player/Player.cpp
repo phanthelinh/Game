@@ -78,7 +78,7 @@ void Player::Update(float deltaTime)
 		else
 		{
 			
-			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox());
+			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
 			
 			if (colRes.isCollide)
 			{
@@ -198,7 +198,7 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 {
 	if (object->tag != Ground)
 		return;
-	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(),deltaTime);
 	if (colRes.isCollide)
 	{
 		

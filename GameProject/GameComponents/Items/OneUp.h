@@ -7,7 +7,7 @@ class OneUp :public GameObject
 private:
 	Sprite*		oneup;
 public:
-	OneUp(int left, int top, int width, int height);
+	OneUp(int x, int y, int width, int height);
 	OneUp(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

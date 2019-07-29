@@ -1,13 +1,13 @@
 #include "OneUp.h"
 
-OneUp::OneUp(int left, int top, int width, int height)
+OneUp::OneUp(int x, int y, int width, int height)
 {
-	posX = left;
-	posY = top;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	oneup = new Sprite("Resources/items/life_health_five_24_16.png", { 0,0,8,16 });
-	tag = Tag::LifeTag;
+	tag = Tag::OneUpTag;
 	vY = 12.0f;
 }
 

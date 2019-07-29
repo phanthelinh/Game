@@ -7,11 +7,11 @@ enum Tag {
 	Ground,
 	Weapon,
 	ItemContainerTag,
-	HeartTag,
-	ExitGemTag,
-	DiamonTag,
-	LifeTag,
-	HealthTag,
+	EnergyTag,
+	KeyCrystalsTag,
+	PowerStoneTag,
+	OneUpTag,
+	RescueTag,
 	FiveTag
 };
 struct BoundingBox 

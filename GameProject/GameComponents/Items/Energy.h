@@ -8,7 +8,7 @@ class Energy : public GameObject
 private:
 	Animation*	energy;
 public:
-	Energy(int left, int top, int width, int height);
+	Energy(int x, int y, int width, int height);
 	Energy(RECT rect);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);

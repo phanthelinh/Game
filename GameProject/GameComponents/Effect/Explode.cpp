@@ -4,7 +4,7 @@ Explode* Explode::instance = nullptr;
 
 Explode::Explode()
 {
-	explode = new Animation("Resources/effect/explode.png", 3, 1, 3, false, 0.3);
+	explode = new Animation("Resources/effect/explode.png", 3, 1, 3, false, 0.5);
 	isStart = false;
 }
 

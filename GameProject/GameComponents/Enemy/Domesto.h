@@ -1,22 +1,25 @@
 #pragma once
 #include "Enemy.h"
+#include "../../Framework/Grid.h"
 #include "../Effect/Explode.h"
 #include "../Player/Player.h"
+#include "Weapon/Missile.h"
 #include <unordered_map>
+#include <vector>
 
 class Domesto : public Enemy
 {
 private:
-	std::unordered_map<EnemyStateName, Animation*> anims;
-	EnemyStateName	currentState, prevState;
-	DWORD		startTime;
-
+	std::unordered_map<EnemyStateName, Animation*>	anims;
+	EnemyStateName									currentState, prevState;
+	DWORD											startTime;
+	std::vector<Missile*>							missles;
+	bool											isPauseMissile;
+	bool											isStopUpdate;
 public:
-	Domesto();
 	//posX, posY is the left + width/2, bottom of enemies
 	Domesto(float posX, float posY);
-	Domesto(RECT r);
-
+	
 	void ChangeEnemyState(EnemyStateName state);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);

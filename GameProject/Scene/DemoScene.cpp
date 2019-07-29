@@ -28,7 +28,8 @@ DemoScene::DemoScene()
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
 	//GRID->listGround = listObject;
-	domesto = new Domesto(120, 390);
+	domesto = new Domesto(120, 460);
+	GRID->AddObject(domesto);
 }
 
 DemoScene::~DemoScene()
@@ -39,8 +40,6 @@ void DemoScene::Update(float deltaTime)
 {
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	GRID->UpdateGrid();
-	domesto->Update(deltaTime);
 	//update object
 	for (auto cell : GRID->visibleCells)
 	{
@@ -49,6 +48,9 @@ void DemoScene::Update(float deltaTime)
 			obj->Update(deltaTime);
 		}
 	}
+	GRID->UpdateGrid();
+	//domesto->Update(deltaTime);
+	
 	//
 	//COLLISION
 	//

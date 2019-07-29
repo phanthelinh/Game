@@ -8,8 +8,10 @@ enum MissileType
 };
 class Missile : public Weapon
 {
+	Animation*		subAnim;
+	MissileType		missileType;
+	D3DXVECTOR3		startingPoint;
 public:
-	Missile();
 	//posX, posY is the left, top of weapon
 	Missile(float posX, float posY, MissileType type);
 

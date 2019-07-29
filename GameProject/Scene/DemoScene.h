@@ -8,7 +8,7 @@
 #include "../GameComponents/Items/ItemsContainer.h"
 #include "../Framework/Grid.h"
 #include "../Framework/Util.h"
-#include "../Framework/Grid.h"
+#include "../GameComponents/Enemy/Domesto.h"
 #include "../GameComponents/Enemy/WizardBoss.h"
 
 class DemoScene:public Scene
@@ -19,6 +19,7 @@ private:
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
 	WizardBoss* boss;
+	Domesto* domesto;
 public:
 	DemoScene();
 	~DemoScene();

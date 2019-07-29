@@ -1,14 +1,15 @@
 #pragma once
 #include "../../GameObject.h"
+#include "../../../Framework/Animation.h"
 #include <unordered_map>
 #include <unordered_set>
 
 class Enemy;
 class Weapon : public GameObject
 {
-private:
+protected:
 	static Enemy*	currEnemy;
-
+	Animation*		currAnim;
 public:
 	float weaponDamage;
 

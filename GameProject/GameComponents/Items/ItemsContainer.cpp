@@ -14,7 +14,7 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 	this->height = height;
 	this->isReverse = false;
 	this->tag = Tag::ItemContainerTag;
-	canThrowItem = false;
+
 	maxItemsNum = 3;
 	//init list items up to 3 items
 	for (int i = 0; i < 1; i++) {
@@ -41,11 +41,11 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 		default:
 			break;
 		}*/
-		obj = new Diamon(left + width/2, top + height/2, 16, 16, true);
+		obj = new PowerStone(left + width/2, top + height/2, 16, 16, true);
 		if(obj != NULL)
 			listItems.insert(obj);
 	}
-	listItems.insert(new Diamon(left, top + height / 2, 16, 16, true));
+	listItems.insert(new PowerStone(left + width / 2, top + height / 2, 16, 16, false));
 }
 
 ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
@@ -55,19 +55,17 @@ ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, re
 
 void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 {
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox());
+	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox(), deltaTime);
 	if (collideRes.isCollide)
 	{
 		//start falling down other items objects
 		isStartFallingItems = true;
-		canThrowItem = true;
 		startTime = GetTickCount() + collideRes.entryTime;
-		if (listItems.size() > 0 && canThrowItem)
+		if (listItems.size() > 0)
 		{
 			auto item = listItems.begin();
 			listDrawItems.insert(*item);
 			listItems.erase(*item);
-			canThrowItem = false;
 		}
 	}
 }

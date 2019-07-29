@@ -3,13 +3,13 @@
 #include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
 
-class ExitGem :public GameObject
+class KeyCrystals :public GameObject
 {
 private:
-	Animation*		exitGem;
+	Animation*		crystals;
 public:
-	ExitGem(int left, int top, int width, int height);
-	ExitGem(RECT rect);
+	KeyCrystals(int x, int y, int width, int height);
+	KeyCrystals(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

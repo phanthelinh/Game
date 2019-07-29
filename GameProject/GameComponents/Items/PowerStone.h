@@ -1,13 +1,17 @@
 #pragma once
 #include "../GameObject.h"
-#include "../../Framework/Sprite.h"
+#include "../../Framework/Animation.h"
+#include "../../Framework/Collision.h"
 
-class Five :public GameObject
+class PowerStone :public GameObject
 {
-	Sprite*	five;
+private:
+	bool isSmallType;
+	Animation*	curDiamon;
+	DWORD	firstTimeCollideGround;
 public:
-	Five(int x, int y, int width, int height);
-	Five(RECT rect);
+	PowerStone(int x, int y, int width, int height, bool isSmallType);
+	PowerStone(RECT rect, bool isSmallType);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

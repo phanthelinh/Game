@@ -9,7 +9,7 @@ PlayerSpinningState::PlayerSpinningState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY = SPINNING_BOOST;
-	if(!PLAYER->shieldFlying)
+	if (PLAYER->shieldFlying == false)
 		PLAYER->shield->isVisible = false;
 }
 
@@ -49,6 +49,6 @@ StateName PlayerSpinningState::GetState()
 	return Spinning;
 }
 
-void PlayerSpinningState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerSpinningState::OnCollision(GameObject* entity, float deltaTime) 
 {
 }

@@ -10,7 +10,8 @@ PlayerJumpingState::PlayerJumpingState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->vY += PLAYER_JUMPING_SPEED;
 	PLAYER->isOnGround = false;
-	//PLAYER->shield->isVisible = false;
+	if (PLAYER->shieldFlying == false)
+		PLAYER->shield->SetState(ShieldState::OnJump);
 }
 
 void PlayerJumpingState::Update(float deltaTime)
@@ -59,6 +60,6 @@ StateName PlayerJumpingState::GetState()
 	return Jumping;
 }
 
-void PlayerJumpingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

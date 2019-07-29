@@ -10,6 +10,8 @@ PlayerRunningState::PlayerRunningState()
 	PLAYER->vY = 0;
 	PLAYER->isOnGround = true;
 	PLAYER->shield->isVisible = true;
+	if (PLAYER->shield->curState != ShieldState::Flying)
+		PLAYER->shield->SetState(ShieldState::Normal);
 }
 
 void PlayerRunningState::Update(float deltaTime)
@@ -53,6 +55,6 @@ StateName PlayerRunningState::GetState()
 	return Running;
 }
 
-void PlayerRunningState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerRunningState::OnCollision(GameObject* entity, float deltaTime) 
 {
 }

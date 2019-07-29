@@ -7,7 +7,8 @@ PlayerOnShieldState::PlayerOnShieldState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	//PLAYER->shield->isVisible = false;
+	if (PLAYER->shieldFlying == false)
+		PLAYER->shield->isVisible = false;
 }
 
 void PlayerOnShieldState::Update(float deltaTime)
@@ -48,6 +49,6 @@ StateName PlayerOnShieldState::GetState()
 	return OnShield;
 }
 
-void PlayerOnShieldState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 {
 }

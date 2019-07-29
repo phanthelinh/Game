@@ -3,13 +3,13 @@
 #include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
 
-class Heart : public GameObject
+class Energy : public GameObject
 {
 private:
-	Animation*	heart;
+	Animation*	energy;
 public:
-	Heart(int left, int top, int width, int height);
-	Heart(RECT rect);
+	Energy(int x, int y, int width, int height);
+	Energy(RECT rect);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

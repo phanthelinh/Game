@@ -18,17 +18,16 @@ DemoScene::DemoScene()
 	}
 	//init for Player
 	PLAYER; //get instance
+	PLAYER->posX = 16;
+	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
-	//ground objects
-	GameObject* ground = new GameObject(0, 436, 1000, 16, Tag::Ground);
-	listObject.push_back(ground);
 	//implement grid
 	GRID;
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
-	GRID->listGround = listObject;
+	//GRID->listGround = listObject;
 }
 
 DemoScene::~DemoScene()
@@ -57,7 +56,7 @@ void DemoScene::Update(float deltaTime)
 		PLAYER->OnCollision(g, deltaTime);
 	}
 	//get list colliable objects with player
-	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER);
+	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision
 	PLAYER->CheckCollision(lstCollideable, deltaTime);
 	//objects check collision
@@ -117,21 +116,18 @@ void DemoScene::ReleaseAll()
 	}
 }
 
-void DemoScene::CheckCollision(BoundingBox player, std::vector<GameObject*> listObj, float deltaTime)
+void DemoScene::CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime)
 {
-	float collisionTime;
-	float normalX, normalY;
 	
-	Collision* collision = new Collision();
-	for (auto i = 0; i < listObj.size(); i++) 
+	/*for (auto i = 0; i < listObj.size(); i++) 
 	{
-		CollisionResult res = collision->SweptAABB(player, listObj[i]->GetBoundingBox(), deltaTime);
+		CollisionResult res = COLLISION->SweptAABB(player, listObj[i]->GetBoundingBox(), deltaTime);
 		if (res.entryTime > 0.0f && res.entryTime < 1.0f)
 		{
 			PLAYER->isOnGround = true;
 			PLAYER->vY = 0;
 		}
-	}
+	}*/
 	//
 	//if (!PLAYER->isOnGround)
 	//	PLAYER->vY += 10;

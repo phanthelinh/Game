@@ -4,14 +4,14 @@
 enum Tag {
 	Captain,
 	Enemy,
-	Ground,
+	GroundTag,
 	Weapon,
 	ItemContainerTag,
-	HeartTag,
-	ExitGemTag,
-	DiamonTag,
-	LifeTag,
-	HealthTag,
+	EnergyTag,
+	KeyCrystalsTag,
+	PowerStoneTag,
+	OneUpTag,
+	RescueTag,
 	FiveTag
 };
 struct BoundingBox 
@@ -25,6 +25,7 @@ class GameObject
 public:
 	GameObject();
 	GameObject(float posX, float posY, float width, float height, Tag tag);
+	GameObject(RECT r);
 	virtual ~GameObject();
 
 	Tag tag;									
@@ -45,4 +46,8 @@ public:
 	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) {};
 	virtual void Draw();
 	void Release();
+
+	//get bound from (0, 0)
+	virtual RECT GetBoundFromCorner();
+	virtual BoundingBox GetBoundingBoxFromCorner();
 };

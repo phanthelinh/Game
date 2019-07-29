@@ -1,7 +1,7 @@
 #include "Shield.h"
 
-#define SHIELD_FLYING_SPEED_MIN -40.0f
-#define SHIELD_FLYING_SPEED_MAX  40.0f
+#define SHIELD_FLYING_SPEED_MIN -30.0f
+#define SHIELD_FLYING_SPEED_MAX  30.0f
 
 
 Shield::Shield()
@@ -21,12 +21,14 @@ void Shield::SetState(ShieldState state)
 	{
 	case Normal:
 	case Normal_Sit:
+	case OnKick:
 		shield->_sourceRect = { 2,0,10,16 };
 		shield->_textureWidth = width = 8;
 		shield->_textureHeight = height = 16;
 		vX = vY = 0;
 		break;
 	case Shielded:
+	case OnJump:
 		shield->_sourceRect = { 18,0,34,16 };
 		shield->_textureWidth = width = 16;
 		shield->_textureHeight = height = 16;
@@ -44,11 +46,11 @@ void Shield::SetState(ShieldState state)
 		shield->_textureHeight = height = 10;
 		if (isReverse)
 		{
-			vX = SHIELD_FLYING_SPEED_MAX;
+			vX = 45.0f;
 		}
 		else
 		{
-			vX = SHIELD_FLYING_SPEED_MIN;
+			vX = -45.0f;
 		}
 		break;
 	default:
@@ -60,6 +62,28 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 {
 	switch (state)
 	{
+	case OnJump:
+		if (playerReverse) //face to right
+		{
+			_translationToPlayer = { -4, -6, 0 };
+		}
+		else
+		{
+			_translationToPlayer = { 4, -6, 0 };
+		}
+		SetPosition(GetPosition() + _translationToPlayer);
+		break;
+	case OnKick:
+		if (playerReverse) //face to right
+		{
+			_translationToPlayer = { -17, -1, 0 };
+		}
+		else
+		{
+			_translationToPlayer = { 17, 1, 0 };
+		}
+		SetPosition(GetPosition() + _translationToPlayer);
+		break;
 	case Normal:
 		if (playerReverse) //face to right
 		{
@@ -138,9 +162,12 @@ void Shield::Draw()
 
 void Shield::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
-	shield->_isFlipHor = isReverse;
+	if (curState == ShieldState::OnKick)
+		shield->_isFlipHor = !isReverse;
+	else
+		shield->_isFlipHor = isReverse;
 	if (isVisible == true)
-	shield->Draw(position, cameraPosition, sourceRect, center);
+		shield->Draw(position, cameraPosition, sourceRect, center);
 }
 
 void Shield::Update(float deltaTime)
@@ -148,7 +175,7 @@ void Shield::Update(float deltaTime)
 	if (curState == ShieldState::Flying)
 	{
 		posX = posX + vX * deltaTime;
-		//posY = posY + vY * deltaTime;
+		posY = posY + vY * deltaTime;
 		//set reverse velocity
 		if (isReverse) //face to right
 		{
@@ -156,7 +183,19 @@ void Shield::Update(float deltaTime)
 			vX = vX <= SHIELD_FLYING_SPEED_MIN ? SHIELD_FLYING_SPEED_MIN : vX;
 			if (vX <= 0)
 			{
-				posY = playerPos.y;
+				if (posY > playerPos.y && (startingPos.y-1) > playerPos.y)
+				{
+					vY -= 5.0f;
+				}
+				else if (posY < playerPos.y && (startingPos.y+1) < playerPos.y)
+				{
+					vY += 5.0f;
+				}
+				else 
+				{
+					posY = playerPos.y;
+					vY = 0;
+				}
 			}
 		}
 		else
@@ -165,7 +204,19 @@ void Shield::Update(float deltaTime)
 			vX = vX >= SHIELD_FLYING_SPEED_MAX ? SHIELD_FLYING_SPEED_MAX : vX;
 			if (vX >= 0)
 			{
-				posY = playerPos.y;
+				if (posY > playerPos.y && (startingPos.y - 1) > playerPos.y)
+				{
+					vY -= 5.0f;
+				}
+				else if (posY < playerPos.y && (startingPos.y + 1) < playerPos.y)
+				{
+					vY += 5.0f;
+				}
+				else
+				{
+					posY = playerPos.y;
+					vY = 0;
+				}
 			}
 		}
 		//check for whether shield goes over player or not

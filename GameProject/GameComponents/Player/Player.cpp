@@ -33,8 +33,8 @@ Player::Player()
 	isOnGround = false;
 	shield = new Shield();
 	shieldFlying = false;
-	posX = 16;
-	posY = 360;
+	/*posX = 16;
+	posY = 360;*/
 	CAMERA->camPosition = GetPosition();
 	CAMERA->isFollowY = true;
 }
@@ -78,7 +78,7 @@ void Player::Update(float deltaTime)
 		else
 		{
 			
-			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox());
+			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
 			
 			if (colRes.isCollide)
 			{
@@ -90,8 +90,9 @@ void Player::Update(float deltaTime)
 			}
 			else
 			{
-				shield->Update(deltaTime);
+				shield->playerVy = vY;
 				shield->playerPos = GetPosition();
+				shield->Update(deltaTime);
 			}
 			if (startcheck)
 			{
@@ -104,6 +105,7 @@ void Player::Update(float deltaTime)
 				}
 				else
 				{
+					shield->playerPos = GetPosition();
 					shield->Update(deltaTime);
 				}
 				
@@ -187,16 +189,19 @@ void Player::ChangeState(StateName stateName)
 	currentAnim->ResetAnim();
 }
 
-void Player::CheckCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime)
 {
-	currentState->OnCollision(colliableObjects, deltaTime);
+	for (auto entity = lstCollideable.begin(); entity != lstCollideable.end(); ++entity)
+	{
+		currentState->OnCollision((*entity), deltaTime);
+	}
 }
 
 void Player::OnCollision(GameObject * object, float deltaTime)
 {
-	if (object->tag != Ground)
+	if (object->tag != GroundTag)
 		return;
-	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(),deltaTime);
 	if (colRes.isCollide)
 	{
 		

@@ -17,7 +17,6 @@ PlayerFallingState::PlayerFallingState()
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED;
 	}
-	//PLAYER->shield->isVisible = false;
 	
 }
 
@@ -27,7 +26,10 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
 	if (PLAYER->vY <= 0)
+	{ 
+		PLAYER->shield->SetState(ShieldState::Normal);
 		PLAYER->ChangeState(Standing);
+	}
 }
 
 void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -61,7 +63,18 @@ StateName PlayerFallingState::GetState()
 	return Falling;
 }
 
-void PlayerFallingState::OnCollision(std::unordered_set<GameObject*> colliableObjects, float deltaTime)
+void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 {
-
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnGround = true;
+		//PLAYER->vY = 0;
+		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		PLAYER->ChangeState(Standing);
+	}
+	else
+	{
+		PLAYER->ChangeState(Falling);
+	}
 }

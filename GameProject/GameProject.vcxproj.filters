@@ -37,6 +37,9 @@
     <Filter Include="GameComponents\Enemy">
       <UniqueIdentifier>{9e7d65fc-fbf0-4902-9b9d-087d4cc60741}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\Enemy\Weapon">
+      <UniqueIdentifier>{baa53ce3-9f23-406d-9473-3e52ec8602bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -162,8 +165,8 @@
     <ClCompile Include="GameComponents\Enemy\Enemy.cpp">
       <Filter>GameComponents\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="GameComponents\Enemy\Weapon.cpp">
-      <Filter>GameComponents\Enemy</Filter>
+    <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,8 +293,8 @@
     <ClInclude Include="GameComponents\Enemy\Enemy.h">
       <Filter>GameComponents\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="GameComponents\Enemy\Weapon.h">
-      <Filter>GameComponents\Enemy</Filter>
+    <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,10 @@
 
 GameObject::GameObject()
 {
+	posX = posY = width = height = 0;
+	spawnX = spawnY = 0;
+	vX = vY = 0;
+	isReverse = isDead = false;
 }
 
 GameObject::GameObject(float posX, float posY, float width, float height, Tag tag)
@@ -14,6 +18,8 @@ GameObject::GameObject(float posX, float posY, float width, float height, Tag ta
 	this->height = height;
 	this->tag = tag;
 	vY = vX = 0;
+	spawnX = spawnY = 0;
+	isReverse = isDead = false;
 }
 
 GameObject::GameObject(RECT r)
@@ -22,6 +28,9 @@ GameObject::GameObject(RECT r)
 	this->posY = r.top;
 	this->width = r.right - r.left;
 	this->height = r.bottom - r.top;
+	vX = vY = 0;
+	spawnX = spawnY = 0;
+	isReverse = isDead = false;
 }
 
 GameObject::~GameObject()

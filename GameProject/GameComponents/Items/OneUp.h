@@ -2,12 +2,13 @@
 #include "../GameObject.h"
 #include "../../Framework/Sprite.h"
 
-class Health :public GameObject
+class OneUp :public GameObject
 {
-	Sprite*	health;
+private:
+	Sprite*		oneup;
 public:
-	Health(int left, int top, int width, int height);
-	Health(RECT rect);
+	OneUp(int x, int y, int width, int height);
+	OneUp(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

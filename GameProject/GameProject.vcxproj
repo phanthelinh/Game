@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -144,13 +144,13 @@
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Ground.cpp" />
-    <ClCompile Include="GameComponents\Items\Diamon.cpp" />
-    <ClCompile Include="GameComponents\Items\ExitGem.cpp" />
+    <ClCompile Include="GameComponents\Items\PowerStone.cpp" />
+    <ClCompile Include="GameComponents\Items\KeyCrystals.cpp" />
     <ClCompile Include="GameComponents\Items\Five.cpp" />
-    <ClCompile Include="GameComponents\Items\Health.cpp" />
-    <ClCompile Include="GameComponents\Items\Heart.cpp" />
+    <ClCompile Include="GameComponents\Items\Rescue.cpp" />
+    <ClCompile Include="GameComponents\Items\Energy.cpp" />
     <ClCompile Include="GameComponents\Items\ItemsContainer.cpp" />
-    <ClCompile Include="GameComponents\Items\Life.cpp" />
+    <ClCompile Include="GameComponents\Items\OneUp.cpp" />
     <ClCompile Include="GameComponents\Player\Player.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerAttackingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerDashingState.cpp" />
@@ -186,13 +186,13 @@
     <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Ground.h" />
-    <ClInclude Include="GameComponents\Items\Diamon.h" />
-    <ClInclude Include="GameComponents\Items\ExitGem.h" />
+    <ClInclude Include="GameComponents\Items\PowerStone.h" />
+    <ClInclude Include="GameComponents\Items\KeyCrystals.h" />
     <ClInclude Include="GameComponents\Items\Five.h" />
-    <ClInclude Include="GameComponents\Items\Health.h" />
-    <ClInclude Include="GameComponents\Items\Heart.h" />
+    <ClInclude Include="GameComponents\Items\Rescue.h" />
+    <ClInclude Include="GameComponents\Items\Energy.h" />
     <ClInclude Include="GameComponents\Items\ItemsContainer.h" />
-    <ClInclude Include="GameComponents\Items\Life.h" />
+    <ClInclude Include="GameComponents\Items\OneUp.h" />
     <ClInclude Include="GameComponents\Player\Player.h" />
     <ClInclude Include="GameComponents\Player\PlayerDashingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />

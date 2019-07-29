@@ -172,7 +172,7 @@ void Grid::UpdateGrid()
 	UpdateVisibleCells();
 }
 
-std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * target)
+std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * target, float deltaTime)
 {
 	std::unordered_set<GameObject*> res; //result objects
 	
@@ -196,7 +196,7 @@ std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * targe
 			for (auto insideObject : cells[i][j]->objects)
 			{
 				//***Check if each object in each cell is colliable with target object
-				if (COLLISION->SweptAABB(target->GetBoundingBox(),insideObject->GetBoundingBox()).isCollide)
+				if (COLLISION->SweptAABB(target->GetBoundingBox(),insideObject->GetBoundingBox(), deltaTime).isCollide)
 				{
 					//add it to result list
 					res.insert(insideObject);

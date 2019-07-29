@@ -2,13 +2,12 @@
 #include "../GameObject.h"
 #include "../../Framework/Sprite.h"
 
-class Life :public GameObject
+class Rescue :public GameObject
 {
-private:
-	Sprite*		life;
+	Sprite*	rescue;
 public:
-	Life(int left, int top, int width, int height);
-	Life(RECT rect);
+	Rescue(int x, int y, int width, int height);
+	Rescue(RECT rect);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

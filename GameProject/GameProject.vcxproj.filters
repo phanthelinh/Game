@@ -126,23 +126,8 @@
     <ClCompile Include="GameComponents\Items\ItemsContainer.cpp">
       <Filter>GameComponents\Items</Filter>
     </ClCompile>
-    <ClCompile Include="GameComponents\Items\Heart.cpp">
-      <Filter>GameComponents\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="GameComponents\Items\ExitGem.cpp">
-      <Filter>GameComponents\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="GameComponents\Items\Diamon.cpp">
-      <Filter>GameComponents\Items</Filter>
-    </ClCompile>
     <ClCompile Include="GameComponents\Effect\Explode.cpp">
       <Filter>GameComponents\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="GameComponents\Items\Life.cpp">
-      <Filter>GameComponents\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="GameComponents\Items\Health.cpp">
-      <Filter>GameComponents\Items</Filter>
     </ClCompile>
     <ClCompile Include="GameComponents\Items\Five.cpp">
       <Filter>GameComponents\Items</Filter>
@@ -152,6 +137,21 @@
     </ClCompile>
     <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp">
       <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\PowerStone.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\KeyCrystals.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Rescue.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\Energy.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Items\OneUp.cpp">
+      <Filter>GameComponents\Items</Filter>
     </ClCompile>
     <ClCompile Include="GameComponents\Ground.cpp">
       <Filter>GameComponents</Filter>
@@ -248,23 +248,8 @@
     <ClInclude Include="GameComponents\Items\ItemsContainer.h">
       <Filter>GameComponents\Items</Filter>
     </ClInclude>
-    <ClInclude Include="GameComponents\Items\Heart.h">
-      <Filter>GameComponents\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="GameComponents\Items\ExitGem.h">
-      <Filter>GameComponents\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="GameComponents\Items\Diamon.h">
-      <Filter>GameComponents\Items</Filter>
-    </ClInclude>
     <ClInclude Include="GameComponents\Effect\Explode.h">
       <Filter>GameComponents\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="GameComponents\Items\Life.h">
-      <Filter>GameComponents\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="GameComponents\Items\Health.h">
-      <Filter>GameComponents\Items</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Items\Five.h">
       <Filter>GameComponents\Items</Filter>
@@ -274,6 +259,21 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerOnShieldState.h">
       <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\PowerStone.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\KeyCrystals.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Rescue.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\Energy.h">
+      <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\OneUp.h">
+      <Filter>GameComponents\Items</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Ground.h">
       <Filter>GameComponents</Filter>

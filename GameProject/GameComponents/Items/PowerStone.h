@@ -3,13 +3,15 @@
 #include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
 
-class ExitGem :public GameObject
+class PowerStone :public GameObject
 {
 private:
-	Animation*		exitGem;
+	bool isSmallType;
+	Animation*	curDiamon;
+	DWORD	firstTimeCollideGround;
 public:
-	ExitGem(int left, int top, int width, int height);
-	ExitGem(RECT rect);
+	PowerStone(int x, int y, int width, int height, bool isSmallType);
+	PowerStone(RECT rect, bool isSmallType);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

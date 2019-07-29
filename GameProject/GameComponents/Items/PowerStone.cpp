@@ -1,9 +1,9 @@
-#include "Diamon.h"
+#include "PowerStone.h"
 
-Diamon::Diamon(int left, int top, int width, int height, bool isSmallType)
+PowerStone::PowerStone(int x, int y, int width, int height, bool isSmallType)
 {
-	posX = left - width/2;
-	posY = top - height/2;
+	posX = x;
+	posY = y;
 	this->width = width;
 	this->height = height;
 	vY = -12.0f;
@@ -16,14 +16,14 @@ Diamon::Diamon(int left, int top, int width, int height, bool isSmallType)
 	{
 		curDiamon = new Animation("Resources/items/diamonlarge_32_16.png", 2, 1, 2, true, 0.5);
 	}
-	tag = Tag::DiamonTag;
+	tag = Tag::PowerStoneTag;
 }
 
-Diamon::Diamon(RECT rect, bool isSmallType) :Diamon(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, isSmallType)
+PowerStone::PowerStone(RECT rect, bool isSmallType) :PowerStone(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, isSmallType)
 {
 }
 
-void Diamon::OnCollision(GameObject * object, float deltaTime)
+void PowerStone::OnCollision(GameObject * object, float deltaTime)
 {
 	if (!isDead)
 	{
@@ -34,11 +34,11 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 		CollisionResult collideRes;
 		if (object->tag == GroundTag)
 		{
-			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		}
 		else
 		{
-			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
 		}
 		if (collideRes.isCollide)
 		{
@@ -47,6 +47,7 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 			case Tag::GroundTag:
 				posY += vY * collideRes.entryTime;
 				vY = 0;
+				firstTimeCollideGround = GetTickCount();
 				break;
 			default:
 				break;
@@ -59,29 +60,34 @@ void Diamon::OnCollision(GameObject * object, float deltaTime)
 	}
 }
 
-void Diamon::Update(float deltaTime)
+void PowerStone::Update(float deltaTime)
 {
 	if (!isDead)
 	{
 		curDiamon->Update(deltaTime);
 		posY += deltaTime * vY;
-		vY += 2;
+		vY = vY == 0 ? 0 : vY + 2;
+		auto now = GetTickCount();
+		if ((now - firstTimeCollideGround) / 1000.0f >= 3.0f)
+		{
+			//start to flashing
+		}
 	}
 }
 
-void Diamon::Draw()
+void PowerStone::Draw()
 {
 	if (!isDead)
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT());//center is like player
 }
 
-void Diamon::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+void PowerStone::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if (!isDead)
 		curDiamon->Draw(position, cameraPosition, sourceRect, center);
 }
 
-BoundingBox Diamon::GetBoundingBox()
+BoundingBox PowerStone::GetBoundingBox()
 {
 	BoundingBox b;
 	b.left = posX + width/2;
@@ -93,7 +99,7 @@ BoundingBox Diamon::GetBoundingBox()
 	return b;
 }
 
-void Diamon::Release()
+void PowerStone::Release()
 {
 	if (curDiamon != nullptr)
 		delete curDiamon;

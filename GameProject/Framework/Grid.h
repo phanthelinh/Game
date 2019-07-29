@@ -36,7 +36,7 @@ public:
 	//Update entire grid
 	void UpdateGrid();
 	//Get objects that have ability to collide with a target Game object
-	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target);
+	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target, float deltaTime);
 	//Get object Ground in visual viewport
 	std::vector<GameObject*> GetVisibleGround();
 };

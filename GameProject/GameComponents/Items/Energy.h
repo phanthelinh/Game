@@ -3,14 +3,14 @@
 #include "../../Framework/Animation.h"
 #include "../../Framework/Collision.h"
 
-class Diamon :public GameObject
+class Energy : public GameObject
 {
 private:
-	bool isSmallType;
-	Animation*	curDiamon;
+	Animation*	energy;
 public:
-	Diamon(int left, int top, int width, int height, bool isSmallType);
-	Diamon(RECT rect, bool isSmallType);
+	Energy(int x, int y, int width, int height);
+	Energy(RECT rect);
+
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

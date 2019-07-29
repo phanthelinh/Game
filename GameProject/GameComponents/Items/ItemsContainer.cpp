@@ -90,9 +90,10 @@ void ItemsContainer::Update(float deltaTime)
 	{
 		it->Update(deltaTime);
 		//collision items and ground
-		for (auto g : GRID->GetVisibleGround())
+		for (auto g : GRID->GetVisibleGrounds())
 		{
-			it->OnCollision(g, deltaTime);
+			GameObject* ground = new ItemsContainer(*g);
+			it->OnCollision(ground, deltaTime);
 		}
 	}
 }

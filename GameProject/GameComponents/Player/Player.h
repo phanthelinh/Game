@@ -49,6 +49,9 @@ public:
 	void OnKeyUp(int keyCode);
 
 	virtual BoundingBox GetBoundingBox();
+	//find collidable ground
+	bool DetectGround(std::unordered_set<RECT*> grounds);
+	void CheckGroundCollision(std::unordered_set<RECT*> grounds);
 
 	void Release();
 
@@ -60,6 +63,7 @@ public:
 	int				health, lives;
 	bool			isOnGround, isAttacking, shieldFlying;
 	Shield*			shield;
+	RECT groundBound; //current ground that captain is standing
 private:
 	static Player*	instance;
 

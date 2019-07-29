@@ -51,10 +51,11 @@ void DemoScene::Update(float deltaTime)
 	//COLLISION
 	//
 	//check collision Ground <> Player
-	for (auto g : GRID->GetVisibleGround())
+	for (auto g : GRID->GetVisibleGrounds())
 	{
-		PLAYER->OnCollision(g, deltaTime);
+		PLAYER->OnCollision((GameObject*)g, deltaTime);
 	}
+	//PLAYER->CheckGroundCollision(GRID->GetColliableGrounds(PLAYER));
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER);
 	//player check collision

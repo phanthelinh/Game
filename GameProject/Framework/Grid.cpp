@@ -29,6 +29,11 @@ Grid::Grid()
 
 	for (auto it = grounds.begin(); it != grounds.end(); ++it)
 	{
+		RECT* g = new RECT();
+		g->top = it->top;
+		g->left = it->left;
+		g->bottom = it->bottom;
+		g->top = it->top;
 		//calculate which cell is valid
 		int startX = floor((*it).left / CELL_WIDTH);
 		int endX = floor((*it).right / CELL_WIDTH);
@@ -43,7 +48,7 @@ Grid::Grid()
 				continue;
 			for (int j = startX; j <= endX; j++)
 			{
-				cells[i][j]->Add(new Ground(*it));
+				cells[i][j]->grounds.push_back(g);
 			}
 		}
 	}
@@ -207,16 +212,48 @@ std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * targe
 	return res;
 }
 
-std::vector<GameObject*> Grid::GetVisibleGround()
+std::unordered_set<RECT*> Grid::GetVisibleGrounds()
 {
-	std::vector<GameObject*> rs;
-	for (auto g : listGround)
+	std::unordered_set<RECT*> lstGrounds;
+
+	for (auto cell : visibleCells)
 	{
-		if (g->IsCollide(CAMERA->GetBound()))
+		for (auto g : cell->grounds)
 		{
-			rs.push_back(g);
+			if (COLLISION->IsCollide(BoundingBox(*g), BoundingBox(CAMERA->GetBound())))
+			{
+				lstGrounds.insert(g);
+			}
 		}
 	}
-	
-	return rs;
+	return lstGrounds;
 }
+
+std::unordered_set<RECT*> Grid::GetColliableGrounds(GameObject* target)
+{
+	std::unordered_set<RECT*> grounds;
+
+	auto targetBound = target->GetBound();
+	int LeftCell = targetBound.left / CELL_WIDTH;
+	int RightCell = targetBound.right / CELL_WIDTH;
+	int TopCell = targetBound.top / CELL_HEIGHT;
+	int BottomCell = targetBound.bottom / CELL_HEIGHT;
+
+	for (int y = BottomCell; y <= TopCell; ++y)
+	{
+		if (y < 0 || y >= numRows)
+			continue;
+		for (int x = LeftCell; x <= RightCell; ++x)
+		{
+			if (x < 0 || x >= numCols)
+				continue;
+			//insert all ground object from cells[y][x] into list grounds
+			for (auto g : cells[y][x]->grounds)
+			{
+				grounds.insert(g);
+			}
+		}
+	}
+	return grounds;
+}
+

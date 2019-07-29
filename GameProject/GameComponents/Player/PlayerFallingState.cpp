@@ -26,7 +26,7 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY -= GRAVITY;
 	if (PLAYER->vY <= 0)
-	{ 
+	{
 		PLAYER->shield->SetState(ShieldState::Normal);
 		PLAYER->ChangeState(Standing);
 	}

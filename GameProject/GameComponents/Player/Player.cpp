@@ -119,7 +119,8 @@ void Player::Update(float deltaTime)
 	//
 	//COLLISION
 	//
-	
+	/*dX = vX * deltaTime;
+	dY = vY * deltaTime;*/
 }
 
 void Player::Draw()
@@ -258,6 +259,62 @@ BoundingBox Player::GetBoundingBox()
 	b.vX = vX;
 	b.vY = vY;
 	return b;
+}
+
+bool Player::DetectGround(std::unordered_set<RECT*> grounds)
+{
+	RECT rbp;					//rect broading-phase
+	/*auto bottom = rbp.y - rbp.height;
+	rbp.y = rbp.y + dy;
+	rbp.height = rbp.height - dy;*/
+	float right = this->posX + this->width;
+	float bottom = this->posY + this->height;
+	rbp.left = this->vX > 0 ? this->posX : this->posX + this->dX;
+	rbp.top = this->vY > 0 ? this->posY : this->posY + this->dY;
+	rbp.right = this->vX > 0 ? right + this->dX : right;
+	rbp.bottom = this->vY > 0 ? bottom + this->dY : bottom;
+
+	if (COLLISION->IsCollide(BoundingBox(rbp), BoundingBox(groundBound)) && (rbp.bottom <= groundBound.top))
+		return true;
+
+	for (auto g : grounds)
+	{
+		if (COLLISION->IsCollide(BoundingBox(rbp), BoundingBox(*g)))
+		{
+			groundBound = *g;
+			return true;
+		}
+	}
+	return false;
+}
+
+void Player::CheckGroundCollision(std::unordered_set<RECT*> grounds)
+{
+	//is on air
+	if (this->vY < 0)
+	{
+		this->isOnGround = false;
+	}
+
+	// find ground and handle collision
+	if (DetectGround(grounds))
+	{
+		//if is falling
+		if (this->vY > 0)
+		{
+			this->isOnGround = true;
+			this->vY = this->dY = 0;
+			this->posY = groundBound.top + (this->height / 2);
+			this->ChangeState(Standing);
+			/*if (currentState == ATTACKING_STAND)
+				this->allow[MOVING] = false;*/
+		}
+	}
+	// if is running, then fall
+	else if (!this->vY)
+	{
+		this->ChangeState(Falling);
+	}
 }
 
 void Player::Release()

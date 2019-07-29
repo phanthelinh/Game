@@ -38,5 +38,6 @@ public:
 	//Get objects that have ability to collide with a target Game object
 	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target);
 	//Get object Ground in visual viewport
-	std::vector<GameObject*> GetVisibleGround();
+	std::unordered_set<RECT*> GetVisibleGrounds();
+	std::unordered_set<RECT*> GetColliableGrounds(GameObject* obj);
 };

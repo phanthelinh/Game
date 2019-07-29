@@ -18,6 +18,8 @@ struct BoundingBox
 { 
 	float left, top, right, bottom;
 	float vX, vY;
+	BoundingBox(){}
+	BoundingBox(RECT r) { left = r.left; top = r.top; right = r.right; bottom = r.bottom; vX = vY = 0; }
 };
 
 class GameObject
@@ -32,7 +34,8 @@ public:
 	float spawnX, spawnY;	//spawn position
 	float posX, posY;		//center-point of object						
 	float vX, vY;								
-	int width, height;						
+	int width, height;	
+	float dX, dY;			//distance in deltaTime
 	bool isReverse;			//is flip sprite vertically				
 	bool isDead;
 

@@ -12,6 +12,8 @@ private:
 	bool IsContain(RECT r);
 public:
 	std::unordered_set<GameObject*> objects;
+	std::vector<RECT*> grounds;
+
 
 	Cell(int x, int y);
 	//Add an object to a cell, if it is contained in this cell

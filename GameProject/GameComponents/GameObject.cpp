@@ -93,8 +93,10 @@ RECT GameObject::GetBoundFromCorner()
 
 void GameObject::Update(float deltaTime)
 {
-	posX = posX + deltaTime * vX;
-	posY = posY + deltaTime * vY;
+	dX = vX * deltaTime;
+	dY = vY * deltaTime;
+	posX = posX + dX;
+	posY = posY + dY;
 }
 
 bool GameObject::IsCollide(RECT r)

@@ -3,9 +3,9 @@
 
 enum Tag {
 	Captain,
-	Enemy,
+	EnemyTag,
+	WeaponTag,
 	GroundTag,
-	Weapon,
 	ItemContainerTag,
 	EnergyTag,
 	KeyCrystalsTag,

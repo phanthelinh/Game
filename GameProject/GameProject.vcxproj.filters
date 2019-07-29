@@ -34,6 +34,9 @@
     <Filter Include="GameComponents\Effect">
       <UniqueIdentifier>{085cbd9b-a351-485e-892e-ab667a581727}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\Enemy">
+      <UniqueIdentifier>{9e7d65fc-fbf0-4902-9b9d-087d4cc60741}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,6 +159,12 @@
     <ClCompile Include="GameComponents\Ground.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Enemy.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Weapon.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -277,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Ground.h">
       <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Enemy.h">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Weapon.h">
+      <Filter>GameComponents\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

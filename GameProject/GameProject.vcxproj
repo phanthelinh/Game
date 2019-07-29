@@ -142,6 +142,8 @@
     <ClCompile Include="Framework\TileSet.cpp" />
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Enemy.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Weapon.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Ground.cpp" />
     <ClCompile Include="GameComponents\Items\PowerStone.cpp" />
@@ -184,6 +186,8 @@
     <ClInclude Include="Framework\TileSet.h" />
     <ClInclude Include="Framework\Util.h" />
     <ClInclude Include="GameComponents\Effect\Explode.h" />
+    <ClInclude Include="GameComponents\Enemy\Enemy.h" />
+    <ClInclude Include="GameComponents\Enemy\Weapon.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Ground.h" />
     <ClInclude Include="GameComponents\Items\PowerStone.h" />

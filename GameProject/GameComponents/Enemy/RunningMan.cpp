@@ -2,23 +2,33 @@
 
 #define RUNNING_RANGE 150
 #define SHOOTING_RANGE 50
+#define SIT_RANGE 100
 
 RunningMan::RunningMan():Enemy()
 {
 
 }
 
-RunningMan::RunningMan(float posX, float posY):Enemy(posX,posY,0,0)
+RunningMan::RunningMan(float posX, float posY, int type):Enemy(posX,posY,0,0)
 {
 	animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
 	animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/RunningMan_Sit.png", 1, 1, 1);
 	animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1);
 	animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/RunningMan_Run.png", 3, 1, 3, true, 0.5f);
 
-	currHealth = maxHealth = 10; 
-	currentState = EnemyStateName::EnemyStand;
-	SetState(EnemyStateName::EnemyStand);
+	currHealth = maxHealth = 10;
+	if (type == 0)
+	{
+		currentState = EnemyStateName::EnemyStand;
+		SetState(EnemyStateName::EnemyStand);
+	}
+	else
+	{
+		currentState = EnemyStateName::EnemySit;
+		SetState(EnemyStateName::EnemySit);
+	}
 	isReverse = true;
+	isWaiting = true;
 }
 
 RunningMan::RunningMan(RECT r):RunningMan(r.left,r.top)
@@ -76,8 +86,22 @@ void RunningMan::Update(float deltaTime)
 			break;
 		}
 		case EnemyDie:
+		{
 			vX = 0.0f;
 			break;
+		}
+		case EnemySit:
+		{
+			if (isAttacking == true)
+			{
+				//ban dan vao nguoi choi
+			}
+			if (CheckPosition() == 2)
+			{
+				isWaiting = false;
+				isAttacking = true;
+			}
+		}
 	}
 
 	if (PLAYER->posX < posX)
@@ -92,7 +116,7 @@ void RunningMan::Update(float deltaTime)
 	currentAnim->Update(deltaTime);
 }
 
-bool RunningMan::CheckPosition()
+int RunningMan::CheckPosition()
 {
 	float distance = abs(PLAYER->posX - posX);
 	if (distance <= RUNNING_RANGE && distance > SHOOTING_RANGE)
@@ -102,6 +126,10 @@ bool RunningMan::CheckPosition()
 	if (distance <= SHOOTING_RANGE)
 	{
 		return 0;
+	}
+	if (distance <= SIT_RANGE && currentState == EnemyStateName::EnemySit)
+	{
+		return 2;
 	}
 	return -1;
 }

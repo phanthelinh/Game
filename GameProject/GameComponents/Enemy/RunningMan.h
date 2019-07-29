@@ -15,10 +15,10 @@ private:
 	bool isAttacking = false;
 public:
 	RunningMan();
-	RunningMan(float posX, float posY);
+	RunningMan(float posX, float posY, int type = 0);
 	RunningMan(RECT r);
 
-	bool CheckPosition(); //0 is shooting range, 1 is running range
+	int CheckPosition(); //0 is shooting range, 1 is running range
 
 	//necessary functions
 	void SetState(EnemyStateName state);

@@ -28,6 +28,11 @@ DemoScene::DemoScene()
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
 	//GRID->listGround = listObject;
+
+	//enemy test
+	boss = new WizardBoss();
+	boss->posX = 70;
+	boss->posY = 436;
 }
 
 DemoScene::~DemoScene()
@@ -80,6 +85,7 @@ void DemoScene::Draw()
 	}
 	//render player
 	PLAYER->Draw();
+	boss->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

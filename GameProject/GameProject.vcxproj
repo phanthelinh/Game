@@ -144,6 +144,7 @@
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\Enemy\Enemy.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp" />
+    <ClCompile Include="GameComponents\Enemy\WizardBoss.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Ground.cpp" />
     <ClCompile Include="GameComponents\Items\PowerStone.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\Enemy\Enemy.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h" />
+    <ClInclude Include="GameComponents\Enemy\WizardBoss.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Ground.h" />
     <ClInclude Include="GameComponents\Items\PowerStone.h" />

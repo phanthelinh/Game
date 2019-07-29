@@ -9,6 +9,7 @@
 #include "../Framework/Grid.h"
 #include "../Framework/Util.h"
 #include "../Framework/Grid.h"
+#include "../GameComponents/Enemy/WizardBoss.h"
 
 class DemoScene:public Scene
 {
@@ -17,7 +18,7 @@ private:
 	std::unordered_set<GameObject*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-
+	WizardBoss* boss;
 public:
 	DemoScene();
 	~DemoScene();

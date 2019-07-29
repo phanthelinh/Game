@@ -9,7 +9,7 @@ public:
 	Animation*		currentAnim;
 	float			maxHealth, currHealth;
 	Weapon*			enemyWeapon;
-	float			point;
+	float			point;		//score when defeated
 
 	Enemy();
 	//posX, posY is the left, top of enemies

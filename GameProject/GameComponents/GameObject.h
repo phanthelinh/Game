@@ -13,7 +13,8 @@ enum Tag {
 	PowerStoneTag,
 	OneUpTag,
 	RescueTag,
-	FiveTag
+	FiveTag,
+	Wizard
 };
 struct BoundingBox 
 { 

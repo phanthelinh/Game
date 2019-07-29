@@ -35,7 +35,7 @@ DemoScene::DemoScene()
 	boss->posY = 436;
 	domesto = new Domesto(120, 390);
 
-	runningman = new RunningMan(240, 436);
+	runningman = new RunningMan(240, 436, 0, 1);
 }
 
 DemoScene::~DemoScene()

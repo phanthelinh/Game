@@ -9,12 +9,22 @@ RunningMan::RunningMan():Enemy()
 
 }
 
-RunningMan::RunningMan(float posX, float posY, int type):Enemy(posX,posY,0,0)
+RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,posY,0,0)
 {
-	animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
-	animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/RunningMan_Sit.png", 1, 1, 1);
-	animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1);
-	animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/RunningMan_Run.png", 3, 1, 3, true, 0.5f);
+	if (color == 0)
+	{
+		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/RunningMan_Sit.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/RunningMan_Run.png", 3, 1, 3, true, 0.5f);
+	}
+	else
+	{
+		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/GreenRunningMan_Stand.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/GreenRunningMan_Sit.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/GreenRunningMan_Die.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/GreenRunningMan_Run.png", 3, 1, 3, true, 0.5f);
+	}
 
 	currHealth = maxHealth = 10;
 	if (type == 0)

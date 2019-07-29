@@ -28,6 +28,7 @@ DemoScene::DemoScene()
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
 	//GRID->listGround = listObject;
+	domesto = new Domesto(120, 390);
 }
 
 DemoScene::~DemoScene()
@@ -39,6 +40,7 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	GRID->UpdateGrid();
+	domesto->Update(deltaTime);
 	//update object
 	for (auto cell : GRID->visibleCells)
 	{
@@ -78,6 +80,7 @@ void DemoScene::Draw()
 			obj->Draw();
 		}
 	}
+	domesto->Draw();
 	//render player
 	PLAYER->Draw();
 }

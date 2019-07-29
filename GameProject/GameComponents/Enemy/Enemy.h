@@ -3,6 +3,16 @@
 #include "../Player/Player.h"
 #include "Weapon/Weapon.h"
 
+enum EnemyStateName
+{
+	EnemyStand,
+	EnemyRun,
+	EnemySit,
+	EnemyAttack,
+	EnemyDie,
+	EnemyJump
+};
+
 class Enemy: public GameObject
 {
 public:

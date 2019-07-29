@@ -177,6 +177,9 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\Missile.cpp">
       <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\RunningMan.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\Weapon\Missile.h">
       <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\RunningMan.h">
+      <Filter>GameComponents\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

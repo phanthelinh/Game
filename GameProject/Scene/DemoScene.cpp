@@ -34,6 +34,8 @@ DemoScene::DemoScene()
 	boss->posX = 70;
 	boss->posY = 436;
 	domesto = new Domesto(120, 390);
+
+	runningman = new RunningMan(240, 436);
 }
 
 DemoScene::~DemoScene()
@@ -46,6 +48,7 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	GRID->UpdateGrid();
 	domesto->Update(deltaTime);
+	runningman->Update(deltaTime);
 	//update object
 	for (auto cell : GRID->visibleCells)
 	{
@@ -89,6 +92,7 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	boss->Draw();
+	runningman->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

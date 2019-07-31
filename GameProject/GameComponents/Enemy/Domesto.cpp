@@ -34,7 +34,7 @@ void Domesto::Update(float deltaTime)
 	auto now = GetTickCount();
 	isReverse = posX <= PLAYER->posX;
 	currentAnim->_isFlipHor = isReverse;
-	EXPLODE->Update(deltaTime);
+	//EXPLODE->Update(deltaTime);
 	if (isStopUpdate)
 	{
 		if ((now - startTime)/1000.0f >= 0.5f)
@@ -44,7 +44,7 @@ void Domesto::Update(float deltaTime)
 		}
 		return;
 	}
-	//currHealth--;
+	currHealth--;
 	if (currHealth <= 0)
 		ChangeEnemyState(EnemyDie);
 	currentAnim->Update(deltaTime);
@@ -161,7 +161,6 @@ void Domesto::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT source
 	if (!isDead)
 	{
 		currentAnim->Draw(position, cameraPosition, sourceRect, center);
-		EXPLODE->Draw();
 		if (!isPauseMissile)
 		{
 			for (auto m : missles)

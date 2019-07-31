@@ -52,7 +52,7 @@ void DemoScene::Update(float deltaTime)
 	visibleObject = GRID->GetVisibleObjects();
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	
+	EXPLODE->Update(deltaTime);
 	//
 	//COLLISION
 	//
@@ -85,6 +85,7 @@ void DemoScene::Draw()
 	PLAYER->Draw();
 	boss->Draw();
 	runningman->Draw();
+	EXPLODE->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

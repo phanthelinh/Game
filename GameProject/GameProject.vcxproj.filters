@@ -183,6 +183,15 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\Bullet.cpp">
       <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerWaterRun.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerWaterStand.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerHurt.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -325,6 +334,15 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\Weapon\Bullet.h">
       <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerWaterRun.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerWaterStand.h">
+      <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerHurt.h">
+      <Filter>GameComponents\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

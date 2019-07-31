@@ -15,6 +15,9 @@ Player::Player()
 	animations[Spinning] = new Animation("Resources/player/Spinning.png", 2, 1, 2, true);
 	animations[OnShield] = new Animation("Resources/player/OnShield.png", 1, 1, 1);
 	animations[Dashing] = new Animation("Resources/player/Dashing.png", 3, 1, 3, false, 0.5);
+	animations[WaterStand] = new Animation("Resources/player/PlayerWaterStand.png", 1, 1, 1);
+	animations[WaterRun] = new Animation("Resources/player/PlayerWaterRun.png", 2, 1, 2, true);
+	animations[Hurt] = new Animation("Resoures/player/PlayerHurt.png", 1, 1, 1);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);

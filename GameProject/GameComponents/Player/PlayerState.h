@@ -22,6 +22,9 @@ enum StateName
 	Attacking_Shield,
 	Attacking_StandBump,
 	Sitting,
+	WaterRun,
+	WaterStand,
+	Hurt,
 	Die
 };
 

@@ -163,6 +163,7 @@
     <ClCompile Include="GameComponents\Player\PlayerDashingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerHurt.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerKickingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp" />
@@ -170,6 +171,8 @@
     <ClCompile Include="GameComponents\Player\PlayerSpinningState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerSittingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerStandingState.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerWaterRun.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerWaterStand.cpp" />
     <ClCompile Include="GameComponents\Shield\Shield.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\DemoScene.cpp" />
@@ -211,6 +214,7 @@
     <ClInclude Include="GameComponents\Player\PlayerDashingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />
     <ClInclude Include="GameComponents\Player\PlayerFallingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerHurt.h" />
     <ClInclude Include="GameComponents\Player\PlayerJumpingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerKickingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerAttackingState.h" />
@@ -220,6 +224,8 @@
     <ClInclude Include="GameComponents\Player\PlayerSpinningState.h" />
     <ClInclude Include="GameComponents\Player\PlayerStandingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerWaterRun.h" />
+    <ClInclude Include="GameComponents\Player\PlayerWaterStand.h" />
     <ClInclude Include="GameComponents\Shield\Shield.h" />
     <ClInclude Include="Scene\DemoScene.h" />
     <ClInclude Include="Scene\Scene.h" />

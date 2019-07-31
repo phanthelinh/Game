@@ -29,7 +29,20 @@ void Bullet::OnCollision(GameObject * object, float deltaTime)
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide && PLAYER->isImmu == false)
 		{
-			PLAYER->ChangeState(Hurt);
+			PLAYER->health -= weaponDamage;
+			if (PLAYER->health <= 0)
+				PLAYER->ChangeState(Die);
+			else
+				PLAYER->ChangeState(Hurt);
+		}
+	}
+	if (object->tag == Tag::ShieldTag)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide)
+		{
+			this->vY = abs(vX) * -1;
+			this->vX = 0.0;
 		}
 	}
 }

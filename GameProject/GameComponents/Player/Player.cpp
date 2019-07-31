@@ -37,6 +37,8 @@ Player::Player()
 	isImmu = false;
 	shield = new Shield();
 	shieldFlying = false;
+
+	health = 10;
 	/*posX = 16;
 	posY = 360;*/
 	CAMERA->camPosition = GetPosition();

@@ -1,4 +1,5 @@
 #include "PlayerHurt.h"
+#define GRAVITY 3.0f
 
 PlayerHurt::PlayerHurt()
 {
@@ -11,6 +12,11 @@ PlayerHurt::PlayerHurt()
 
 void PlayerHurt::Update(float deltaTime)
 {
+	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	if (PLAYER->PreviousState == Jumping)
+	{
+		PLAYER->vY += GRAVITY;
+	}
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		PLAYER->isImmu = false;
@@ -29,4 +35,10 @@ StateName PlayerHurt::GetState()
 
 void PlayerHurt::OnCollision(GameObject* entity, float deltaTime)
 {
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnGround = true;
+		PLAYER->vY = 0;
+	}
 }

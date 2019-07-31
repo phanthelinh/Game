@@ -26,9 +26,22 @@ void Missile::OnCollision(GameObject * object, float deltaTime)
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide && PLAYER->isImmu == false)
+		{
+			PLAYER->health -= weaponDamage;
+			if (PLAYER->health <= 0)
+				PLAYER->ChangeState(Die);
+			else
+				PLAYER->ChangeState(Hurt);
+		}
+	}
+	if (object->tag == Tag::ShieldTag)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide)
 		{
-			object->posX += 50;
+			this->vY = abs(vX) * -1;
+			this->vX = 0.0;
 		}
 	}
 }

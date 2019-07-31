@@ -6,6 +6,7 @@ PlayeDiedState::PlayeDiedState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->allow[Attacking] = PLAYER->allow[Attacking_Shield]=false;
 	PLAYER->allow[Sitting] = false;
+	PLAYER->isImmu = true;
 }
 
 void PlayeDiedState::Update(float deltaTime)

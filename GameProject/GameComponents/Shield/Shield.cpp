@@ -46,11 +46,11 @@ void Shield::SetState(ShieldState state)
 		shield->_textureHeight = height = 10;
 		if (isReverse)
 		{
-			vX = 45.0f;
+			vX = 70.0f;
 		}
 		else
 		{
-			vX = -45.0f;
+			vX = -70.0f;
 		}
 		break;
 	default:

@@ -23,6 +23,7 @@ private:
 	WizardBoss* wizard;
 	Domesto* domesto;
 	bool isSpawned = false;
+	bool		shieldInserted;
 public:
 	DemoScene();
 	~DemoScene();

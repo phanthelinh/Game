@@ -2,9 +2,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <exception>
-#include "../../Framework/Animation.h"
 #include "PlayerState.h"
-#include "../GameObject.h"
 #include "PlayerStandingState.h"
 #include "PlayerDiedState.h"
 #include "PlayerDashingState.h"
@@ -14,6 +12,8 @@
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
+#include "../../Framework/Animation.h"
+#include "../../Framework/Grid.h"
 
 #define PLAYER	Player::GetInstance()
 
@@ -66,6 +66,4 @@ public:
 	Shield*			shield;
 private:
 	static Player*	instance;
-
-	bool startcheck = false;
 };

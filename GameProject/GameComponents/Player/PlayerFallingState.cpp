@@ -1,6 +1,6 @@
 #include "PlayerFallingState.h"
 
-#define PLAYER_FALLING_SPEED 30.0f
+#define PLAYER_FALLING_SPEED 40.0f
 #define PLAYER_RUNNING_SPEED 6.5f
 #define GRAVITY 3.0f
 
@@ -27,8 +27,8 @@ void PlayerFallingState::Update(float deltaTime)
 	PLAYER->vY -= GRAVITY;
 	if (PLAYER->vY <= 0)
 	{ 
-		PLAYER->shield->SetState(ShieldState::Normal);
-		PLAYER->ChangeState(Standing);
+		//PLAYER->shield->SetState(ShieldState::Normal);
+		//PLAYER->ChangeState(Standing);
 	}
 }
 
@@ -69,9 +69,9 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnGround = true;
-		//PLAYER->vY = 0;
 		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
 		PLAYER->ChangeState(Standing);
+		PLAYER->shield->SetState(ShieldState::Normal);
 	}
 	else
 	{

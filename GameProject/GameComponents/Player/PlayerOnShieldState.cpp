@@ -1,6 +1,6 @@
 #include "PlayerOnShieldState.h"
 
-#define PLAYER_FALLING_SPEED 30.0f
+#define PLAYER_FALLING_SPEED 40.0f
 #define GRAVITY 3.0f
 
 PlayerOnShieldState::PlayerOnShieldState()
@@ -15,9 +15,8 @@ void PlayerOnShieldState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
-	PLAYER->vY -= GRAVITY;
-	if (PLAYER->vY <= 0)
-		PLAYER->vY = 0;
+	if (PLAYER->isOnGround == false)
+		PLAYER->vY -= GRAVITY;
 }
 
 void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -37,6 +36,7 @@ void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	if (!keys[VK_DOWN])
 	{
 		PLAYER->ChangeState(Standing);
+		PLAYER->shield->SetState(ShieldState::Normal);
 	}
 	if (!keys['X'])
 	{
@@ -51,4 +51,10 @@ StateName PlayerOnShieldState::GetState()
 
 void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 {
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnGround = true;
+		PLAYER->vY = 0;
+	}
 }

@@ -22,15 +22,6 @@ void PlayerKickingState::Update(float deltaTime)
 		if (PLAYER->vY >= 0)
 			PLAYER->ChangeState(Falling);
 	}
-	else
-	{
-		PLAYER->vY -= GRAVITY;
-		if (PLAYER->vY <= 0)
-		{
-			PLAYER->shield->SetState(ShieldState::Normal);
-			PLAYER->ChangeState(Standing);
-		}
-	}
 }
 
 void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -58,4 +49,12 @@ StateName PlayerKickingState::GetState()
 
 void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime) 
 {
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnGround = true;
+		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		PLAYER->ChangeState(Standing);
+		PLAYER->shield->SetState(ShieldState::Normal);
+	}
 }

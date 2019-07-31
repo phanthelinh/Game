@@ -1,6 +1,6 @@
 #include "PlayerJumpingState.h"
 
-#define PLAYER_JUMPING_SPEED -30.0f
+#define PLAYER_JUMPING_SPEED -35.0f
 #define PLAYER_RUNNING_SPEED 6.5f
 #define GRAVITY 3.0f
 
@@ -43,7 +43,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys['X'])
 	{
-		if (PLAYER->vY == 0)
+		if (PLAYER->vY >= 0)
 		{
 			PLAYER->ChangeState(Spinning);
 		}

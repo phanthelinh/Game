@@ -102,17 +102,20 @@ CollisionResult Collision::SweptAABB(BoundingBox movingObj, BoundingBox staticOb
 		tyExit = dyExit / movingObj.vY;
 	}
 	float entryTime, exitTime;
-	//Calculate time on entry and exit 
-	entryTime = (float) max(txEntry, tyEntry);
-	exitTime = (float) min(txExit, tyExit);
+	
 
 	//if not collision
 	//collision occur when entryTime < exitTime 
 	//0 < entryTime < 1
-	if (entryTime > exitTime || (txEntry < 0.0f && tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f)
+	if ((txEntry < 0.0f && tyEntry < 0.0f) || txEntry > 1.0f || tyEntry > 1.0f)
 	{
 		return result;
 	}
+	//Calculate time on entry and exit 
+	entryTime = (float)max(txEntry, tyEntry);
+	exitTime = (float)min(txExit, tyExit);
+	if (entryTime > exitTime)
+		return result;
 	else
 	{
 		result.isCollide = true;

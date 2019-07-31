@@ -32,9 +32,8 @@ DemoScene::DemoScene()
 	GRID->AddObject(domesto);
 
 	//enemy test
-	boss = new WizardBoss();
-	boss->posX = 70;
-	boss->posY = 436;
+	wizard = new WizardBoss(240, 285);
+	GRID->AddObject(wizard);
 	runningman = new RunningMan(240, 436, 0, 1);
 }
 
@@ -47,6 +46,7 @@ void DemoScene::Update(float deltaTime)
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
 	runningman->Update(deltaTime);
+	wizard->Update(deltaTime);
 	//update object
 	visibleObject.clear();
 	visibleObject = GRID->GetVisibleObjects();
@@ -83,7 +83,7 @@ void DemoScene::Draw()
 	}
 	//render player
 	PLAYER->Draw();
-	boss->Draw();
+	wizard->Draw();
 	runningman->Draw();
 }
 

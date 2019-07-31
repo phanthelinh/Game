@@ -37,7 +37,7 @@ RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,p
 		currentState = EnemyStateName::EnemySit;
 		SetState(EnemyStateName::EnemySit);
 	}
-	isReverse = true;
+	isReverse = false;
 	isWaiting = true;
 }
 

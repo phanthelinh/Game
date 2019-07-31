@@ -20,7 +20,7 @@ private:
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-	WizardBoss* boss;
+	WizardBoss* wizard;
 	Domesto* domesto;
 	RunningMan* runningman;
 public:

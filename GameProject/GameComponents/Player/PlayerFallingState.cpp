@@ -9,6 +9,7 @@ PlayerFallingState::PlayerFallingState()
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = false;
+	PLAYER->shield->isVisible = true;
 	if (PLAYER->PreviousState == Spinning)
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED + 13.0f;

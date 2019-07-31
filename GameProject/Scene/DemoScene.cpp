@@ -26,9 +26,8 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	GRID->InsertToGrid(itemsContainer);
-	GRID->AddObject(PLAYER->shield);
-	//GRID->listGround = listObject;
-	domesto = new Domesto(120, 460);
+
+	domesto = new Domesto(120, 432);
 	GRID->AddObject(domesto);
 
 	//enemy test
@@ -48,11 +47,13 @@ void DemoScene::Update(float deltaTime)
 	GRID->UpdateGrid(deltaTime);
 	runningman->Update(deltaTime);
 	//update object
-	visibleObject.clear();
-	visibleObject = GRID->GetVisibleObjects();
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	EXPLODE->Update(deltaTime);
+	if (!shieldInserted)
+	{
+		GRID->AddObject(PLAYER->shield);
+	}
 	//
 	//COLLISION
 	//
@@ -66,6 +67,8 @@ void DemoScene::Update(float deltaTime)
 	//player check collision
 	PLAYER->CheckCollision(lstCollideable, deltaTime);
 	// visible objects check collision with player
+	visibleObject.clear();
+	visibleObject = GRID->GetVisibleObjects();
 	for (auto obj : visibleObject)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
@@ -124,17 +127,5 @@ void DemoScene::ReleaseAll()
 
 void DemoScene::CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime)
 {
-	
-	/*for (auto i = 0; i < listObj.size(); i++) 
-	{
-		CollisionResult res = COLLISION->SweptAABB(player, listObj[i]->GetBoundingBox(), deltaTime);
-		if (res.entryTime > 0.0f && res.entryTime < 1.0f)
-		{
-			PLAYER->isOnGround = true;
-			PLAYER->vY = 0;
-		}
-	}*/
-	//
-	//if (!PLAYER->isOnGround)
-	//	PLAYER->vY += 10;
+
 }

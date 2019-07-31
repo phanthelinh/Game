@@ -1,6 +1,6 @@
 #include "Missile.h"
 
-#define MISSILE_VX	5.0f
+#define MISSILE_VX	6.5f
 #define MISSILE_MAX_DISTANCE_BEFORE_DIRECTION_CHANGE 50.0f
 
 
@@ -28,7 +28,8 @@ void Missile::OnCollision(GameObject * object, float deltaTime)
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide)
 		{
-			object->posX += 50;
+			
+			
 		}
 	}
 }
@@ -69,7 +70,7 @@ void Missile::Update(float deltaTime)
 	}
 	currAnim->Update(deltaTime);
 	//check for if missle is out of camera bound
-	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
+	if(!IsCollide(CAMERA->GetBound()))
 	{
 		isDead = true;
 	}

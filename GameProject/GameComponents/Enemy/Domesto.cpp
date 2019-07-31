@@ -1,4 +1,5 @@
 #include "Domesto.h"
+#define MAX_DISTANCE_START_TO_JUMP_PLAYER 50.0f
 
 Domesto::Domesto(float posX, float posY):Enemy(posX,posY,0,0)
 {
@@ -27,6 +28,19 @@ void Domesto::ChangeEnemyState(EnemyStateName state)
 
 void Domesto::OnCollision(GameObject * object, float deltaTime)
 {
+	//check collision with ground
+	auto grounds = GRID->GetVisibleGround();
+	for (auto g : grounds)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), g->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide)
+		{
+			posX += vX * colRes.entryTime;
+			posY += vY * colRes.entryTime;
+			vY = 0;
+			ChangeEnemyState(EnemyStateName::EnemyStand);
+		}
+	}
 }
 
 void Domesto::Update(float deltaTime)
@@ -34,7 +48,6 @@ void Domesto::Update(float deltaTime)
 	auto now = GetTickCount();
 	isReverse = posX <= PLAYER->posX;
 	currentAnim->_isFlipHor = isReverse;
-	//EXPLODE->Update(deltaTime);
 	if (isStopUpdate)
 	{
 		if ((now - startTime)/1000.0f >= 0.5f)
@@ -44,7 +57,7 @@ void Domesto::Update(float deltaTime)
 		}
 		return;
 	}
-	currHealth--;
+	//currHealth--;
 	if (currHealth <= 0)
 		ChangeEnemyState(EnemyDie);
 	currentAnim->Update(deltaTime);
@@ -55,7 +68,6 @@ void Domesto::Update(float deltaTime)
 	{
 		for (int i = 0; i < missles.size(); ++i)
 		{
-			missles[i]->Update(deltaTime);
 			if (missles[i]->isDead)
 			{
 				GRID->RemoveObject(missles[i]);
@@ -78,7 +90,7 @@ void Domesto::Update(float deltaTime)
 	case EnemyStand:
 		isPauseMissile = false;
 		vX = 0;
-		if ((now - startTime) / 1000.0f >= 1.5f)
+		if ((now - startTime) / 1000.0f >= 2.0f)
 		{
 			//attack
 			startTime = now;
@@ -93,21 +105,19 @@ void Domesto::Update(float deltaTime)
 		vX = 3.0f * (isReverse ? 1.0f : -1.0f);
 		posX += vX * deltaTime;
 		posY += vY * deltaTime;
-		now = GetTickCount();
-		if ((now - startTime) / 1000.0f >= 1.5f)
+		if (abs(posX-PLAYER->posX)>= MAX_DISTANCE_START_TO_JUMP_PLAYER)
 		{
-			startTime = now;
 			mis = new Missile(posX, posY - height, MissileType::StraightMissile);
 			mis->isReverse = isReverse;
 			missles.push_back(mis);
-			ChangeEnemyState(EnemyStand);
+			vY = -28.0f;
+			ChangeEnemyState(EnemyJump);
 		}
 		break;
 	case EnemySit:
 		isPauseMissile = false;
 		vX = 0;
-		now = GetTickCount();
-		if ((now - startTime) / 1000.0f >= 1.5f)
+		if ((now - startTime) / 1000.0f >= 2.0f)
 		{
 			//attack
 			startTime = now;
@@ -144,7 +154,10 @@ void Domesto::Update(float deltaTime)
 		break;
 	case EnemyJump:
 		isPauseMissile = true;
-
+		vY = vY + 2 > 28.0f ? 8.0f : vY + 2;
+		vX = 5.0f*(isReverse ? 1.0f : -1.0f);
+		posX += vX * deltaTime;
+		posY += vY * deltaTime;
 		break;
 	default:
 		break;

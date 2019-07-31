@@ -63,7 +63,9 @@ void Player::Update(float deltaTime)
 	{
 		SetPosition(D3DXVECTOR3(GLOBAL->g_WorldMapWidth - 16, posY, 0));
 	}
+	//
 	//assign position for shield
+	//
 	if (shield->curState == ShieldState::Flying) //shield flying is true when start attack shiled state
 	{
 		if (currentAnim->_isFinished) //if sprite throw is finish, start to throw shield
@@ -77,38 +79,22 @@ void Player::Update(float deltaTime)
 		}
 		else
 		{
-			
+			//player catch the the Shield
 			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
 			
-			if (colRes.isCollide)
+			if (colRes.isCollide) //caught shield
 			{
-				startcheck = true;
 				shield->Update(colRes.entryTime);
 				shieldFlying = false;
-				startcheck = false;
 				shield->SetState(ShieldState::Normal);
+				if (currentState->GetState() == StateName::Spinning)
+					shield->isVisible = false;
 			}
-			else
+			else //shield flying
 			{
 				shield->playerVy = vY;
 				shield->playerPos = GetPosition();
-				shield->Update(deltaTime);
-			}
-			if (startcheck)
-			{
-				if (IsCollide(shield->GetBound()))
-				{
-					//
-					shieldFlying = false;
-					startcheck = false;
-					shield->SetState(ShieldState::Normal);
-				}
-				else
-				{
-					shield->playerPos = GetPosition();
-					shield->Update(deltaTime);
-				}
-				
+				//shield->Update(deltaTime); update at Grid
 			}
 		}	
 	}

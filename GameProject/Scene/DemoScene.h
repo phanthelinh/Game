@@ -23,6 +23,7 @@ private:
 	WizardBoss* boss;
 	Domesto* domesto;
 	RunningMan* runningman;
+	bool		shieldInserted;
 public:
 	DemoScene();
 	~DemoScene();

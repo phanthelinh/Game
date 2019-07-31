@@ -8,6 +8,9 @@
 #include "PlayerStandingState.h"
 #include "PlayerDiedState.h"
 #include "PlayerDashingState.h"
+#include "PlayerHurt.h"
+#include "PlayerWaterRun.h"
+#include "PlayerWaterStand.h"
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
@@ -59,6 +62,7 @@ public:
 	StateName PreviousState; //save the laststate of the character
 	int				health, lives;
 	bool			isOnGround, isAttacking, shieldFlying;
+	bool			isImmu;
 	Shield*			shield;
 private:
 	static Player*	instance;

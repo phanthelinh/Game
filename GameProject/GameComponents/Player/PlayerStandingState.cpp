@@ -58,4 +58,5 @@ StateName PlayerStandingState::GetState()
 
 void PlayerStandingState::OnCollision(GameObject* entity, float deltaTime) 
 {
+
 }

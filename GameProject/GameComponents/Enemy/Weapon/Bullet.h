@@ -1,6 +1,7 @@
 #pragma once
 #include "Weapon.h"
 #include "../../../Framework/Collision.h"
+#include "../../Player/Player.h"
 
 class Bullet : public Weapon
 {

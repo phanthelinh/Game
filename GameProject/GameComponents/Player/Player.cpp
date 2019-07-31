@@ -17,7 +17,7 @@ Player::Player()
 	animations[Dashing] = new Animation("Resources/player/Dashing.png", 3, 1, 3, false, 0.5);
 	animations[WaterStand] = new Animation("Resources/player/PlayerWaterStand.png", 1, 1, 1);
 	animations[WaterRun] = new Animation("Resources/player/PlayerWaterRun.png", 2, 1, 2, true);
-	animations[Hurt] = new Animation("Resoures/player/PlayerHurt.png", 1, 1, 1);
+	animations[Hurt] = new Animation("Resources/player/PlayerHurt.png", 3, 1, 1, false, 0.5f);
 
 	animations[Attacking_Shield] = new Animation("Resources/player/player_standthrow_96_32.png", 2, 1, 2, false);
 	animations[Attacking_StandBump] = animations[Attacking] = new Animation("Resources/player/player_standbump_96_48.png", 2, 1, 2, false);
@@ -34,6 +34,7 @@ Player::Player()
 	LastKeyState[RIGHT] = false;
 	isReverse = true;
 	isOnGround = false;
+	isImmu = false;
 	shield = new Shield();
 	shieldFlying = false;
 	/*posX = 16;
@@ -172,6 +173,15 @@ void Player::ChangeState(StateName stateName)
 		break;
 	case OnShield:
 		newState = new PlayerOnShieldState();
+		break;
+	case Hurt:
+		newState = new PlayerHurt();
+		break;
+	case WaterRun:
+		newState = new PlayerWaterRun();
+		break;
+	case WaterStand:
+		newState = new PlayerWaterStand();
 		break;
 	case Die:
 		newState = new PlayeDiedState();

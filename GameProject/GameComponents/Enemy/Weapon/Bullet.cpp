@@ -8,6 +8,7 @@ Bullet::Bullet(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 	vX = BULLET_SPEED * direction;
 	currAnim = new Animation("Resources/weapon/RunningManBullet.png", 1, 1, 1);
 	weaponDamage = 2;
+	tag = Tag::WeaponTag;
 }
 
 
@@ -23,7 +24,14 @@ void Bullet::Update(float deltaTime)
 
 void Bullet::OnCollision(GameObject * object, float deltaTime)
 {
-
+	if (object->tag == Tag::Captain)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide && PLAYER->isImmu == false)
+		{
+			PLAYER->ChangeState(Hurt);
+		}
+	}
 }
 
 void Bullet::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)

@@ -35,6 +35,7 @@ DemoScene::DemoScene()
 	boss = new WizardBoss();
 	boss->posX = 70;
 	boss->posY = 436;
+	runningman = new RunningMan(240, 436, 0, 1);
 }
 
 DemoScene::~DemoScene()
@@ -45,6 +46,7 @@ void DemoScene::Update(float deltaTime)
 {
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
+	runningman->Update(deltaTime);
 	//update object
 	visibleObject.clear();
 	visibleObject = GRID->GetVisibleObjects();
@@ -82,6 +84,7 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	boss->Draw();
+	runningman->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

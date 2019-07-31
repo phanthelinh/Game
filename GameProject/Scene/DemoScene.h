@@ -10,6 +10,7 @@
 #include "../Framework/Util.h"
 #include "../GameComponents/Enemy/Domesto.h"
 #include "../GameComponents/Enemy/WizardBoss.h"
+#include "../GameComponents/Enemy/RunningMan.h"
 
 class DemoScene:public Scene
 {
@@ -21,6 +22,7 @@ private:
 	std::vector<RECT> lstItemContainerRect;
 	WizardBoss* boss;
 	Domesto* domesto;
+	RunningMan* runningman;
 public:
 	DemoScene();
 	~DemoScene();

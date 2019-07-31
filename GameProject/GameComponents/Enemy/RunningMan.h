@@ -1,5 +1,7 @@
 #pragma once
 #include "Enemy.h"
+#include "Weapon/Bullet.h"
+#include "../../Framework/Grid.h"
 #include "../Effect/Explode.h"
 #include "../Player/Player.h"
 #include <unordered_map>
@@ -9,7 +11,9 @@ class RunningMan : public Enemy
 private:
 	std::unordered_map<EnemyStateName, Animation*> animations;
 	EnemyStateName	currentState, prevState;
-	
+	std::vector<Bullet*>	bullets;
+	float LastShotTime;
+
 	//variables that helps control runningman's behaviour
 	bool isWaiting = true;
 	bool isAttacking = false;

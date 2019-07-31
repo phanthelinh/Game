@@ -1,7 +1,7 @@
 #include "RunningMan.h"
 
 #define RUNNING_RANGE 150
-#define SHOOTING_RANGE 50
+#define SHOOTING_RANGE 100
 #define SIT_RANGE 100
 
 RunningMan::RunningMan():Enemy()
@@ -58,6 +58,8 @@ void RunningMan::SetState(EnemyStateName state)
 
 void RunningMan::Update(float deltaTime)
 {
+	float currTime = GetTickCount();
+
 	if (currHealth <= 0)
 	{
 		isDead = true;
@@ -67,19 +69,25 @@ void RunningMan::Update(float deltaTime)
 	{
 		case EnemyStand:
 		{
-			if (isWaiting == true && CheckPosition() == 1)
+			if (isWaiting == true && CheckPosition() == 1) //player vao tam thi chay toi
 			{
 				isWaiting = false;
 				SetState(EnemyStateName::EnemyRun);
 			}
-			if (isAttacking == true && CheckPosition() == 1)
+			if (isAttacking == true && CheckPosition() == 1) //player ra khoi tam thi duoi theo
 			{
 				isAttacking = false;
 				SetState(EnemyStateName::EnemyRun);
 			}
-			if (isAttacking == true && CheckPosition() == 0)
+			if (isAttacking == true && CheckPosition() == 0) //trong tam thi ban
 			{
-				//ban dan vao nguoi choi
+				if (currTime - LastShotTime >= 1200.0f)
+				{
+					LastShotTime = currTime;
+					Bullet* bull = new Bullet(posX, posY - 35, (PLAYER->posX - posX > 0) ? 1 : -1);
+					GRID->AddObject(bull);
+					bullets.push_back(bull);
+				}
 			}
 			break;
 		}
@@ -104,16 +112,33 @@ void RunningMan::Update(float deltaTime)
 		{
 			if (isAttacking == true)
 			{
-				//ban dan vao nguoi choi
+				if (currTime - LastShotTime >= 1200.0f)
+				{
+					LastShotTime = currTime;
+					Bullet* bull = new Bullet(posX, posY - 20, (PLAYER->posX - posX > 0) ? 1 : -1);
+					GRID->AddObject(bull);
+					bullets.push_back(bull);
+				}
 			}
 			if (CheckPosition() == 2)
 			{
 				isWaiting = false;
 				isAttacking = true;
 			}
+			break;
 		}
 	}
 
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		bullets[i]->Update(deltaTime);
+		if (bullets[i]->isDead)
+		{
+			GRID->RemoveObject(bullets[i]);
+			bullets.erase(bullets.begin() + i);
+
+		}
+	}
 	if (PLAYER->posX < posX)
 	{
 		isReverse = false;
@@ -133,7 +158,7 @@ int RunningMan::CheckPosition()
 	{
 		return 1;
 	}
-	if (distance <= SHOOTING_RANGE)
+	if (distance <= SHOOTING_RANGE && currentState != EnemyStateName::EnemySit)
 	{
 		return 0;
 	}

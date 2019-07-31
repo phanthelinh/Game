@@ -20,8 +20,6 @@ DemoScene::DemoScene()
 	PLAYER; //get instance
 	PLAYER->posX = 16;
 	PLAYER->posY = 390;
-	/*PLAYER->posX = 300;
-	PLAYER->posY = 390;*/
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
@@ -36,6 +34,10 @@ DemoScene::DemoScene()
 	//enemy test
 	wizard = new WizardBoss(240, 285);
 	GRID->AddObject(wizard);
+
+	//runningman dung de test ban dan
+	RunningMan* abc = new RunningMan(240, 436);
+	GRID->AddObject(abc);
 
 	//add running mans
 	RunningMan* runningman = new RunningMan(700, 355, 1, 0);

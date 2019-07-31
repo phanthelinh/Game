@@ -18,7 +18,7 @@ private:
 	std::unordered_set<GameObject*> itemsContainer;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-	WizardBoss* boss;
+	WizardBoss* wizard;
 	Domesto* domesto;
 public:
 	DemoScene();

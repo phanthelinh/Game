@@ -34,7 +34,7 @@ Grid::Grid()
 		int endX = floor((*it).right / CELL_WIDTH);
 		int startY = floor((*it).top / CELL_HEIGHT);
 		int endY = floor((*it).bottom / CELL_HEIGHT);
-
+		Ground* gr = new Ground(*(it));
 		if (endX >= numCols || endY >= numRows)
 			continue;
 		for (int i = startY; i <= endY; i++)
@@ -43,7 +43,7 @@ Grid::Grid()
 				continue;
 			for (int j = startX; j <= endX; j++)
 			{
-				cells[i][j]->Add(new Ground(*it));
+				cells[i][j]->Add(gr);
 			}
 		}
 	}

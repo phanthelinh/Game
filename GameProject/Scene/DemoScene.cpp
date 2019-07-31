@@ -23,17 +23,16 @@ DemoScene::DemoScene()
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
+	//enemy test
+	wizard = new WizardBoss(246, 285);;
+	domesto = new Domesto(120, 390);
+
 	//implement grid
 	GRID;
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
+	GRID->AddObject(wizard);
 	//GRID->listGround = listObject;
-
-	//enemy test
-	boss = new WizardBoss();
-	boss->posX = 70;
-	boss->posY = 436;
-	domesto = new Domesto(120, 390);
 }
 
 DemoScene::~DemoScene()
@@ -46,6 +45,7 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	GRID->UpdateGrid();
 	domesto->Update(deltaTime);
+	wizard->Update(deltaTime);
 	//update object
 	for (auto cell : GRID->visibleCells)
 	{
@@ -71,6 +71,14 @@ void DemoScene::Update(float deltaTime)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
 	}
+
+	//check collision with wizard boss
+	/*auto lstCollidableWithWizard = GRID->GetColliableObjectsWith(wizard, deltaTime);
+	for (auto obj : lstCollidableWithWizard)
+	{
+		wizard->OnCollision(obj, deltaTime);
+	}
+	*/
 }
 
 void DemoScene::Draw()
@@ -86,9 +94,10 @@ void DemoScene::Draw()
 		}
 	}
 	domesto->Draw();
+	wizard->Draw();
 	//render player
 	PLAYER->Draw();
-	boss->Draw();
+	
 }
 
 void DemoScene::OnKeyDown(int keyCode)

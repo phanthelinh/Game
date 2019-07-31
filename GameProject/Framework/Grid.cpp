@@ -34,7 +34,7 @@ Grid::Grid()
 		int endX = floor((*it).right / CELL_WIDTH);
 		int startY = floor((*it).top / CELL_HEIGHT);
 		int endY = floor((*it).bottom / CELL_HEIGHT);
-
+		Ground* gr = new Ground(*it);
 		if (endX >= numCols || endY >= numRows)
 			continue;
 		for (int i = startY; i <= endY; i++)
@@ -43,7 +43,7 @@ Grid::Grid()
 				continue;
 			for (int j = startX; j <= endX; j++)
 			{
-				cells[i][j]->Add(new Ground(*it));
+				cells[i][j]->Add(gr);
 			}
 		}
 	}
@@ -167,9 +167,10 @@ void Grid::UpdateVisibleCells()
 	}
 }
 
-void Grid::UpdateGrid()
+void Grid::UpdateGrid(float deltaTime)
 {
 	UpdateVisibleCells();
+	ObjectMoving(deltaTime);
 }
 
 std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * target, float deltaTime)
@@ -210,13 +211,43 @@ std::unordered_set<GameObject*> Grid::GetColliableObjectsWith(GameObject * targe
 std::vector<GameObject*> Grid::GetVisibleGround()
 {
 	std::vector<GameObject*> rs;
-	for (auto g : listGround)
+	for (auto c : visibleCells)
 	{
-		if (g->IsCollide(CAMERA->GetBound()))
+		for (auto g : c->objects)
 		{
-			rs.push_back(g);
+			if (g->tag == Tag::GroundTag && g->IsCollide(CAMERA->GetBound()))
+			{
+				rs.push_back(g);
+			}
 		}
 	}
 	
 	return rs;
+}
+
+std::unordered_set<GameObject*> Grid::GetVisibleObjects()
+{
+	std::unordered_set<GameObject*> rs;
+	for (auto cell : visibleCells)
+	{
+		for (auto obj : cell->objects)
+		{
+			if (obj->IsCollide(CAMERA->GetBound()))
+			{
+				rs.insert(obj);
+			}
+		}
+	}
+	return rs;
+}
+
+void Grid::ObjectMoving(float deltaTime)
+{
+	auto lst = GetVisibleObjects();
+	for (auto obj : lst)
+	{
+		RemoveObject(obj);
+		obj->Update(deltaTime);
+		AddObject(obj);
+	}
 }

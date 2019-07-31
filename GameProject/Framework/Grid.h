@@ -34,9 +34,11 @@ public:
 	//Only update cells contained in camera
 	void UpdateVisibleCells();
 	//Update entire grid
-	void UpdateGrid();
+	void UpdateGrid(float deltaTime);
 	//Get objects that have ability to collide with a target Game object
 	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target, float deltaTime);
 	//Get object Ground in visual viewport
 	std::vector<GameObject*> GetVisibleGround();
+	std::unordered_set<GameObject*> GetVisibleObjects();
+	void ObjectMoving(float deltaTime);
 };

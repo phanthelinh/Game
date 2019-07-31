@@ -4,11 +4,11 @@
 #include <unordered_map>
 #include <unordered_set>
 
-class Enemy;
+//class Enemy;
 class Weapon : public GameObject
 {
 protected:
-	static Enemy*	currEnemy;
+
 	Animation*		currAnim;
 public:
 	float weaponDamage;

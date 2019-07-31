@@ -28,12 +28,13 @@ DemoScene::DemoScene()
 	GRID->InsertToGrid(itemsContainer);
 	GRID->AddObject(PLAYER->shield);
 	//GRID->listGround = listObject;
+	domesto = new Domesto(120, 460);
+	GRID->AddObject(domesto);
 
 	//enemy test
 	boss = new WizardBoss();
 	boss->posX = 70;
 	boss->posY = 436;
-	domesto = new Domesto(120, 390);
 }
 
 DemoScene::~DemoScene()
@@ -42,18 +43,14 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
+	//object will be move to another cell, that is included in Update Grid
+	GRID->UpdateGrid(deltaTime);
+	//update object
+	visibleObject.clear();
+	visibleObject = GRID->GetVisibleObjects();
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
-	GRID->UpdateGrid();
-	domesto->Update(deltaTime);
-	//update object
-	for (auto cell : GRID->visibleCells)
-	{
-		for (auto obj : cell->objects)
-		{
-			obj->Update(deltaTime);
-		}
-	}
+	
 	//
 	//COLLISION
 	//
@@ -66,8 +63,8 @@ void DemoScene::Update(float deltaTime)
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision
 	PLAYER->CheckCollision(lstCollideable, deltaTime);
-	//objects check collision
-	for (auto obj : lstCollideable)
+	// visible objects check collision with player
+	for (auto obj : visibleObject)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
 	}
@@ -78,14 +75,10 @@ void DemoScene::Draw()
 	//render map
 	map->RenderMap();
 	//draw visible objects
-	for (auto cell : GRID->visibleCells)
+	for (auto obj : visibleObject)
 	{
-		for (auto obj : cell->objects)
-		{
-			obj->Draw();
-		}
+		obj->Draw();
 	}
-	domesto->Draw();
 	//render player
 	PLAYER->Draw();
 	boss->Draw();

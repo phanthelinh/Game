@@ -6,7 +6,7 @@ PowerStone::PowerStone(int x, int y, int width, int height, bool isSmallType)
 	posY = y;
 	this->width = width;
 	this->height = height;
-	vY = -12.0f;
+	vY = -13.0f;
 	this->isSmallType = isSmallType;
 	if (isSmallType)
 	{
@@ -34,11 +34,11 @@ void PowerStone::OnCollision(GameObject * object, float deltaTime)
 		CollisionResult collideRes;
 		if (object->tag == GroundTag)
 		{
-			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
 		}
 		else
 		{
-			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
+			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
 		}
 		if (collideRes.isCollide)
 		{

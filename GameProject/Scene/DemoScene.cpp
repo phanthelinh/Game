@@ -20,6 +20,8 @@ DemoScene::DemoScene()
 	PLAYER; //get instance
 	PLAYER->posX = 16;
 	PLAYER->posY = 390;
+	/*PLAYER->posX = 300;
+	PLAYER->posY = 390;*/
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 
@@ -34,7 +36,14 @@ DemoScene::DemoScene()
 	//enemy test
 	wizard = new WizardBoss(240, 285);
 	GRID->AddObject(wizard);
-	runningman = new RunningMan(240, 436, 0, 1);
+
+	//add running mans
+	RunningMan* runningman = new RunningMan(700, 355, 1, 0);
+	RunningMan* runningman1 = new RunningMan(950, 355, 1, 0);
+	RunningMan* runningman2 = new RunningMan(625, 436, 0, 0);
+	GRID->AddObject(runningman);
+	GRID->AddObject(runningman1);
+	GRID->AddObject(runningman2);
 }
 
 DemoScene::~DemoScene()
@@ -45,7 +54,6 @@ void DemoScene::Update(float deltaTime)
 {
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
-	runningman->Update(deltaTime);
 	wizard->Update(deltaTime);
 	//update object
 	visibleObject.clear();
@@ -70,6 +78,12 @@ void DemoScene::Update(float deltaTime)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
 	}
+	if (PLAYER->posX >= 350 && isSpawned == false)
+	{
+		isSpawned = true;
+		RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
+		GRID->AddObject(runningman3);
+	}
 }
 
 void DemoScene::Draw()
@@ -84,7 +98,6 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	wizard->Draw();
-	runningman->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

@@ -85,7 +85,7 @@ void RunningMan::Update(float deltaTime)
 		}
 		case EnemyRun:
 		{
-			vX = (isReverse == false) ? -4.0f : 4.0f;
+			vX = (isReverse == false) ? -8.0f : 8.0f;
 			posX += vX * deltaTime;
 			posY += vY * deltaTime;
 			if (CheckPosition() == 0)

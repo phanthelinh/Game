@@ -22,7 +22,7 @@ private:
 	std::vector<RECT> lstItemContainerRect;
 	WizardBoss* wizard;
 	Domesto* domesto;
-	RunningMan* runningman;
+	bool isSpawned = false;
 public:
 	DemoScene();
 	~DemoScene();

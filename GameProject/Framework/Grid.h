@@ -39,4 +39,5 @@ public:
 	std::unordered_set<GameObject*> GetColliableObjectsWith(GameObject* target, float deltaTime);
 	//Get object Ground in visual viewport
 	std::vector<GameObject*> GetVisibleGround();
+	std::unordered_set<GameObject*> GetVisibleObjects();
 };

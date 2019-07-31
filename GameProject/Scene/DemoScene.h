@@ -17,6 +17,7 @@ class DemoScene:public Scene
 private:
 	GameMap*	map;
 	std::unordered_set<GameObject*> itemsContainer;
+	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
 	WizardBoss* boss;

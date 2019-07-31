@@ -1,26 +1,18 @@
 #include "Domesto.h"
 
-Domesto::Domesto():Enemy()
-{
-
-}
-
 Domesto::Domesto(float posX, float posY):Enemy(posX,posY,0,0)
 {
 	point = 500;//500 scores for player if he killed this object
-	currHealth = maxHealth = 5; //attack five times
+	currHealth = maxHealth = 100; //attack five times
 	anims[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/domesto/domesto_stand_23_46.png", 1, 1, 1);
-	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2,true,0.9);
+	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2,true,0.8f);
 	anims[EnemyStateName::EnemyJump] = anims[EnemyStateName::EnemySit] = new Animation("Resources/enemy/domesto/domesto_sit_24_31.png", 1, 1, 1);
 	anims[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/domesto/domesto_die_24_46.png", 1, 1, 1);
 	currentState = EnemyStateName::EnemyRun;
 	ChangeEnemyState(EnemyStateName::EnemyRun);
 	startTime = 0;
 	isReverse = true;
-}
-
-Domesto::Domesto(RECT r):Domesto(r.left,r.top)
-{
+	isPauseMissile = false;
 }
 
 void Domesto::ChangeEnemyState(EnemyStateName state)
@@ -39,10 +31,44 @@ void Domesto::OnCollision(GameObject * object, float deltaTime)
 
 void Domesto::Update(float deltaTime)
 {
+	auto now = GetTickCount();
 	isReverse = posX <= PLAYER->posX;
 	currentAnim->_isFlipHor = isReverse;
-	//running for 2 seconds
-	auto now = GetTickCount();
+	EXPLODE->Update(deltaTime);
+	if (isStopUpdate)
+	{
+		if ((now - startTime)/1000.0f >= 0.5f)
+		{
+			isDead = true;
+			startTime = 0;
+		}
+		return;
+	}
+	//currHealth--;
+	if (currHealth <= 0)
+		ChangeEnemyState(EnemyDie);
+	currentAnim->Update(deltaTime);
+	//
+	//Update missiles
+	//
+	if (!isPauseMissile)
+	{
+		for (int i = 0; i < missles.size(); ++i)
+		{
+			missles[i]->Update(deltaTime);
+			if (missles[i]->isDead)
+			{
+				GRID->RemoveObject(missles[i]);
+				missles.erase(missles.begin() + i);
+				
+			}
+		}
+	}
+	//
+	//Domesto update
+	//
+	
+	Missile* mis = NULL;
 	if (startTime == 0)
 	{
 		startTime = now;
@@ -50,50 +76,84 @@ void Domesto::Update(float deltaTime)
 	switch (currentState)
 	{
 	case EnemyStand:
+		isPauseMissile = false;
 		vX = 0;
-		if ((now - startTime) / 1000.0f >= 1.0f)
+		if ((now - startTime) / 1000.0f >= 1.5f)
 		{
 			//attack
 			startTime = now;
-			EXPLODE->ExplodeAt(20, 300);
+			mis = new Missile(posX, posY - 30, MissileType::StraightUpwardMissile);
+			mis->isReverse = isReverse;
+			missles.push_back(mis);
 			ChangeEnemyState(EnemySit);
 		}
 		break;
 	case EnemyRun:
-		vX = 4.0f * (isReverse ? 1.0f : -1.0f);
+		isPauseMissile = true;
+		vX = 3.0f * (isReverse ? 1.0f : -1.0f);
 		posX += vX * deltaTime;
 		posY += vY * deltaTime;
 		now = GetTickCount();
-		if ((now - startTime) / 1000.0f >= 2.0f)
+		if ((now - startTime) / 1000.0f >= 1.5f)
 		{
 			startTime = now;
+			mis = new Missile(posX, posY - height, MissileType::StraightMissile);
+			mis->isReverse = isReverse;
+			missles.push_back(mis);
 			ChangeEnemyState(EnemyStand);
 		}
 		break;
 	case EnemySit:
+		isPauseMissile = false;
 		vX = 0;
 		now = GetTickCount();
-		if ((now - startTime) / 1000.0f >= 1.0f)
+		if ((now - startTime) / 1000.0f >= 1.5f)
 		{
 			//attack
 			startTime = now;
-			EXPLODE->ExplodeAt(20, 300);
+			mis = new Missile(posX, posY - 48, MissileType::StraightMissile);
+			mis->isReverse = isReverse;
+			missles.push_back(mis);
 			ChangeEnemyState(EnemyStand);
 		}
 		break;
-	case EnemyAttack:
-		//attack and change to preState
-		ChangeEnemyState(prevState);
-		break;
 	case EnemyDie:
+		isPauseMissile = true;
+		if (currHealth <= 0)
+		{
+			//bounce behind
+			if (isReverse) //face to right
+			{
+				//bounce to left
+				vX = -10.0f;
+				vY = -10.0f;
+			}
+			else
+			{
+				//bounce to right
+				vX = 20.0f;
+				vY = -20.0f;
+			}
+			posX += vX * deltaTime;
+			posY += vY * deltaTime;
+			//explode
+			EXPLODE->ExplodeAt(posX-8, posY-24);
+			startTime = now;
+			isStopUpdate = true;
+		}
 		break;
 	case EnemyJump:
+		isPauseMissile = true;
+
 		break;
 	default:
 		break;
 	}
-	currentAnim->Update(deltaTime);
-	EXPLODE->Update(deltaTime);
+	//add to grid
+	if (mis != NULL)
+	{
+		GRID->AddObject(mis);
+	}
 }
 
 void Domesto::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
@@ -102,6 +162,13 @@ void Domesto::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT source
 	{
 		currentAnim->Draw(position, cameraPosition, sourceRect, center);
 		EXPLODE->Draw();
+		if (!isPauseMissile)
+		{
+			for (auto m : missles)
+			{
+				m->Draw();
+			}
+		}
 	}
 }
 

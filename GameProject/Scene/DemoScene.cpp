@@ -34,6 +34,7 @@ DemoScene::DemoScene()
 	boss->posX = 70;
 	boss->posY = 436;
 	domesto = new Domesto(120, 390);
+	GRID->AddObject(domesto);
 
 	runningman = new RunningMan(240, 436, 0, 1);
 }
@@ -44,19 +45,18 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
-	PLAYER->Update(deltaTime);
-	PLAYER->HandleKeyboard(keys, deltaTime);
 	GRID->UpdateGrid();
-	domesto->Update(deltaTime);
 	runningman->Update(deltaTime);
 	//update object
-	for (auto cell : GRID->visibleCells)
+	visibleObject.clear();
+	visibleObject = GRID->GetVisibleObjects();
+	for (auto obj : visibleObject)
 	{
-		for (auto obj : cell->objects)
-		{
-			obj->Update(deltaTime);
-		}
+		obj->Update(deltaTime);
 	}
+	PLAYER->Update(deltaTime);
+	PLAYER->HandleKeyboard(keys, deltaTime);
+	
 	//
 	//COLLISION
 	//
@@ -81,14 +81,10 @@ void DemoScene::Draw()
 	//render map
 	map->RenderMap();
 	//draw visible objects
-	for (auto cell : GRID->visibleCells)
+	for (auto obj : visibleObject)
 	{
-		for (auto obj : cell->objects)
-		{
-			obj->Draw();
-		}
+		obj->Draw();
 	}
-	domesto->Draw();
 	//render player
 	PLAYER->Draw();
 	boss->Draw();

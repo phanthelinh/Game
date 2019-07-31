@@ -1,7 +1,7 @@
 #include "Weapon.h"
 
 
-Enemy* Weapon::currEnemy = NULL;
+//Enemy* Weapon::currEnemy = NULL;
 
 Weapon::Weapon():GameObject()
 {

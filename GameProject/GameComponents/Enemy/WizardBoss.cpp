@@ -65,12 +65,14 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 	}
 	if (object->tag == Captain)
 	{
-		res = COLLISION->SweptAABB(this->GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (res.isCollide)
+		if(COLLISION->IsCollide(this->GetBoundingBox(), object->GetBoundingBox()) && currentState != InjuringWizard)
 		{
 			ChangeEnemyState(InjuringWizard);
-			posX += vX > 0 ? -5 : 5;
 		}
+	}
+	else if (object->tag == ShieldTag)
+	{
+
 	}
 }
 
@@ -175,6 +177,16 @@ void WizardBoss::Update(float deltaTime)
 			ChangeEnemyState(FlyingWizard);
 			isReverse = !isReverse;
 			nVerticalBullet = NUM_OF_VERTICAL_BULLET;
+		}
+		break;
+	}
+	case InjuringWizard:
+	{
+		posX += vX > 0 ? -10 : 10;
+		if ((now - startTime) / 1000.0f >= 0.7f)	
+		{
+			startTime = now;
+			ChangeEnemyState(StandingWizard);
 		}
 		break;
 	}

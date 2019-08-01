@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,6 +148,7 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\Bullet.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Missile.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Weapon\WizardBullet.cpp" />
     <ClCompile Include="GameComponents\Enemy\WizardBoss.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Ground.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="GameComponents\Player\PlayerDiedState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerFallingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerHurt.cpp" />
+    <ClCompile Include="GameComponents\Player\PlayerInjuringState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerJumpingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerKickingState.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerOnShieldState.cpp" />
@@ -201,6 +203,7 @@
     <ClInclude Include="GameComponents\Enemy\Weapon\Bullet.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Missile.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h" />
+    <ClInclude Include="GameComponents\Enemy\Weapon\WizardBullet.h" />
     <ClInclude Include="GameComponents\Enemy\WizardBoss.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Ground.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="GameComponents\Player\PlayerDashingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerDiedState.h" />
     <ClInclude Include="GameComponents\Player\PlayerFallingState.h" />
+    <ClInclude Include="GameComponents\Player\PlayerInjuringState.h" />
     <ClInclude Include="GameComponents\Player\PlayerHurt.h" />
     <ClInclude Include="GameComponents\Player\PlayerJumpingState.h" />
     <ClInclude Include="GameComponents\Player\PlayerKickingState.h" />

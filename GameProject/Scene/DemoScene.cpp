@@ -54,7 +54,7 @@ void DemoScene::Update(float deltaTime)
 {
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
-	wizard->Update(deltaTime);
+	//wizard->Update(deltaTime);
 	//update object
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);

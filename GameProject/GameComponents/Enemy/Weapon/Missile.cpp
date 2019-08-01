@@ -1,4 +1,5 @@
 #include "Missile.h"
+#include "../../Player/Player.h"
 
 #define MISSILE_VX	6.5f
 #define MISSILE_MAX_DISTANCE_BEFORE_DIRECTION_CHANGE 50.0f

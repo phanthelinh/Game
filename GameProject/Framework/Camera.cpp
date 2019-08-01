@@ -50,6 +50,18 @@ RECT Camera::GetBound()
 	return bound;
 }
 
+BoundingBox Camera::GetBoundingBox()
+{
+	BoundingBox bound;
+
+	bound.left = camPosition.x - camWidth / 2;
+	bound.right = bound.left + camWidth;
+	bound.top = camPosition.y - camHeight / 2;
+	bound.bottom = bound.top + camHeight;
+	bound.vX = bound.vY = 0;
+	return bound;
+}
+
 D3DXVECTOR2 Camera::GetTranslateCamera()
 {
 	return D3DXVECTOR2(GLOBAL->g_ScreenWidth / 2 - camPosition.x, (GLOBAL->g_ScreenHeight / 2 + GLOBAL->g_GameUIArea / 2) - camPosition.y);

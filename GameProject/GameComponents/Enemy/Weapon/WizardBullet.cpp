@@ -27,7 +27,7 @@ void WizardBullet::OnCollision(GameObject* object, float deltaTime)
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide)
 		{
-			PLAYER->ChangeState(Injuring);
+			PLAYER->ChangeState(Hurt);
 		}
 	}
 }

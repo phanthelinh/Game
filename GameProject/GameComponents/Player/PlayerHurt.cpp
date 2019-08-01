@@ -12,15 +12,24 @@ PlayerHurt::PlayerHurt()
 
 void PlayerHurt::Update(float deltaTime)
 {
-	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
-	if (PLAYER->PreviousState == Jumping)
+	if (PLAYER->isReverse)
 	{
-		PLAYER->vY += GRAVITY;
+		PLAYER->vX = -5.0f;
+		PLAYER->vY = -5.0f;
 	}
+	else
+	{
+		PLAYER->vX = 5.0f;
+		PLAYER->vY = -5.0f;
+	}
+	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
+	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	
+
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		PLAYER->isImmu = false;
-		PLAYER->ChangeState(StateName::Standing);
+		PLAYER->ChangeState(StateName::Falling);
 	}
 }
 

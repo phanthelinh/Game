@@ -24,6 +24,9 @@ private:
 	WizardBoss* wizard;
 	bool isSpawned = false;
 	bool		shieldInserted;
+	int			currentLevel;
+	DWORD		timePause;
+	bool		isGamePause;
 public:
 	DemoScene();
 	~DemoScene();
@@ -39,4 +42,7 @@ public:
 
 	virtual void ReleaseAll() override;
 	void CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime);
+	void CheckForNextStage();
+	void ChangingStage();
+	void ReloadResources(int nextLevel);
 };

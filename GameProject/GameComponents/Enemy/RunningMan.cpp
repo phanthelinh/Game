@@ -4,9 +4,33 @@
 #define SHOOTING_RANGE 100
 #define SIT_RANGE 100
 
-RunningMan::RunningMan():Enemy()
+RunningMan::RunningMan(int level):Enemy()
 {
-
+	std::unordered_set<GameObject*> rs;
+	if (level == 1)
+	{
+		//insert to grid
+		std::ifstream file("Resources/enemy/runningman/runningmanlevel1.txt");
+		if (file.good())
+		{
+			while (!file.eof())
+			{
+				int x, y, t, c;
+				file >> x;
+				file >> y;
+				file >> t;
+				file >> c;
+				GameObject* obj = new RunningMan(x, y, t, c);
+				if (obj)
+				{
+					rs.insert(obj);
+				}
+			}
+			file.close();
+		}
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
 }
 
 RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,posY,0,0)
@@ -179,6 +203,13 @@ void RunningMan::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sou
 
 void RunningMan::OnCollision(GameObject * object, float deltaTime)
 {
+	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+	if (colRes.isCollide && object->tag == ShieldTag)
+	{
+		currHealth -= 5;
+		if (currHealth <= 0)
+			SetState(EnemyStateName::EnemyDie);
+	}
 }
 
 void RunningMan::Draw()

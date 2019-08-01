@@ -28,6 +28,7 @@ DemoScene::DemoScene()
 	GRID;
 	GRID->InsertToGrid(itemsContainer);
 	domesto = new Domesto(1);
+	runningman = new RunningMan(1);
 	//enemy test
 	wizard = new WizardBoss(240, 285);
 	GRID->AddObject(wizard);
@@ -86,8 +87,8 @@ void DemoScene::Update(float deltaTime)
 	if (PLAYER->posX >= 350 && isSpawned == false)
 	{
 		isSpawned = true;
-		/*RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
-		GRID->AddObject(runningman3);*/
+		RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
+		GRID->AddObject(runningman3);
 	}
 }
 

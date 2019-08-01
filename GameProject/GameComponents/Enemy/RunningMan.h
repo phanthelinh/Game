@@ -18,7 +18,7 @@ private:
 	bool isWaiting = true;
 	bool isAttacking = false;
 public:
-	RunningMan();
+	RunningMan(int level);
 	RunningMan(float posX, float posY, int type = 0, int color = 0); //type 0 binh thuong, type 1 ngoi tai cho //color = 0 la mau xanh duong, color = 1 la mau xanh la
 	RunningMan(RECT r);
 

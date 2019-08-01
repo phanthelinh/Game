@@ -7,6 +7,7 @@ enum Tag {
 	EnemyTag,
 	WeaponTag,
 	GroundTag,
+	WaterTag,
 	ItemContainerTag,
 	EnergyTag,
 	KeyCrystalsTag,

@@ -5,6 +5,7 @@
 #include "../GameComponents/GameObject.h"
 #include "Util.h"
 #include "../GameComponents/Ground.h"
+#include "../GameComponents/Water.h"
 
 
 #define GRID	Grid::GetInstance()

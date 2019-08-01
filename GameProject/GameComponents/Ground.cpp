@@ -6,9 +6,9 @@ Ground::Ground(RECT r):GameObject(r)
 	vX = vY = 0;
 }
 
-Ground::Ground(float x, float y, float width, float height)
+Ground::Ground(float x, float y, float width, float height):GameObject(x, y, width, height, GroundTag)
 {
-	GameObject(x, y, width, height, GroundTag);
+	
 }
 
 Ground::~Ground()

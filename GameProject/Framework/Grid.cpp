@@ -26,27 +26,19 @@ Grid::Grid()
 	}
 	//add ground from file to cell
 	grounds = Util::GetAllObjectFromFile(GroundTag, 1);
-
-	for (auto it = grounds.begin(); it != grounds.end(); ++it)
+	for (auto g : grounds)
 	{
-		//calculate which cell is valid
-		int startX = floor((*it).left / CELL_WIDTH);
-		int endX = floor((*it).right / CELL_WIDTH);
-		int startY = floor((*it).top / CELL_HEIGHT);
-		int endY = floor((*it).bottom / CELL_HEIGHT);
-		Ground* gr = new Ground(*it);
-		if (endX >= numCols || endY >= numRows)
-			continue;
-		for (int i = startY; i <= endY; i++)
-		{
-			if (cells[i] == NULL)
-				continue;
-			for (int j = startX; j <= endX; j++)
-			{
-				cells[i][j]->Add(gr);
-			}
-		}
+		GameObject* gr = new Ground(g);
+		AddObject(gr);
 	}
+	//add water from file to cell
+	auto data = Util::GetAllObjectFromFile(WaterTag, 1);
+	for (auto w : data)
+	{
+		GameObject* water = new Water(w);
+		AddObject(water);
+	}
+
 }
 
 Grid::Grid(int numCols, int numRows)

@@ -192,6 +192,9 @@
     <ClCompile Include="GameComponents\Player\PlayerHurt.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Water.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Player\PlayerHurt.h">
       <Filter>GameComponents\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Water.h">
+      <Filter>GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

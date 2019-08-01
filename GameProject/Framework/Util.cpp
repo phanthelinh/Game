@@ -58,6 +58,12 @@ std::vector<RECT> Util::GetAllObjectFromFile(Tag tag, int level)
 		else
 			data = GetObjectDataFromFile("Resources/map/lv2_gameobject_ground.txt");
 		break;
+	case WaterTag:
+		if (level == 1)
+		{
+			data = GetObjectDataFromFile("Resources/map/lv1_water.txt");
+		}
+		break;
 	}
 	return data;
 }

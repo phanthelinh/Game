@@ -1,4 +1,5 @@
 #include "Missile.h"
+#include "../../Player/Player.h"
 
 #define MISSILE_VX	5.0f
 #define MISSILE_MAX_DISTANCE_BEFORE_DIRECTION_CHANGE 50.0f
@@ -28,7 +29,7 @@ void Missile::OnCollision(GameObject * object, float deltaTime)
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide)
 		{
-			object->posX += 50;
+			PLAYER->ChangeState(Injuring);
 		}
 	}
 }

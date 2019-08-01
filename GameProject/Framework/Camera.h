@@ -1,6 +1,6 @@
 #pragma once
 #include "Global.h"
-
+#include "../GameComponents/GameObject.h"
 #define CAMERA Camera::GetInstance()
 
 class Camera
@@ -19,6 +19,7 @@ public:
 	~Camera();
 	static Camera* GetInstance();
 	RECT GetBound();
+	BoundingBox GetBoundingBox();
 	D3DXVECTOR2 GetTranslateCamera();
 	void UpdateCamera(D3DXVECTOR3 playerPosition);
 };

@@ -15,6 +15,7 @@ Bullet::Bullet(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 void Bullet::Update(float deltaTime)
 {
 	posX += vX * deltaTime;
+	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
@@ -24,6 +25,17 @@ void Bullet::Update(float deltaTime)
 
 void Bullet::OnCollision(GameObject * object, float deltaTime)
 {
+	if (object->tag == Tag::ShieldTag)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide && PLAYER->shieldFlying == false)
+		{
+			posX += vX * colRes.entryTime;
+			posY += vY * colRes.entryTime;
+			this->vY = abs(vX) * -1;
+			this->vX = 0.0;
+		}
+	}
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
@@ -34,15 +46,6 @@ void Bullet::OnCollision(GameObject * object, float deltaTime)
 				PLAYER->ChangeState(Die);
 			else
 				PLAYER->ChangeState(Hurt);
-		}
-	}
-	if (object->tag == Tag::ShieldTag)
-	{
-		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide)
-		{
-			this->vY = abs(vX) * -1;
-			this->vX = 0.0;
 		}
 	}
 }

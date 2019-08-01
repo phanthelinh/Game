@@ -39,7 +39,7 @@ RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,p
 	{
 		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
 		animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/RunningMan_Sit.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1);
+		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1, false);
 		animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/RunningMan_Run.png", 3, 1, 3, true, 0.5f);
 	}
 	else
@@ -84,9 +84,8 @@ void RunningMan::Update(float deltaTime)
 {
 	float currTime = GetTickCount();
 
-	if (currHealth <= 0)
+	if (currHealth <= 0 && isDying == false)
 	{
-		isDead = true;
 		SetState(EnemyStateName::EnemyDie);
 	}
 	switch (currentState)
@@ -129,7 +128,31 @@ void RunningMan::Update(float deltaTime)
 		}
 		case EnemyDie:
 		{
-			vX = 0.0f;
+			if (isDying == false) //vong lap dau tien khi running man moi chet
+			{
+				if (isReverse == true)
+				{
+					vX = -5.0f;
+					vY = -5.0f;
+				}
+				else
+				{
+					vX = 5.0f;
+					vY = 5.0f;
+				}
+				posX += vX * deltaTime;
+				posY += vY * deltaTime;
+				EXPLODE->ExplodeAt(posX - 8, posY - 24);
+				DeadStartTime = GetTickCount();
+				isDying = true;
+			}
+			else
+			{
+				if (currTime - DeadStartTime >= 200.0f && DeadStartTime != 0.0f)
+				{
+					isDead = true;
+				}
+			}
 			break;
 		}
 		case EnemySit:
@@ -203,12 +226,38 @@ void RunningMan::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sou
 
 void RunningMan::OnCollision(GameObject * object, float deltaTime)
 {
-	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-	if (colRes.isCollide && object->tag == ShieldTag)
+	auto grounds = GRID->GetVisibleGround();
+	for (auto g : grounds)
 	{
-		currHealth -= 5;
-		if (currHealth <= 0)
-			SetState(EnemyStateName::EnemyDie);
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), g->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide)
+		{
+			posX += vX * colRes.entryTime;
+			posY += vY * colRes.entryTime;
+			vY = 0;
+			SetState(EnemyStateName::EnemyStand);
+		}
+	}
+	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
+	if (colRes.isCollide)
+	{
+		switch (object->tag)
+		{
+		case Tag::ShieldTag:
+			if (PLAYER->shieldFlying)
+			{
+				currHealth -= 10;
+			}
+			else
+			{
+				vX = vY = 0;
+				currHealth = 0;
+				SetState(EnemyStateName::EnemyDie);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 

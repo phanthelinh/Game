@@ -28,16 +28,6 @@ void PlayerDashingState::Update(float deltaTime)
 
 void PlayerDashingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
-	if (keys[VK_LEFT])
-	{
-		PLAYER->isReverse = false;
-		PLAYER->vX = -PLAYER_RUNNING_SPEED;
-	}
-	if (keys[VK_RIGHT])
-	{
-		PLAYER->isReverse = true;
-		PLAYER->vX = PLAYER_RUNNING_SPEED;
-	}
 	if (keys['Z'])
 	{
 		PLAYER->ChangeState(Attacking);

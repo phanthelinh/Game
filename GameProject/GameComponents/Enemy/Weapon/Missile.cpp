@@ -35,15 +35,6 @@ void Missile::OnCollision(GameObject * object, float deltaTime)
 				PLAYER->ChangeState(Hurt);
 		}
 	}
-	if (object->tag == Tag::ShieldTag)
-	{
-		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide)
-		{
-			this->vY = abs(vX) * -1;
-			this->vX = 0.0;
-		}
-	}
 }
 
 RECT Missile::GetBound()

@@ -12,11 +12,13 @@ private:
 	std::unordered_map<EnemyStateName, Animation*> animations;
 	EnemyStateName	currentState, prevState;
 	std::vector<Bullet*>	bullets;
-	float LastShotTime;
+	float LastShotTime = 0.0f;
+	float DeadStartTime = 0.0f;
 
 	//variables that helps control runningman's behaviour
 	bool isWaiting = true;
 	bool isAttacking = false;
+	bool isDying = false;
 public:
 	RunningMan(int level);
 	RunningMan(float posX, float posY, int type = 0, int color = 0); //type 0 binh thuong, type 1 ngoi tai cho //color = 0 la mau xanh duong, color = 1 la mau xanh la

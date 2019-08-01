@@ -25,7 +25,8 @@ enum StateName
 	WaterRun,
 	WaterStand,
 	Hurt,
-	Die
+	Die,
+	Injuring,
 };
 
 class PlayerState

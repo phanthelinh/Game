@@ -1,5 +1,7 @@
 #pragma once
 #include "Enemy.h"
+#include "../../Framework/Grid.h"
+#include "Weapon/WizardBullet.h"
 
 enum WizardState {
 	StandingWizard,
@@ -31,5 +33,7 @@ private:
 	std::unordered_map<WizardState, Animation*> animations;
 	WizardState	currentState, prevState;
 	DWORD		startTime;
-
+	bool		isOnGround;
+	std::vector<WizardBullet*>  bullets;
+	int			nHorizontalBullet, nVerticalBullet;
 };

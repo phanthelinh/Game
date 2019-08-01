@@ -195,6 +195,12 @@
     <ClCompile Include="GameComponents\Water.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Weapon\WizardBullet.cpp">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\Player\PlayerInjuringState.cpp">
+      <Filter>GameComponents\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -334,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\RunningMan.h">
       <Filter>GameComponents\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Weapon\WizardBullet.h">
+      <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Player\PlayerInjuringState.h">
+      <Filter>GameComponents\Player</Filter>
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\Weapon\Bullet.h">
       <Filter>GameComponents\Enemy\Weapon</Filter>

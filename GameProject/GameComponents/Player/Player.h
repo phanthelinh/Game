@@ -9,6 +9,7 @@
 #include "PlayerHurt.h"
 #include "PlayerWaterRun.h"
 #include "PlayerWaterStand.h"
+#include "PlayerInjuringState.h"
 #include "../Shield/Shield.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
@@ -54,6 +55,7 @@ public:
 	virtual BoundingBox GetBoundingBox();
 
 	void Release();
+	void JumpBack();	//when injured
 
 	std::unordered_map<StateName, Animation*> animations;
 	std::unordered_map<StateName, bool> allow;

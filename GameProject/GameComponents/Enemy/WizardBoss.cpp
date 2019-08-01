@@ -1,4 +1,7 @@
 #include "WizardBoss.h"
+#include "../Ground.h"
+#define NUM_OF_HORIZONTAL_BULLET 3
+#define NUM_OF_VERTICAL_BULLET 1
 
 WizardBoss::WizardBoss() :Enemy()
 {
@@ -15,12 +18,16 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	currentAnim = animations[FlyingWizard] = new Animation("Resources/boss/Wizard_Flying.png", 1, 1, 1);
 	animations[RunningWizard] = new Animation("Resources/boss/Wizard_Running.png", 3, 1, 3, true, 0.09);
 	animations[DieWizard] = new Animation("Resources/boss/Wizard_Die.png", 2, 1, 2);
-	animations[AttackingWizard] = new Animation("Resources/boss/Wizard_Attacking.png", 4, 1, 4);
-	animations[FlyAttackWizard] = new Animation("Resources/boss/Wizard_FlyAttack.png", 3, 1, 3);
+	animations[AttackingWizard] = new Animation("Resources/boss/Wizard_Attacking.png", 4, 1, 4, true, 0.9);
+	animations[FlyAttackWizard] = new Animation("Resources/boss/Wizard_FlyAttack.png", 3, 1, 3, false, 0.07);
 	animations[InjuringWizard] = new Animation("Resources/boss/Wizard_Injuring.png", 1, 1, 1);
 	currentState = FlyingWizard;
 	ChangeEnemyState(FlyingWizard);
-	isReverse = true;
+	isReverse = false;
+	isDead = false;
+	isOnGround = false; //falling down
+	nHorizontalBullet = NUM_OF_HORIZONTAL_BULLET;
+	nVerticalBullet = NUM_OF_VERTICAL_BULLET;
 }
 
 WizardBoss::WizardBoss(RECT r) :Enemy(r)
@@ -41,56 +48,134 @@ void WizardBoss::ChangeEnemyState(WizardState state)
 
 void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 {
-	if (object->tag == GroundTag)
+	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
+	CollisionResult res;
+	for (auto g: grounds)
 	{
-		CollisionResult res = COLLISION->SweptAABB(this->GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		res = COLLISION->SweptAABB(this->GetBoundingBox(), g->GetBoundingBox(), deltaTime);
 		if (res.isCollide)
 		{
+			//low health, then not check small ground collision
+			if (currentState == FlyAttackWizard && (currHealth <= 5 || isReverse))	
+				continue;
 			ChangeEnemyState(StandingWizard);
-			posY = 390;
+			posY = g->posY;
+			isOnGround = true;
 		}
 	}
 }
 
 void WizardBoss::Update(float deltaTime)
 {
+	auto now = GetTickCount();
+	currentAnim->_isFlipHor = isReverse;
+	
 	if (currHealth <= 0)
 	{
 		isDead = true;
 		ChangeEnemyState(DieWizard);
 	}
+	currentAnim->Update(deltaTime);
+	WizardBullet* bul = NULL;
+	if (startTime == 0)
+	{
+		startTime = now;
+	}
 	switch (currentState)
 	{
 	case FlyingWizard:
 	{
-		vY = (posY >= 250) ? 10.0f : -10.0f;
+		vX = 0;
+		vY = isOnGround ? -15.0f : 15.0f;
 		posY += vY * deltaTime;
-		if (posY + height >= 450)	//collide with ground
+		
+		if (isOnGround && posY + height <= 350)	//is flying up and touch camera.top, then fly horizontally and attack
 		{
-			ChangeEnemyState(StandingWizard);
-			posY = 436;
+			vY = 0;
+			ChangeEnemyState(FlyAttackWizard);
+			isOnGround = false;
 		}
 		break;
 	}
 	case StandingWizard:
 	{
 		vX = vY = 0;
+
+		//run toward player and shoot
+		if ((now - startTime) / 1000.0f >= 2.0f)
+		{
+			startTime = now;
+			if (prevState == FlyAttackWizard)	//is standing on small ground
+			{
+				isReverse = !isReverse;
+				ChangeEnemyState(FlyingWizard);
+				break;
+			}
+			
+			ChangeEnemyState(RunningWizard);
+		}
 		break;
 	}
 	case RunningWizard:
 	{
-		vX = (isReverse == false) ? -10.0f : 10.0f;
+		vX = (isReverse == false) ? -15.0f : 15.0f;
 		posX += vX * deltaTime;
 		posY += vY * deltaTime;
-
+		if (abs(PLAYER->posX - posX) <= 200)	//run toward and closer to captain, then shoot
+		{
+			ChangeEnemyState(AttackingWizard);
+		}
 		break;
 	}
 	case AttackingWizard:
-		vX = 0.0f;
+	{
+		vX = vY = 0;
+		if (nHorizontalBullet > 0) 
+		{
+			if ((now - startTime) / 1000.0f >= 0.7f)	//shoot, then fly up
+			{
+				startTime = now;
+				bul = new WizardBullet(posX-2, posY - 33, HorizontalBullet);
+				bul->isReverse = isReverse;
+				bullets.push_back(bul);
+				nHorizontalBullet--;
+			}
+		}
+		else
+		{
+			ChangeEnemyState(FlyingWizard);
+			nHorizontalBullet = NUM_OF_HORIZONTAL_BULLET;
+		}
 		break;
 	}
-	currentAnim->_isFlipHor = false;
-	currentAnim->Update(deltaTime);
+	case FlyAttackWizard:
+	{
+		vY = 0;
+		vX = isReverse ? 15.0f : -15.0f;
+		posX += vX * deltaTime;
+		if (abs(PLAYER->posX - posX) <= 20 && nVerticalBullet) //shoot bullet to player while flying
+		{
+			bul = new WizardBullet(posX, posY, VerticalBullet);
+			bul->isReverse = isReverse;
+			bullets.push_back(bul);
+			nVerticalBullet--;
+		}
+
+		if ((isReverse && abs(posX - CAMERA->GetBound().right) <= 10) || (!isReverse && abs(posX - CAMERA->GetBound().left) <= 10))	//then flying down
+		{
+			ChangeEnemyState(FlyingWizard);
+			isReverse = !isReverse;
+			nVerticalBullet = NUM_OF_VERTICAL_BULLET;
+		}
+		break;
+	}
+	default:
+		break;
+	}
+	if (bul != NULL)
+	{
+		GRID->AddObject(bul);
+	}
 }
 
 RECT WizardBoss::GetBound()
@@ -120,6 +205,10 @@ void WizardBoss::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sou
 	if (!isDead)
 	{
 		currentAnim->Draw(position, cameraPosition, sourceRect, center);
+		for (auto m : bullets)
+		{
+			m->Draw();
+		}
 	}
 }
 

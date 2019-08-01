@@ -25,6 +25,7 @@ Player::Player()
 
 	animations[LookUpward] = new Animation("Resources/player/player_lookup_32_48.png", 1, 1, 1, false);
 	animations[Die] = new Animation("Resources/player/player_died_64_32.png", 2, 1, 2, false, 0.95);
+	animations[Injuring] = new Animation("Resources/player/Injuring.png", 2, 1, 2, true, 0.95);
 	currentAnim = animations[Falling];
 	allow[Attacking_Shield] = true;
 	LastKeyState[Z] = false;
@@ -169,6 +170,9 @@ void Player::ChangeState(StateName stateName)
 	case Die:
 		newState = new PlayeDiedState();
 		break;
+	case Injuring:
+		newState = new PlayerInjuringState();
+		break;
 	case Attacking:
 	case Attacking_Shield:
 	case Attacking_SitBump:
@@ -279,4 +283,16 @@ void Player::Release()
 	if (shield != nullptr)
 		delete shield;
 	LastKeyState.clear();
+}
+
+void Player::JumpBack()
+{
+	this->vY = -0.01f;
+
+	if (vX > 0)
+		this->vX = 2.0f;
+	else
+		this->vX = -2.0f;
+	health--;
+	ChangeState(StateName::Jumping);
 }

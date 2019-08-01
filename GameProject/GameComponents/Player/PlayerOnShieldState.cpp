@@ -15,28 +15,45 @@ void PlayerOnShieldState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
-	if (PLAYER->isOnGround == false)
-		PLAYER->vY -= GRAVITY;
+	if (PLAYER->isOnGround == false && PLAYER->isOnWater == false)
+		PLAYER->vY += GRAVITY;
 }
 
 void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	if (keys[VK_LEFT])
 	{
-		PLAYER->ChangeState(Running);
+		if (PLAYER->isOnWater)
+			PLAYER->ChangeState(WaterRun);
+		else
+		{
+			PLAYER->ChangeState(Running);
+		}
 	}
 	if (keys[VK_RIGHT])
 	{
-		PLAYER->ChangeState(Running);
+		if (PLAYER->isOnWater)
+			PLAYER->ChangeState(WaterRun);
+		else
+		{
+			PLAYER->ChangeState(Running);
+		}
 	}
-	if (keys['Z'])
+	if (keys['Z'] && PLAYER->isOnWater == false)
 	{
 		PLAYER->ChangeState(Attacking);
 	}
 	if (!keys[VK_DOWN])
 	{
-		PLAYER->ChangeState(Standing);
-		PLAYER->shield->SetState(ShieldState::Normal);
+		if (PLAYER->isOnWater)
+		{
+			PLAYER->ChangeState(WaterStand);
+		}
+		else
+		{
+			PLAYER->ChangeState(Standing);
+			PLAYER->shield->SetState(ShieldState::Normal);
+		}
 	}
 	if (!keys['X'])
 	{
@@ -55,6 +72,12 @@ void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnGround = true;
+		PLAYER->vY = 0;
+	}
+	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
+	{
+		PLAYER->isOnWater = true;
+		PLAYER->posY = entity->GetBoundFromCorner().top;
 		PLAYER->vY = 0;
 	}
 }

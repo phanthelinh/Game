@@ -63,7 +63,7 @@ public:
 	PlayerState*	currentState;
 	StateName PreviousState; //save the laststate of the character
 	int				health, lives;
-	bool			isOnGround, isAttacking, shieldFlying;
+	bool			isOnGround, isAttacking, shieldFlying, isOnWater;
 	bool			isImmu;
 	Shield*			shield;
 private:

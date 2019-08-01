@@ -72,7 +72,8 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{
-		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		PLAYER->posY = entity->GetBoundFromCorner().top;
+		PLAYER->isOnWater = true;
 		PLAYER->ChangeState(WaterStand);
 	}
 	else

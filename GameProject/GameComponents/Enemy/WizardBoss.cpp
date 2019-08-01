@@ -63,6 +63,15 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 			isOnGround = true;
 		}
 	}
+	if (object->tag == Captain)
+	{
+		res = COLLISION->SweptAABB(this->GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (res.isCollide)
+		{
+			ChangeEnemyState(InjuringWizard);
+			posX += vX > 0 ? -5 : 5;
+		}
+	}
 }
 
 void WizardBoss::Update(float deltaTime)

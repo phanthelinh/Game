@@ -1,8 +1,8 @@
 #include "PlayerFallingState.h"
 
 #define PLAYER_FALLING_SPEED 40.0f
-#define PLAYER_RUNNING_SPEED 6.5f
-#define GRAVITY 3.0f
+#define PLAYER_RUNNING_SPEED 7.5f
+#define GRAVITY 2.0f
 
 PlayerFallingState::PlayerFallingState()
 {
@@ -10,27 +10,23 @@ PlayerFallingState::PlayerFallingState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = false;
 	PLAYER->shield->isVisible = true;
-	if (PLAYER->PreviousState == Spinning)
+	/*if (PLAYER->PreviousState == Spinning)
 	{
 		PLAYER->vY += PLAYER_FALLING_SPEED + 13.0f;
 	}
 	else
 	{
-		PLAYER->vY += PLAYER_FALLING_SPEED;
+		
 	}
-	
+	*/
 }
 
 void PlayerFallingState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
-	//PLAYER->vY -= GRAVITY;
-	if (PLAYER->vY <= 0)
-	{ 
-		//PLAYER->shield->SetState(ShieldState::Normal);
-		//PLAYER->ChangeState(Standing);
-	}
+	PLAYER->vY += GRAVITY;
+	PLAYER->vY >= 10.0f ? 10.0f : PLAYER->vY;
 }
 
 void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

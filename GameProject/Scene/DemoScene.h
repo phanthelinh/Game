@@ -20,8 +20,8 @@ private:
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
 	std::vector<RECT> lstItemContainerRect;
-	WizardBoss* wizard;
 	Domesto* domesto;
+	WizardBoss* wizard;
 	bool isSpawned = false;
 	bool		shieldInserted;
 public:

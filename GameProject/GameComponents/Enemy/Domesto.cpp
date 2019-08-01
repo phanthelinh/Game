@@ -1,12 +1,49 @@
 #include "Domesto.h"
-#define MAX_DISTANCE_START_TO_JUMP_PLAYER 50.0f
+#define MAX_DISTANCE_START_TO_JUMP_PLAYER	50.0f
+#define MAX_DISTANCE_RUNNING				30.0f
 
-Domesto::Domesto(float posX, float posY):Enemy(posX,posY,0,0)
+Domesto::Domesto(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	if (level == 1)
+	{
+		//insert to grid
+		std::ifstream file("Resources/enemy/domesto/domesto.txt");
+		if (file.good())
+		{
+			while (!file.eof())
+			{
+				int x, y, t;
+				file >> x;
+				file >> y;
+				file >> t;
+				GameObject* obj = NULL;
+				if (t == 0)
+				{
+					obj = new Domesto(x, y + 50, EnemyDomestoType::DomestoRunning);
+				}
+				else
+				{
+					obj = new Domesto(x, y, EnemyDomestoType::DomestoJumping);
+				}
+				if (obj)
+				{
+					rs.insert(obj);
+				}
+			}
+			file.close();
+		}
+	}
+	if(rs.size()>0)
+		GRID->InsertToGrid(rs);
+}
+
+Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
 {
 	point = 500;//500 scores for player if he killed this object
-	currHealth = maxHealth = 100; //attack five times
+	currHealth = maxHealth = 50; //attack five times
 	anims[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/domesto/domesto_stand_23_46.png", 1, 1, 1);
-	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2,true,0.8f);
+	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2, true, 0.8f);
 	anims[EnemyStateName::EnemyJump] = anims[EnemyStateName::EnemySit] = new Animation("Resources/enemy/domesto/domesto_sit_24_31.png", 1, 1, 1);
 	anims[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/domesto/domesto_die_24_46.png", 1, 1, 1);
 	currentState = EnemyStateName::EnemyRun;
@@ -14,6 +51,11 @@ Domesto::Domesto(float posX, float posY):Enemy(posX,posY,0,0)
 	startTime = 0;
 	isReverse = true;
 	isPauseMissile = false;
+}
+
+Domesto::Domesto(float posX, float posY, EnemyDomestoType type) :Domesto(posX, posY)
+{
+	this->domestoType = type;
 }
 
 void Domesto::ChangeEnemyState(EnemyStateName state)
@@ -39,6 +81,27 @@ void Domesto::OnCollision(GameObject * object, float deltaTime)
 			posY += vY * colRes.entryTime;
 			vY = 0;
 			ChangeEnemyState(EnemyStateName::EnemyStand);
+		}
+	}
+	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
+	if (colRes.isCollide)
+	{
+		switch (object->tag)
+		{
+		case Tag::ShieldTag:
+			if (PLAYER->shieldFlying)
+			{
+				currHealth -= 10;
+			}
+			else
+			{
+				vX = vY = 0;
+				currHealth = 0;
+				ChangeEnemyState(EnemyStateName::EnemyDie);
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -94,7 +157,14 @@ void Domesto::Update(float deltaTime)
 		{
 			//attack
 			startTime = now;
-			mis = new Missile(posX, posY - 30, MissileType::StraightUpwardMissile);
+			if (domestoType == EnemyDomestoType::DomestoRunning)
+			{
+				mis = new Missile(posX, posY - 30, MissileType::StraightMissile);
+			}
+			else
+			{
+				mis = new Missile(posX, posY - 30, MissileType::StraightUpwardMissile);
+			}
 			mis->isReverse = isReverse;
 			missles.push_back(mis);
 			ChangeEnemyState(EnemySit);
@@ -105,13 +175,20 @@ void Domesto::Update(float deltaTime)
 		vX = 3.0f * (isReverse ? 1.0f : -1.0f);
 		posX += vX * deltaTime;
 		posY += vY * deltaTime;
-		if (abs(posX-PLAYER->posX)>= MAX_DISTANCE_START_TO_JUMP_PLAYER)
+		if (abs(posX-PLAYER->posX)>= MAX_DISTANCE_RUNNING)
 		{
-			mis = new Missile(posX, posY - height, MissileType::StraightMissile);
-			mis->isReverse = isReverse;
-			missles.push_back(mis);
-			vY = -28.0f;
-			ChangeEnemyState(EnemyJump);
+			if (this->domestoType == EnemyDomestoType::DomestoRunning)
+			{
+				mis = new Missile(posX, posY - height, MissileType::StraightMissile);
+				mis->isReverse = isReverse;
+				missles.push_back(mis);
+				ChangeEnemyState(EnemyStand);
+			}
+			else
+			{
+				vY = -28.0f;
+				ChangeEnemyState(EnemyJump);
+			}
 		}
 		break;
 	case EnemySit:
@@ -141,8 +218,8 @@ void Domesto::Update(float deltaTime)
 			else
 			{
 				//bounce to right
-				vX = 20.0f;
-				vY = -20.0f;
+				vX = 10.0f;
+				vY = -10.0f;
 			}
 			posX += vX * deltaTime;
 			posY += vY * deltaTime;

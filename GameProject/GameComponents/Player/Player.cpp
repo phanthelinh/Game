@@ -39,10 +39,6 @@ Player::Player()
 	shieldFlying = false;
 
 	health = 10;
-	/*posX = 16;
-	posY = 360;*/
-	CAMERA->camPosition = GetPosition();
-	CAMERA->isFollowY = true;
 }
 
 Player * Player::GetInstance()
@@ -125,7 +121,6 @@ void Player::Draw()
 	}
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
-	auto x = shield->GetBound();
 }
 
 void Player::ChangeState(StateName stateName)

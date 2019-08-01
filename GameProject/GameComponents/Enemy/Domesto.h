@@ -6,6 +6,13 @@
 #include "Weapon/Missile.h"
 #include <unordered_map>
 #include <vector>
+#include <fstream>
+
+enum EnemyDomestoType
+{
+	DomestoRunning,
+	DomestoJumping
+};
 
 class Domesto : public Enemy
 {
@@ -16,9 +23,13 @@ private:
 	std::vector<Missile*>							missles;
 	bool											isPauseMissile;
 	bool											isStopUpdate;
+	EnemyDomestoType								domestoType;
 public:
+	//Call this constructor for insert all Domesto to grid
+	Domesto(int level);
 	//posX, posY is the left + width/2, bottom of enemies
-	Domesto(float posX, float posY);
+	Domesto(float x, float y);
+	Domesto(float posX, float posY, EnemyDomestoType type);
 	
 	void ChangeEnemyState(EnemyStateName state);
 

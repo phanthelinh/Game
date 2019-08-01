@@ -7,14 +7,12 @@ PlayeDiedState::PlayeDiedState()
 	PLAYER->allow[Attacking] = PLAYER->allow[Attacking_Shield]=false;
 	PLAYER->allow[Sitting] = false;
 	PLAYER->isImmu = true;
+	PLAYER->posY += 16;
+	PLAYER->shield->isVisible = false;
 }
 
 void PlayeDiedState::Update(float deltaTime)
 {
-	/*if (PLAYER->currentAnim->_isFinished)
-	{
-		PLAYER->ChangeState(StateName::Standing);
-	}*/
 }
 
 void PlayeDiedState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

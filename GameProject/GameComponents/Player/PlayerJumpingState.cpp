@@ -1,7 +1,7 @@
 #include "PlayerJumpingState.h"
 
 #define PLAYER_JUMPING_SPEED -35.0f
-#define PLAYER_RUNNING_SPEED 6.5f
+#define PLAYER_RUNNING_SPEED 7.5f
 #define GRAVITY 3.0f
 
 PlayerJumpingState::PlayerJumpingState()
@@ -16,8 +16,8 @@ PlayerJumpingState::PlayerJumpingState()
 
 void PlayerJumpingState::Update(float deltaTime)
 {
-	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
-	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	PLAYER->posX += PLAYER->vX * deltaTime;
+	PLAYER->posY += PLAYER->vY * deltaTime;
 	PLAYER->vY += GRAVITY;
 	if (PLAYER->vY >= 0 && PLAYER->LastKeyState[X] == false)
 	{

@@ -4,7 +4,7 @@
 
 DemoScene::DemoScene()
 {
-	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston_cut.png", "Resources/map/Charleston_1_1.csv");
+	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
 	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
 
 	//Get items container
@@ -22,29 +22,27 @@ DemoScene::DemoScene()
 	PLAYER->posY = 390;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
-
+	CAMERA->camPosition = PLAYER->GetPosition();
+	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
 	GRID->InsertToGrid(itemsContainer);
-
-	domesto = new Domesto(120, 432);
-	GRID->AddObject(domesto);
-
+	domesto = new Domesto(1);
 	//enemy test
 	wizard = new WizardBoss(240, 285);
 	GRID->AddObject(wizard);
 
 	//runningman dung de test ban dan
-	RunningMan* abc = new RunningMan(240, 436);
-	GRID->AddObject(abc);
+	/*RunningMan* abc = new RunningMan(240, 436);
+	GRID->AddObject(abc);*/
 
 	//add running mans
-	RunningMan* runningman = new RunningMan(700, 355, 1, 0);
+	/*RunningMan* runningman = new RunningMan(700, 355, 1, 0);
 	RunningMan* runningman1 = new RunningMan(950, 355, 1, 0);
 	RunningMan* runningman2 = new RunningMan(625, 436, 0, 0);
 	GRID->AddObject(runningman);
 	GRID->AddObject(runningman1);
-	GRID->AddObject(runningman2);
+	GRID->AddObject(runningman2);*/
 }
 
 DemoScene::~DemoScene()
@@ -60,10 +58,11 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	EXPLODE->Update(deltaTime);
-	if (!shieldInserted)
+	/*if (!shieldInserted)
 	{
 		GRID->AddObject(PLAYER->shield);
-	}
+	}*/
+	PLAYER->shield->Update(deltaTime);
 	//
 	//COLLISION
 	//
@@ -82,12 +81,13 @@ void DemoScene::Update(float deltaTime)
 	for (auto obj : visibleObject)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
+		obj->OnCollision(PLAYER->shield, deltaTime);
 	}
 	if (PLAYER->posX >= 350 && isSpawned == false)
 	{
 		isSpawned = true;
-		RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
-		GRID->AddObject(runningman3);
+		/*RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
+		GRID->AddObject(runningman3);*/
 	}
 }
 

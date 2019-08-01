@@ -30,4 +30,6 @@ public:
 	int					g_GameUIArea = 0;				//game ui start position
 	int					g_WorldMapWidth;
 	int					g_WorldMapHeight;
+	int					g_Scene1_EndMap = 2000;
+	int					g_ChangeScene_Delay = 3.0f;
 };

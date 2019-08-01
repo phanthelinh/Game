@@ -6,7 +6,7 @@ DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
 	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-
+	currentLevel = 1;
 	//Get items container
 	lstItemContainerRect = Util::GetObjectDataFromFile("Resources/items/itemcontainer.txt");
 	if (lstItemContainerRect.size() > 0)
@@ -52,6 +52,15 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
+	auto now = GetTickCount();
+	if ((now - timePause) / 1000.0f >= GLOBAL->g_ChangeScene_Delay && isGamePause)
+	{
+
+		ReloadResources(currentLevel);
+		isGamePause = false;
+	}
+	if (isGamePause)
+		return;
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
 	//wizard->Update(deltaTime);
@@ -59,11 +68,11 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	EXPLODE->Update(deltaTime);
-	/*if (!shieldInserted)
+	if (!shieldInserted)
 	{
 		GRID->AddObject(PLAYER->shield);
-	}*/
-	PLAYER->shield->Update(deltaTime);
+	}
+	CheckForNextStage();
 	//
 	//COLLISION
 	//
@@ -144,4 +153,49 @@ void DemoScene::ReleaseAll()
 void DemoScene::CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime)
 {
 
+}
+
+void DemoScene::CheckForNextStage()
+{
+	switch (currentLevel)
+	{
+	case 1://
+		if (PLAYER->posX >= GLOBAL->g_Scene1_EndMap)
+		{
+			currentLevel++;
+			ChangingStage();
+		}
+		break;
+	/*case 2:
+		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
+		break;*/
+	case 4:
+		break;
+	}
+}
+
+void DemoScene::ChangingStage()
+{
+	timePause = GetTickCount();
+	isGamePause = true;
+}
+
+
+
+void DemoScene::ReloadResources(int nextLevel)
+{
+	if (nextLevel == 1)
+		return;
+	switch (nextLevel)
+	{
+	case 2://boss 1
+		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
+		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
+		break;
+	case 3:
+		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
+		break;
+	case 4:
+		break;
+	}
 }

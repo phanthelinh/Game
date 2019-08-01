@@ -10,10 +10,7 @@ PlayerWaterStand::PlayerWaterStand()
 
 void PlayerWaterStand::Update(float deltaTime)
 {
-	/*if (PLAYER->currentAnim->_isFinished)
-	{
-		PLAYER->ChangeState(StateName::Standing);
-	}*/
+	PLAYER->vY = 0.0f;
 }
 
 void PlayerWaterStand::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

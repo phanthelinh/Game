@@ -1,12 +1,16 @@
 #include "Water.h"
 
-Water::Water(RECT r)
+Water::Water(RECT r) :GameObject(r)
 {
 	tag = WaterTag;
 	vX = vY = 0;
 }
 
 Water::Water(float x, float y, float width, float height):GameObject(x, y, width, height, WaterTag)
+{
+}
+
+Water::~Water()
 {
 }
 

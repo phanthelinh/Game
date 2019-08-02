@@ -5,17 +5,7 @@
 DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
-	//map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
 	currentLevel = 1;
-	//Get items container
-	lstItemContainerRect = Util::GetObjectDataFromFile("Resources/items/itemcontainer.txt");
-	if (lstItemContainerRect.size() > 0)
-	{
-		for (auto r : lstItemContainerRect)
-		{
-			itemsContainer.insert(new ItemsContainer(r));
-		}
-	}
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 16;
@@ -26,11 +16,9 @@ DemoScene::DemoScene()
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	GRID->InsertToGrid(itemsContainer);
-	domesto = new Domesto(1);
-	runningman = new RunningMan(1);
+	LoadGridFromFile(1);
 	//enemy test
-	
+
 	//ChangingStage();
 	//runningman dung de test ban dan
 	/*RunningMan* abc = new RunningMan(240, 436);
@@ -62,16 +50,14 @@ void DemoScene::Update(float deltaTime)
 		return;
 	//object will be move to another cell, that is included in Update Grid
 	GRID->UpdateGrid(deltaTime);
-	//wizard->Update(deltaTime);
-	//update object
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	EXPLODE->Update(deltaTime);
+	//GRID->ObjectMoving(deltaTime);
 	if (!shieldInserted)
 	{
 		GRID->AddObject(PLAYER->shield);
 	}
-	//PLAYER->shield->Update(deltaTime);
 	CheckForNextStage();
 	//
 	//COLLISION
@@ -108,7 +94,7 @@ void DemoScene::Draw()
 	//draw visible objects
 	for (auto obj : visibleObject)
 	{
-		if(obj->tag != Tag::ShieldTag)
+		if (obj->tag != Tag::ShieldTag)
 			obj->Draw();
 	}
 	//render player
@@ -166,9 +152,9 @@ void DemoScene::CheckForNextStage()
 			ChangingStage();
 		}
 		break;
-	/*case 2:
-		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-		break;*/
+		/*case 2:
+			map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
+			break;*/
 	case 4:
 		break;
 	}
@@ -182,27 +168,191 @@ void DemoScene::ChangingStage()
 
 
 
-void DemoScene::ReloadResources(int nextLevel)
+void DemoScene::ReloadResources(int level)
 {
 	Ground* gr = NULL;
-	if (nextLevel == 1)
+	if (level == 1)
 		return;
-	switch (nextLevel)
+	switch (level)
 	{
 	case 2://boss 1
 		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
 		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
 		CAMERA->isFollowY = false;
 		wizard = new WizardBoss(240, 52);
-		gr = new Ground(0, 198, 256, 16);
-		GRID->AddObject(gr);
 		GRID->AddObject(wizard);
+		LoadGridFromFile(currentLevel);
 		break;
 	case 3:
 		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-
+		LoadGridFromFile(currentLevel);
 		break;
 	case 4:
 		break;
 	}
+}
+
+void DemoScene::SaveGridToFile(int level)
+{
+	std::ofstream file;
+	std::string filename = "Resources/grid/level_" + std::to_string(level) + ".txt";
+	file.open(filename);
+	for (auto o : GRID->objects)
+	{
+		//get object info
+		switch (o->tag)
+		{
+		case GroundTag:
+		{
+			file << "\nground ";
+			file << o->posX << " " << o->posY << " " << o->width << " " << o->height;
+			break;
+		}
+		case WaterTag:
+		{
+			file << "\nwater ";
+			file << o->posX << " " << o->posY << " " << o->width << " " << o->height;
+			break;
+		}
+		case EnemyTag:
+		{
+			auto enemy = (Enemy*)o;
+			switch (enemy->enemySubTag)
+			{
+			case DomestoTag:
+			{
+				auto domesto = (Domesto*)enemy;
+				file << "\ndomesto ";
+				file << domesto->posX << " " << domesto->posY << " " << domesto->domestoType;
+				break;
+			}
+			case RunningManTag:
+			{
+				auto runningman = (RunningMan*)enemy;
+				file << "\nrunningman ";
+				file << runningman->posX << " " << runningman->posY << " " << runningman->type << " "<<runningman->color;
+				break;
+			}
+			case WizardBossTag:
+			{
+				auto wizardbo = (WizardBoss*)enemy;
+				file << "\nwizard ";
+				file << wizardbo->posX << " " << wizardbo->posY;
+				break;
+			}
+			default:
+				break;
+			}
+			break;
+		}
+		case ItemContainerTag:
+		{
+			auto item = (ItemsContainer*)o;
+			int hasExit = item->hasExit > 0 ? item->hasExit : 0;
+			file << "\nitemscontainer ";
+			file << item->posX << " " << item->posY << " " << item->width << " " << item->height << " "<<hasExit;
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	file.close();
+}
+
+void DemoScene::LoadGridFromFile(int level)
+{
+	std::ifstream file;
+	std::string filename = "Resources/grid/level_" + std::to_string(level) + ".txt";
+	file.open(filename);
+	GRID->ResetGrid();
+	if (!file.good())
+	{
+		file.close();
+		//add ground from file to cell
+		auto grounds = Util::GetAllObjectFromFile(GroundTag, level);
+		for (auto g : grounds)
+		{
+			GameObject* gr = new Ground(g);
+			GRID->AddObject(gr);
+		}
+		////add water from file to cell
+		auto data = Util::GetAllObjectFromFile(WaterTag, level);
+		for (auto w : data)
+		{
+			GameObject* water = new Water(w);
+			GRID->AddObject(water);
+		}
+		//add enemy
+		//domesto
+		ItemsContainer::InsertFromFile(level);
+		Domesto::InsertFromFile(level);
+		RunningMan::InsertFromFile(level);
+		SaveGridToFile(level);
+		return;
+	}
+	int count = 0;
+	while (!file.eof())
+	{
+		std::string objectname;
+		file >> objectname;
+		if (objectname._Equal(""))
+		{
+			break;
+		}
+		count++;
+		if (objectname._Equal("ground"))
+		{
+			int x,y,w,h;
+			file >> x;
+			file >> y;
+			file >> w;
+			file >> h;
+			GRID->AddObject(new Ground(x, y, w, h));
+		}
+		else if (objectname._Equal("water"))
+		{
+			int x, y, w, h;
+			file >> x;
+			file >> y;
+			file >> w;
+			file >> h;
+			GRID->AddObject(new Water(x, y, w, h));
+		}
+		else if (objectname._Equal("domesto"))
+		{
+			int x, y, type;
+			file >> x;
+			file >> y;
+			file >> type;
+			type == 0 ? GRID->AddObject(new Domesto(x, y, EnemyDomestoType::DomestoRunning)): GRID->AddObject(new Domesto(x, y, EnemyDomestoType::DomestoRunning));
+		}
+		else if (objectname._Equal("runningman"))
+		{
+			int x, y, type, color;
+			file >> x;
+			file >> y;
+			file >> type;
+			file >> color;
+			GRID->AddObject(new RunningMan(x, y, type, color));
+		}
+		else if (objectname._Equal("wizard"))
+		{
+			int x, y;
+			file >> x;
+			file >> y;
+			GRID->AddObject(new WizardBoss(x, y));
+		}
+		else if (objectname._Equal("itemscontainer"))
+		{
+			int x, y, w, h, hs;
+			file >> x;
+			file >> y;
+			file >> w;
+			file >> h;
+			file >> hs;
+			GRID->AddObject(new ItemsContainer(x, y, w, h, hs));
+		}
+	}
+	file.close();
 }

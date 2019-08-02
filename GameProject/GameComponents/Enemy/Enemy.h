@@ -13,6 +13,13 @@ enum EnemyStateName
 	EnemyJump
 };
 
+enum EnemySubTag
+{
+	DomestoTag,
+	RunningManTag,
+	WizardBossTag
+};
+
 class Enemy: public GameObject
 {
 public:
@@ -20,7 +27,7 @@ public:
 	float			maxHealth, currHealth;
 	Weapon*			enemyWeapon;
 	float			point;		//score when defeated
-
+	EnemySubTag		enemySubTag;
 	Enemy();
 	//posX, posY is the left, top of enemies
 	Enemy(float posX, float posY, float width, float height);

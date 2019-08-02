@@ -40,8 +40,5 @@ RECT Cell::GetCellBound()
 
 void Cell::Release()
 {
-	for (auto i = objects.begin(); i != objects.end(); ++i)
-	{
-		i = objects.erase(i);
-	}
+	objects.erase(objects.begin(), objects.end());
 }

@@ -6,35 +6,13 @@
 
 RunningMan::RunningMan(int level):Enemy()
 {
-	std::unordered_set<GameObject*> rs;
-	if (level == 1)
-	{
-		//insert to grid
-		std::ifstream file("Resources/enemy/runningman/runningmanlevel1.txt");
-		if (file.good())
-		{
-			while (!file.eof())
-			{
-				int x, y, t, c;
-				file >> x;
-				file >> y;
-				file >> t;
-				file >> c;
-				GameObject* obj = new RunningMan(x, y, t, c);
-				if (obj)
-				{
-					rs.insert(obj);
-				}
-			}
-			file.close();
-		}
-	}
-	if (rs.size() > 0)
-		GRID->InsertToGrid(rs);
+	
 }
 
 RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,posY,0,0)
 {
+	this->type = type;
+	this->color = color;
 	if (color == 0)
 	{
 		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
@@ -63,10 +41,43 @@ RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,p
 	}
 	isReverse = false;
 	isWaiting = true;
+	enemySubTag = EnemySubTag::RunningManTag;
 }
 
 RunningMan::RunningMan(RECT r):RunningMan(r.left,r.top)
 {
+}
+
+void RunningMan::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::ifstream file;
+	if (level == 1)
+	{
+		file.open("Resources/enemy/runningman/runningmanlevel1.txt");
+	}
+	//insert to grid
+	
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y, t, c;
+			file >> x;
+			file >> y;
+			file >> t;
+			file >> c;
+			GameObject* obj = new RunningMan(x, y, t, c);
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
 }
 
 void RunningMan::SetState(EnemyStateName state)

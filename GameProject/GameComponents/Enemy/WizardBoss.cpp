@@ -28,6 +28,7 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	isOnGround = false; //falling down
 	nHorizontalBullet = NUM_OF_HORIZONTAL_BULLET;
 	nVerticalBullet = NUM_OF_VERTICAL_BULLET;
+	enemySubTag = EnemySubTag::WizardBossTag;
 }
 
 WizardBoss::WizardBoss(RECT r) :Enemy(r)

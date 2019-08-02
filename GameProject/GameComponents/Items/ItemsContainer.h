@@ -16,10 +16,12 @@ private:
 	int		maxItemsNum;
 public:
 	std::unordered_set<GameObject*> listItems;
+	int hasExit;
 
-	ItemsContainer(int left, int top, int width, int height, bool hasExit = false);
+	ItemsContainer(int left, int top, int width, int height, int hasExit = 0);
 	ItemsContainer(RECT rect);
 
+	static void InsertFromFile(int level);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

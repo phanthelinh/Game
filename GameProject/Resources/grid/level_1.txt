@@ -1,0 +1,41 @@
+
+itemscontainer 1600 384 16 16 0
+ground 0 432 96 16
+ground 1856 432 160 16
+itemscontainer 832 320 16 16 0
+ground 160 432 1216 16
+ground 1440 432 352 16
+ground 1568 192 224 16
+domesto 1632 434 0
+domesto 848 320 1
+ground 1792 416 64 16
+itemscontainer 1184 288 16 16 0
+ground 1312 192 224 16
+ground 1056 192 224 16
+ground 1328 304 48 16
+ground 880 272 32 16
+ground 832 352 32 16
+ground 928 352 48 16
+itemscontainer 128 368 16 16 0
+ground 800 192 224 16
+ground 624 272 32 16
+ground 288 192 224 16
+ground 672 352 48 16
+ground 576 352 32 16
+ground 544 192 224 16
+ground 48 304 48 16
+itemscontainer 64 272 16 16 0
+ground 32 192 224 16
+water 0 448 1792 16
+itemscontainer 1344 272 16 16 0
+itemscontainer 320 384 16 16 0
+itemscontainer 416 288 16 16 0
+itemscontainer 576 320 16 16 0
+itemscontainer 1088 384 16 16 0
+itemscontainer 1408 368 16 16 0
+itemscontainer 1696 288 16 16 0
+domesto 384 434 0
+domesto 640 434 0
+runningman 700 355 1 0
+runningman 950 355 1 0
+runningman 625 436 0 0

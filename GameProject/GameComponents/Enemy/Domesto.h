@@ -23,14 +23,16 @@ private:
 	std::vector<Missile*>							missles;
 	bool											isPauseMissile;
 	bool											isStopUpdate;
-	EnemyDomestoType								domestoType;
 public:
+	EnemyDomestoType								domestoType;
 	//Call this constructor for insert all Domesto to grid
 	Domesto(int level);
 	//posX, posY is the left + width/2, bottom of enemies
 	Domesto(float x, float y);
 	Domesto(float posX, float posY, EnemyDomestoType type);
 	
+	static void InsertFromFile(int level);
+
 	void ChangeEnemyState(EnemyStateName state);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);

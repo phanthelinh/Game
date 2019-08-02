@@ -20,9 +20,13 @@ private:
 	bool isAttacking = false;
 	bool isDying = false;
 public:
+	int type, color;
+
 	RunningMan(int level);
 	RunningMan(float posX, float posY, int type = 0, int color = 0); //type 0 binh thuong, type 1 ngoi tai cho //color = 0 la mau xanh duong, color = 1 la mau xanh la
 	RunningMan(RECT r);
+
+	static void InsertFromFile(int level);
 
 	int CheckPosition(); //0 is shooting range, 1 is running range
 

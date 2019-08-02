@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool hasExit)
+ItemsContainer::ItemsContainer(int left, int top, int width, int height, int hasExit)
 {
 	sprites = new Sprite*[2];
 	sprites[0] = curSprite = new Sprite("Resources/items/itemcontainer_32_16.png", { 0,0,16,16 });
@@ -15,6 +15,7 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 	this->isReverse = false;
 	this->tag = Tag::ItemContainerTag;
 
+	this->hasExit = hasExit;
 	maxItemsNum = 3;
 	//init list items up to 3 items
 	for (int i = 0; i < 1; i++) {
@@ -51,6 +52,33 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
 {
 	
+}
+
+void ItemsContainer::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::string filename = "Resources/items/lv" + std::to_string(level) + "_itemcontainer.txt";
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y, w,h;
+			file >> x;
+			file >> y;
+			file >> w;
+			file >> h;
+			GameObject* obj = new ItemsContainer(x, y, w, h);
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
 }
 
 void ItemsContainer::OnCollision(GameObject* object, float deltaTime)

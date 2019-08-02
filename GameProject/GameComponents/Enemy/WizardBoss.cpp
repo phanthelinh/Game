@@ -32,7 +32,7 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 
 WizardBoss::WizardBoss(RECT r) :Enemy(r)
 {
-	maxHealth = 14;
+	maxHealth = 50;
 	tag = Wizard;
 }
 
@@ -63,16 +63,11 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 			isOnGround = true;
 		}
 	}
-	if (object->tag == Captain)
+	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
+	if (colRes.isCollide && object->tag == ShieldTag)
 	{
-		if(COLLISION->IsCollide(this->GetBoundingBox(), object->GetBoundingBox()) && currentState != InjuringWizard)
-		{
-			ChangeEnemyState(InjuringWizard);
-		}
-	}
-	else if (object->tag == ShieldTag)
-	{
-
+		currHealth -= 5;
+		ChangeEnemyState(InjuringWizard);
 	}
 }
 
@@ -100,7 +95,7 @@ void WizardBoss::Update(float deltaTime)
 		vY = isOnGround ? -15.0f : 15.0f;
 		posY += vY * deltaTime;
 		
-		if (isOnGround && posY + height <= 150)	//is flying up and touch camera.top, then fly horizontally and attack
+		if (isOnGround && posY + height <= 140)	//is flying up and touch camera.top, then fly horizontally and attack
 		{
 			vY = 0;
 			ChangeEnemyState(FlyAttackWizard);
@@ -108,15 +103,6 @@ void WizardBoss::Update(float deltaTime)
 		}
 		break;
 	}
-	case InjuringWizard:
-	{
-		if ((now - startTime)/1000.0f >= 0.5f)
-		{
-			startTime = now;
-			ChangeEnemyState(StandingWizard);
-		}
-	}
-	break;
 	case StandingWizard:
 	{
 		vX = vY = 0;
@@ -131,7 +117,7 @@ void WizardBoss::Update(float deltaTime)
 				ChangeEnemyState(FlyingWizard);
 				break;
 			}
-			
+
 			ChangeEnemyState(RunningWizard);
 		}
 		break;

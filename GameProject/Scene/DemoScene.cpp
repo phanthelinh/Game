@@ -184,7 +184,7 @@ void DemoScene::ChangingStage()
 
 void DemoScene::ReloadResources(int nextLevel)
 {
-	Ground* gr = NULL;
+	std::vector<RECT> grounds;
 	if (nextLevel == 1)
 		return;
 	switch (nextLevel)
@@ -194,8 +194,12 @@ void DemoScene::ReloadResources(int nextLevel)
 		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
 		CAMERA->isFollowY = false;
 		wizard = new WizardBoss(240, 52);
-		gr = new Ground(0, 198, 256, 16);
-		GRID->AddObject(gr);
+		grounds = Util::GetAllObjectFromFile(GroundTag, 2);
+		for (auto g : grounds)
+		{
+			GameObject* gr = new Ground(g);
+			GRID->AddObject(gr);
+		}
 		GRID->AddObject(wizard);
 		break;
 	case 3:

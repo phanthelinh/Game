@@ -116,7 +116,7 @@ void Camera::UpdateCamera(D3DXVECTOR3 playerPosition)
 	{
 		camPosition.y = GLOBAL->g_WorldMapHeight - GLOBAL->g_ScreenHeight / 2;
 	}
-	if (camPosition.y < 0)
+	if (camPosition.y < GLOBAL->g_ScreenHeight/2)
 	{
 		camPosition.y = GLOBAL->g_ScreenHeight / 2;
 	}

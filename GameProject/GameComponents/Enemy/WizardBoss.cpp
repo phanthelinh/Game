@@ -20,7 +20,7 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DieWizard] = new Animation("Resources/boss/Wizard_Die.png", 2, 1, 2);
 	animations[AttackingWizard] = new Animation("Resources/boss/Wizard_Attacking.png", 4, 1, 4, true, 0.9);
 	animations[FlyAttackWizard] = new Animation("Resources/boss/Wizard_FlyAttack.png", 3, 1, 3, false, 0.07);
-	animations[InjuringWizard] = new Animation("Resources/boss/Wizard_Injuring.png", 1, 1, 1);
+	animations[InjuringWizard] = new Animation("Resources/boss/Wizard_Injuring.png", 1, 1, 1,false);
 	currentState = FlyingWizard;
 	ChangeEnemyState(FlyingWizard);
 	isReverse = false;
@@ -98,7 +98,7 @@ void WizardBoss::Update(float deltaTime)
 		vY = isOnGround ? -15.0f : 15.0f;
 		posY += vY * deltaTime;
 		
-		if (isOnGround && posY + height <= 350)	//is flying up and touch camera.top, then fly horizontally and attack
+		if (isOnGround && posY + height <= 150)	//is flying up and touch camera.top, then fly horizontally and attack
 		{
 			vY = 0;
 			ChangeEnemyState(FlyAttackWizard);
@@ -106,6 +106,15 @@ void WizardBoss::Update(float deltaTime)
 		}
 		break;
 	}
+	case InjuringWizard:
+	{
+		if ((now - startTime)/1000.0f >= 0.5f)
+		{
+			startTime = now;
+			ChangeEnemyState(StandingWizard);
+		}
+	}
+	break;
 	case StandingWizard:
 	{
 		vX = vY = 0;

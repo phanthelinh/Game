@@ -97,7 +97,7 @@ void Player::Update(float deltaTime)
 			{
 				shield->playerVy = vY;
 				shield->playerPos = GetPosition();
-				//shield->Update(deltaTime); update at Grid
+				//shield->Update(deltaTime);// update at Grid
 			}
 		}	
 	}
@@ -199,13 +199,6 @@ void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, floa
 
 void Player::OnCollision(GameObject * object, float deltaTime)
 {
-	if (object->tag != GroundTag)
-		return;
-	auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(),deltaTime);
-	if (colRes.isCollide)
-	{
-		
-	}
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

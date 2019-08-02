@@ -30,9 +30,8 @@ DemoScene::DemoScene()
 	domesto = new Domesto(1);
 	runningman = new RunningMan(1);
 	//enemy test
-	wizard = new WizardBoss(240, 285);
-	GRID->AddObject(wizard);
-
+	
+	//ChangingStage();
 	//runningman dung de test ban dan
 	/*RunningMan* abc = new RunningMan(240, 436);
 	GRID->AddObject(abc);*/
@@ -72,6 +71,7 @@ void DemoScene::Update(float deltaTime)
 	{
 		GRID->AddObject(PLAYER->shield);
 	}
+	//PLAYER->shield->Update(deltaTime);
 	CheckForNextStage();
 	//
 	//COLLISION
@@ -108,11 +108,11 @@ void DemoScene::Draw()
 	//draw visible objects
 	for (auto obj : visibleObject)
 	{
-		obj->Draw();
+		if(obj->tag != Tag::ShieldTag)
+			obj->Draw();
 	}
 	//render player
 	PLAYER->Draw();
-	wizard->Draw();
 	EXPLODE->Draw();
 }
 
@@ -184,6 +184,7 @@ void DemoScene::ChangingStage()
 
 void DemoScene::ReloadResources(int nextLevel)
 {
+	Ground* gr = NULL;
 	if (nextLevel == 1)
 		return;
 	switch (nextLevel)
@@ -191,9 +192,15 @@ void DemoScene::ReloadResources(int nextLevel)
 	case 2://boss 1
 		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
 		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
+		CAMERA->isFollowY = false;
+		wizard = new WizardBoss(240, 52);
+		gr = new Ground(0, 198, 256, 16);
+		GRID->AddObject(gr);
+		GRID->AddObject(wizard);
 		break;
 	case 3:
 		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
+
 		break;
 	case 4:
 		break;

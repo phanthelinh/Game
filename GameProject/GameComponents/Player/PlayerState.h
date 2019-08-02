@@ -4,6 +4,8 @@
 #include <map>
 #include "../GameObject.h"
 
+#define PLAYER_RUNNING_SPEED 7.5f
+
 enum StateName
 {
 	Standing,

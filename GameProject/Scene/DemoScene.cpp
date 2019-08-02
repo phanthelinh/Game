@@ -8,8 +8,8 @@ DemoScene::DemoScene()
 	currentLevel = 1;
 	//init for Player
 	PLAYER; //get instance
-	PLAYER->posX = 16;
-	PLAYER->posY = 390;
+	PLAYER->posX = 9;
+	PLAYER->posY = 384;
 	PLAYER->isOnGround = false;
 	PLAYER->currentState = new PlayerFallingState();
 	CAMERA->camPosition = PLAYER->GetPosition();
@@ -50,9 +50,29 @@ void DemoScene::Update(float deltaTime)
 	//COLLISION
 	//
 	//check collision Ground <> Player
+	bool test = false;
 	for (auto g : GRID->GetVisibleGround())
 	{
-		PLAYER->OnCollision(g, deltaTime);
+		if (g->IsCollide(PLAYER->GetBound()))
+		{
+			test = true;
+			auto m = g->IsCollide(PLAYER->GetBound());
+			auto b = PLAYER->GetBound();
+			break;
+		}
+	}
+	for (auto w : GRID->GetVisibleWater())
+	{
+		if (COLLISION->IsCollide(w->GetBoundingBox(), PLAYER->GetBoundingBox()))
+		{
+			test = true;
+			break;
+		}
+	}
+	if (!test)
+	{
+		if(PLAYER->isOnGround)
+			PLAYER->ChangeState(Falling);
 	}
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);

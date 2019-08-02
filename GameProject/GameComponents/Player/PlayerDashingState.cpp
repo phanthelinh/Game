@@ -1,7 +1,6 @@
 #include "PlayerDashingState.h"
 
 #define PLAYER_DASHING_SPEED 25.0f
-#define PLAYER_RUNNING_SPEED 8.0f
 #define GRAVITY 1.0f
 
 PlayerDashingState::PlayerDashingState()

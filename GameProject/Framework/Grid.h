@@ -42,7 +42,7 @@ public:
 	std::vector<GameObject*> GetVisibleGround();
 	std::unordered_set<GameObject*> GetVisibleObjects();
 	void ObjectMoving(float deltaTime);
-	
+	std::vector<GameObject*> GetVisibleWater();
 	void Release();
 	void ResetGrid();
 };

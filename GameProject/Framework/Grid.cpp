@@ -217,6 +217,23 @@ void Grid::ObjectMoving(float deltaTime)
 	}
 }
 
+std::vector<GameObject*> Grid::GetVisibleWater()
+{
+	std::vector<GameObject*> rs;
+	for (auto c : visibleCells)
+	{
+		for (auto g : c->objects)
+		{
+			if (g->tag == Tag::WaterTag && g->IsCollide(CAMERA->GetBound()))
+			{
+				rs.push_back(g);
+			}
+		}
+	}
+
+	return rs;
+}
+
 void Grid::Release()
 {
 	objects.clear();

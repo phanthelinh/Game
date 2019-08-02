@@ -1,12 +1,12 @@
 #include "PlayerFallingState.h"
 
 #define PLAYER_FALLING_SPEED 40.0f
-#define PLAYER_RUNNING_SPEED 7.5f
 #define GRAVITY 3.0f
 
 PlayerFallingState::PlayerFallingState()
 {
 	PLAYER->allow[Attacking] = true;
+	PLAYER->allow[Moving] = true;
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = false;
 	PLAYER->shield->isVisible = true;

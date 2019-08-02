@@ -125,7 +125,7 @@ void ItemsContainer::Update(float deltaTime)
 
 void ItemsContainer::Draw()
 {
-	Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition,RECT(),D3DXVECTOR3(0,0,0));
+	Draw(D3DXVECTOR3(posX - 4, posY - 4, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
 }
 
 void ItemsContainer::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)

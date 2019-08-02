@@ -188,33 +188,6 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 	currentState->OnCollision(object, deltaTime);
 }
 
-RECT Player::GetBound()
-{
-	RECT r;
-	if (currentState->GetState() == Standing)
-	{
-		r.left = posX - width / 2 + 4;
-		r.top = posY - height / 2 -2;
-		r.right = posX + width / 2 - 6;
-		r.bottom = posY + height / 2 - 1;
-	}
-	else if (currentState->GetState() == Running)
-	{
-		r.left = posX - width / 2 + 3;
-		r.top = posY - height / 2 -4;
-		r.right = posX + width / 2 - 4;
-		r.bottom = posY + height / 2 - 1;
-	}
-	else
-	{
-		r.left = posX - width / 2;
-		r.top = posY - height / 2;
-		r.right = posX + width / 2;
-		r.bottom = posY + height / 2;
-	}
-	return r;
-}
-
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 {
 	currentState->HandleKeyboard(keys, deltaTime);

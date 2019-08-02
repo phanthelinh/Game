@@ -45,7 +45,6 @@ public:
 	void CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime);
 	//Used for check collision with Ground
 	void OnCollision(GameObject* object, float deltaTime = 0);
-	RECT GetBound();
 	void HandleKeyboard(std::map<int, bool> keys, float deltaTime);
 
 	void OnKeyDown(int keyCode);

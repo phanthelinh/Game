@@ -17,20 +17,6 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	LoadGridFromFile(1);
-	//enemy test
-
-	//ChangingStage();
-	//runningman dung de test ban dan
-	/*RunningMan* abc = new RunningMan(240, 436);
-	GRID->AddObject(abc);*/
-
-	//add running mans
-	/*RunningMan* runningman = new RunningMan(700, 355, 1, 0);
-	RunningMan* runningman1 = new RunningMan(950, 355, 1, 0);
-	RunningMan* runningman2 = new RunningMan(625, 436, 0, 0);
-	GRID->AddObject(runningman);
-	GRID->AddObject(runningman1);
-	GRID->AddObject(runningman2);*/
 }
 
 DemoScene::~DemoScene()
@@ -53,10 +39,11 @@ void DemoScene::Update(float deltaTime)
 	PLAYER->Update(deltaTime);
 	PLAYER->HandleKeyboard(keys, deltaTime);
 	EXPLODE->Update(deltaTime);
-	//GRID->ObjectMoving(deltaTime);
+
 	if (!shieldInserted)
 	{
 		GRID->AddObject(PLAYER->shield);
+		shieldInserted = true;
 	}
 	CheckForNextStage();
 	//
@@ -178,6 +165,7 @@ void DemoScene::ReloadResources(int level)
 	case 2://boss 1
 		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
 		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
+		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = false;
 		wizard = new WizardBoss(240, 52);
 		GRID->AddObject(wizard);

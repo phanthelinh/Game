@@ -211,7 +211,8 @@ void Grid::ObjectMoving(float deltaTime)
 	for (auto obj : lst)
 	{
 		RemoveObject(obj);
-		obj->Update(deltaTime);
+		if(obj->tag != Tag::ShieldTag)
+			obj->Update(deltaTime);
 		AddObject(obj);
 	}
 }

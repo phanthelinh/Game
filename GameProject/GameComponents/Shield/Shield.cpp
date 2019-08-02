@@ -46,11 +46,11 @@ void Shield::SetState(ShieldState state)
 		shield->_textureHeight = height = 10;
 		if (isReverse)
 		{
-			vX = 70.0f;
+			vX = 50.0f;
 		}
 		else
 		{
-			vX = -70.0f;
+			vX = -50.0f;
 		}
 		break;
 	default:
@@ -87,11 +87,11 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 	case Normal:
 		if (playerReverse) //face to right
 		{
-			_translationToPlayer = { 13,-6,0 };
+			_translationToPlayer = { 13,-4,0 };
 		}
 		else
 		{
-			_translationToPlayer = { -13,-6,0 };
+			_translationToPlayer = { -13,-4,0 };
 		}
 		SetPosition(GetPosition() + _translationToPlayer);
 		break;
@@ -131,9 +131,9 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			else
 			{
 				_translationToPlayer = { 31,0,0 };
-				startingPos = GetPosition() + _translationToPlayer;
-				SetPosition(startingPos);
 			}
+			startingPos = GetPosition() + _translationToPlayer;
+			SetPosition(startingPos);
 		}
 		else
 		{
@@ -144,9 +144,9 @@ void Shield::SetTranslationToPlayer(bool playerReverse, ShieldState state, int s
 			else
 			{
 				_translationToPlayer = { -31,0,0 };
-				startingPos = GetPosition() + _translationToPlayer;
-				SetPosition(startingPos);
 			}
+			startingPos = GetPosition() + _translationToPlayer;
+			SetPosition(startingPos);
 		}
 		break;
 	default:

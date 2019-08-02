@@ -2,7 +2,7 @@
 
 #define PLAYER_FALLING_SPEED 40.0f
 #define PLAYER_RUNNING_SPEED 7.5f
-#define GRAVITY 2.0f
+#define GRAVITY 3.0f
 
 PlayerFallingState::PlayerFallingState()
 {
@@ -10,15 +10,8 @@ PlayerFallingState::PlayerFallingState()
 	PLAYER->allow[Jumping] = false;
 	PLAYER->isOnGround = false;
 	PLAYER->shield->isVisible = true;
-	/*if (PLAYER->PreviousState == Spinning)
-	{
-		PLAYER->vY += PLAYER_FALLING_SPEED + 13.0f;
-	}
-	else
-	{
-		
-	}
-	*/
+	if (!PLAYER->shieldFlying)
+		PLAYER->shield->SetState(ShieldState::OnJump);
 }
 
 void PlayerFallingState::Update(float deltaTime)

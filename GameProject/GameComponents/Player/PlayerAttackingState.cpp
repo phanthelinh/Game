@@ -3,7 +3,6 @@
 
 PlayerAttackingState::PlayerAttackingState()
 {
-	PLAYER->isOnGround = true;
 	PLAYER->shield->isVisible = true;
 	prevState = PLAYER->currentState->GetState();
 	if (prevState == Standing || prevState == Running)
@@ -11,7 +10,7 @@ PlayerAttackingState::PlayerAttackingState()
 		PLAYER->allow[Jumping] = true;
 		PLAYER->allow[Sitting] = true;
 		PLAYER->allow[Running] = true;
-		if (!PLAYER->shieldFlying)
+		if (!PLAYER->shieldFlying || PLAYER->shield->curState != Flying)
 		{
 			PLAYER->currentAnim = PLAYER->animations[Attacking_Shield];
 			PLAYER->shield->SetState(ShieldState::Flying);
@@ -25,7 +24,8 @@ PlayerAttackingState::PlayerAttackingState()
 	{
 		PLAYER->currentAnim = PLAYER->animations[Attacking_SitBump];
 		PLAYER->allow[Attacking_SitBump] = true;
-		PLAYER->shield->SetState(ShieldState::Shielded);
+		if(!PLAYER->shieldFlying)
+			PLAYER->shield->SetState(ShieldState::Shielded);
 	}
 	//reset anim
 	PLAYER->currentAnim->ResetAnim();
@@ -36,13 +36,11 @@ void PlayerAttackingState::Update(float deltaTime)
 	StateName currentState = PLAYER->currentState->GetState();
 	if (PLAYER->currentAnim->_isFinished)
 	{
-		if (currentState == Attacking_SitBump)
+		if (prevState == Sitting)
 		{
 			PLAYER->posY -= 10;
-			PLAYER->ChangeState(Sitting);
 		}
-		else if(currentState == Attacking_StandBump || currentState == Attacking_Shield)
-			PLAYER->ChangeState(Standing);
+		PLAYER->ChangeState(Standing);
 	}
 }
 
@@ -56,18 +54,7 @@ void PlayerAttackingState::HandleKeyboard(std::map<int, bool> keys, float deltaT
 
 StateName PlayerAttackingState::GetState()
 {
-	if (prevState == Standing || prevState == Running)
-	{
-		if (PLAYER->shieldFlying)
-			return Attacking_StandBump;
-		else
-			return Attacking_Shield;
-	}
-	else if (prevState == Sitting)
-		return Attacking_SitBump;
-	else if (prevState == Attacking_StandBump)
-		return Attacking_StandBump;
-	return Standing;
+	return Attacking;
 }
 
 void PlayerAttackingState::OnCollision(GameObject* entity, float deltaTime)

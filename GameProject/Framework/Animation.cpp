@@ -29,7 +29,10 @@ void Animation::Update(float deltaTime)
 {
 	//no update when the number of frames are less than 1
 	if (_totalFrames <= 1)
+	{
+		_isFinished = true;
 		return;
+	}
 	//update frame
 	if (_curTotalTime >= _timePerFrame)
 	{

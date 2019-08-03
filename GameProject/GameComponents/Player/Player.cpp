@@ -11,7 +11,7 @@ Player::Player()
 	animations[Sitting] = new Animation("Resources/player/player_sit_32_32.png", 1, 1, 1);
 	animations[Jumping] = new Animation("Resources/player/Jumping.png", 1, 1, 1);
 	animations[Falling] = new Animation("Resources/player/Jumping.png", 1, 1, 1);
-	animations[Kicking] = new Animation("Resources/player/Kicking.png", 1, 1, 1);
+	animations[Kicking] = new Animation("Resources/player/Kicking.png", 1, 1, 1,false);
 	animations[Spinning] = new Animation("Resources/player/Spinning.png", 2, 1, 2, true);
 	animations[OnShield] = new Animation("Resources/player/OnShield.png", 1, 1, 1);
 	animations[Dashing] = new Animation("Resources/player/Dashing.png", 3, 1, 3, false, 0.5);
@@ -199,7 +199,7 @@ void Player::OnKeyDown(int keyCode)
 	{
 	case VK_Z:
 		if (allow[Attacking_Shield] && currentState->GetState() != Jumping && currentState->GetState() != Falling && 
-			currentState->GetState() != Spinning)
+			currentState->GetState() != Spinning && currentState->GetState() != Kicking)
 		{
 			allow[Attacking_Shield] = false;
 			ChangeState(Attacking);

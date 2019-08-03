@@ -5,6 +5,8 @@
 
 class PlayerKickingState : public PlayerState
 {
+private:
+	DWORD startTime;
 public:
 	PlayerKickingState();
 	// Inherited via PlayerState

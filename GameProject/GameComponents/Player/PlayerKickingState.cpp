@@ -6,19 +6,27 @@ PlayerKickingState::PlayerKickingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
+	PLAYER->allow[Kicking] = false;
 	if (PLAYER->shieldFlying == false)
 		PLAYER->shield->SetState(ShieldState::OnKick);
+	startTime = GetTickCount();
 }
 
 void PlayerKickingState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	auto v = PLAYER->vY;
 	if (PLAYER->PreviousState == Jumping)
 	{
-		PLAYER->vY += GRAVITY;
-		if (PLAYER->vY >= 0)
-			PLAYER->ChangeState(Falling);
+		
+			
+	}
+	PLAYER->vY += GRAVITY;
+	if (PLAYER->vY >= 0)
+	{
+		PLAYER->allow[Kicking] = true;
+		PLAYER->ChangeState(Falling);
 	}
 }
 
@@ -28,8 +36,8 @@ void PlayerKickingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
-	}
-	if (keys[VK_RIGHT])
+	} 
+	else if (keys[VK_RIGHT])
 	{
 		PLAYER->isReverse = true;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;

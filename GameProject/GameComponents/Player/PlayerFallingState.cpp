@@ -18,6 +18,7 @@ void PlayerFallingState::Update(float deltaTime)
 {
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
+	auto v = PLAYER->vY;
 	PLAYER->vY += GRAVITY;
 	PLAYER->vY >= 10.0f ? 10.0f : PLAYER->vY;
 }
@@ -38,8 +39,9 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->ChangeState(OnShield);
 	}
-	if (keys['Z'])
+	if (keys['Z'] && PLAYER->allow[Kicking])
 	{
+		auto v = PLAYER->vY;
 		PLAYER->ChangeState(Kicking);
 	}
 	if (!keys['X'])
@@ -59,7 +61,7 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnGround = true;
-		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		PLAYER->posY += PLAYER->vY*res.entryTime;//= entity->GetBoundFromCorner().top - PLAYER->height / 2;
 		PLAYER->ChangeState(Standing);
 		PLAYER->shield->SetState(ShieldState::Normal);
 	}

@@ -1,12 +1,13 @@
 #include "PlayerJumpingState.h"
 
-#define PLAYER_JUMPING_SPEED -35.0f
+#define PLAYER_JUMPING_SPEED -30.0f
 #define GRAVITY 3.0f
 
 PlayerJumpingState::PlayerJumpingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
+	PLAYER->allow[Kicking] = true;
 	PLAYER->vY = PLAYER_JUMPING_SPEED;
 	PLAYER->isOnGround = false;
 	if (PLAYER->shieldFlying == false)
@@ -36,7 +37,7 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 		PLAYER->isReverse = true;
 		PLAYER->vX = PLAYER_RUNNING_SPEED;
 	}
-	if (keys['Z'])
+	if (keys['Z'] && PLAYER->allow[Kicking])
 	{
 		PLAYER->ChangeState(Kicking);
 	}

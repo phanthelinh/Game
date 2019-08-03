@@ -201,6 +201,9 @@
     <ClCompile Include="GameComponents\Player\PlayerInjuringState.cpp">
       <Filter>GameComponents\Player</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Items\BigHeart.cpp">
+      <Filter>GameComponents\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Water.h">
       <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Items\BigHeart.h">
+      <Filter>GameComponents\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

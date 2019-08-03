@@ -15,37 +15,18 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 	this->isReverse = false;
 	this->tag = Tag::ItemContainerTag;
 
-	maxItemsNum = 3;
-	//init list items up to 3 items
-	for (int i = 0; i < 1; i++) {
+	//init list items
+	
+	/*for (int i = 0; i < 1; i++) {
 		srand(time(0));
 		int rnd = rand() % 5 + 1;
 		GameObject* obj = NULL;
-		/*switch (rnd)
-		{
-		case 1:
-			obj = new Diamon(left, top, width, height, true);
-			break;
-		case 2:
-			obj = new Five(left, top, width, height);
-			break;
-		case 3:
-			obj = new Health(left, top, width, height);
-			break;
-		case 4:
-			obj = new Heart(left, top, width, height);
-			break;
-		case 5:
-			obj = new Life(left, top, width, height);
-			break;
-		default:
-			break;
-		}*/
+
 		obj = new PowerStone(left + width/2, top + height/2, 16, 16, true);
 		if(obj != NULL)
 			listItems.insert(obj);
-	}
-	listItems.insert(new PowerStone(left + width / 2, top + height / 2, 16, 16, false));
+	}*/
+	//listItems.insert(new PowerStone(left + width / 2, top + height / 2, 16, 16, false));
 }
 
 ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
@@ -55,17 +36,56 @@ ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, re
 
 void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 {
+	GameObject* item = NULL;
 	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox(), deltaTime);
 	if (collideRes.isCollide)
 	{
 		//start falling down other items objects
 		isStartFallingItems = true;
 		startTime = GetTickCount() + collideRes.entryTime;
-		if (listItems.size() > 0)
+		if (0)
 		{
-			auto item = listItems.begin();
-			listDrawItems.insert(*item);
-			listItems.erase(*item);
+			/*if (isSpawnExit)
+				return;*/
+			srand(time(NULL));
+			int randNum = rand() % 5 + 1;
+			switch (randNum)
+			{
+				case 1:
+				{
+					item = new Energy(posX + width / 2, posY - height / 2, 16, 16);
+					break;
+				}
+				case 2:
+				{
+					item = new Five(posX + width / 2, posY - height / 2, 16, 16);
+					break;
+				}
+				case 3:
+				{
+					item = new KeyCrystals(posX + width / 2, posY - height / 2, 16, 16);
+					isSpawnExit = true;
+					break;
+				}
+				case 4:
+				{
+					item = new OneUp(posX + width / 2, posY - height / 2, 16, 16);
+					break;
+				}
+				case 5:
+				{
+					item = new PowerStone(posX + width / 2, posY - height / 2, 16, 16, true);
+					break;
+				}
+				case 6:
+				{
+					item = new Rescue(posX + width / 2, posY - height / 2, 16, 16);
+				}
+			}
+			
+			listDrawItems.insert(item);
+			listItems.erase(item);
+
 		}
 	}
 }

@@ -6,8 +6,7 @@ Energy::Energy(int x, int y, int width, int height)
 	posY = y;
 	this->width = width;
 	this->height = height;
-	vY = 12.0f;
-	energy = new Animation("Resources/items/heart_24_12.png", 2, 1, 2, true, 0.5);
+	vY = 12.0f;energy = new Sprite("Resources/items/heart_24_12.png", { 0,0,12,12 });
 	tag = Tag::EnergyTag;
 }
 
@@ -46,7 +45,6 @@ void Energy::Update(float deltaTime)
 {
 	if (!isDead)
 	{
-		energy->Update(deltaTime);
 		posY += vY * deltaTime;
 	}
 }

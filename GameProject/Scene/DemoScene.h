@@ -46,4 +46,6 @@ public:
 	void CheckForNextStage();
 	void ChangingStage();
 	void ReloadResources(int nextLevel);
+
+	std::unordered_map<int, std::string> lstItems;
 };

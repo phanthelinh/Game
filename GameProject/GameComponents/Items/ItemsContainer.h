@@ -5,6 +5,12 @@
 #include "../../Framework/Grid.h"
 #include <unordered_set>
 #include "PowerStone.h"
+#include "Five.h"
+#include "Energy.h"
+#include "KeyCrystals.h"
+#include "OneUp.h"
+#include "Rescue.h"
+
 class ItemsContainer :public GameObject
 {
 private:
@@ -13,7 +19,7 @@ private:
 	bool	isStartFallingItems;
 	DWORD	startTime;
 	std::unordered_set<GameObject*> listDrawItems;
-	int		maxItemsNum;
+	bool isSpawnExit;	//check if exit gem is spawned
 public:
 	std::unordered_set<GameObject*> listItems;
 

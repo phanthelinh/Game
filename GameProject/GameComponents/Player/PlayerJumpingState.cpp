@@ -1,14 +1,13 @@
 #include "PlayerJumpingState.h"
 
 #define PLAYER_JUMPING_SPEED -35.0f
-#define PLAYER_RUNNING_SPEED 7.5f
 #define GRAVITY 3.0f
 
 PlayerJumpingState::PlayerJumpingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	PLAYER->vY += PLAYER_JUMPING_SPEED;
+	PLAYER->vY = PLAYER_JUMPING_SPEED;
 	PLAYER->isOnGround = false;
 	if (PLAYER->shieldFlying == false)
 		PLAYER->shield->SetState(ShieldState::OnJump);

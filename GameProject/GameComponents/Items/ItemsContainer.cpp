@@ -1,8 +1,9 @@
 #include "ItemsContainer.h"
 #include <time.h>
 #include <stdlib.h>
+#include "../../Scene/DemoScene.h"
 
-ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool hasExit)
+ItemsContainer::ItemsContainer(int left, int top, int width, int height, std::string items, int hasExit)
 {
 	sprites = new Sprite*[2];
 	sprites[0] = curSprite = new Sprite("Resources/items/itemcontainer_32_16.png", { 0,0,16,16 });
@@ -14,77 +15,99 @@ ItemsContainer::ItemsContainer(int left, int top, int width, int height, bool ha
 	this->height = height;
 	this->isReverse = false;
 	this->tag = Tag::ItemContainerTag;
-
-	//init list items
+	this->hasExit = hasExit;
 	
-	/*for (int i = 0; i < 1; i++) {
-		srand(time(0));
-		int rnd = rand() % 5 + 1;
-		GameObject* obj = NULL;
-
-		obj = new PowerStone(left + width/2, top + height/2, 16, 16, true);
-		if(obj != NULL)
-			listItems.insert(obj);
-	}*/
-	//listItems.insert(new PowerStone(left + width / 2, top + height / 2, 16, 16, false));
+	//load string items by posX of container
+	this->strItems = items;
 }
 
-ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
+ItemsContainer::ItemsContainer(RECT rect):ItemsContainer(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, "")
 {
 	
+}
+
+void ItemsContainer::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::string filename = "Resources/items/lv" + std::to_string(level) + "_itemcontainer.txt";
+	std::ifstream file(filename);
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y, w,h;
+			std::string strItems;
+			file >> x;
+			file >> y;
+			file >> w;
+			file >> h;
+			file >> strItems;
+			GameObject* obj = new ItemsContainer(x, y, w, h, strItems);
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
 }
 
 void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 {
 	GameObject* item = NULL;
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox(), deltaTime);
-	if (collideRes.isCollide)
+	if (object->tag == ShieldTag)
 	{
-		//start falling down other items objects
-		isStartFallingItems = true;
-		startTime = GetTickCount() + collideRes.entryTime;
-		if (0)
+		auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), this->GetBoundingBox(), deltaTime);
+		if (collideRes.isCollide)
 		{
-			/*if (isSpawnExit)
-				return;*/
-			srand(time(NULL));
-			int randNum = rand() % 5 + 1;
-			switch (randNum)
+			//start falling down other items objects
+			isStartFallingItems = true;
+			startTime = GetTickCount() + collideRes.entryTime;
+			if (strItems.length() > 0)
 			{
-				case 1:
+				switch (strItems.at(0))
+				{
+				case '1':
+				{
+					item = new BigHeart(posX + width / 2, posY - height / 2, 16, 16);
+					break;
+				}
+				case '2':
 				{
 					item = new Energy(posX + width / 2, posY - height / 2, 16, 16);
 					break;
 				}
-				case 2:
+				case '3':
 				{
 					item = new Five(posX + width / 2, posY - height / 2, 16, 16);
-					break;
-				}
-				case 3:
-				{
-					item = new KeyCrystals(posX + width / 2, posY - height / 2, 16, 16);
 					isSpawnExit = true;
 					break;
 				}
-				case 4:
+				case '4':
 				{
-					item = new OneUp(posX + width / 2, posY - height / 2, 16, 16);
+					item = new KeyCrystals(posX + width / 2, posY - height / 2, 16, 16);
 					break;
 				}
-				case 5:
+				case '5':
 				{
 					item = new PowerStone(posX + width / 2, posY - height / 2, 16, 16, true);
 					break;
 				}
-				case 6:
+				case '6':
 				{
 					item = new Rescue(posX + width / 2, posY - height / 2, 16, 16);
+					break;
 				}
+				}
+
+				listDrawItems.insert(item);
+				GRID->AddObject(item);
+				//listItems.erase(item);
+				strItems.pop_back();
 			}
-			
-			listDrawItems.insert(item);
-			listItems.erase(item);
 
 		}
 	}
@@ -117,7 +140,7 @@ void ItemsContainer::Update(float deltaTime)
 
 void ItemsContainer::Draw()
 {
-	Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition,RECT(),D3DXVECTOR3(0,0,0));
+	Draw(D3DXVECTOR3(posX - 4, posY - 4, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
 }
 
 void ItemsContainer::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
@@ -148,11 +171,11 @@ void ItemsContainer::Release()
 		delete sprites[1];
 		delete[] sprites;
 	}
-	if (listItems.size() > 0)
+	if (listDrawItems.size() > 0)
 	{
-		for (auto item : listItems)
+		for (auto item : listDrawItems)
 		{
-			listItems.erase(item);
+			listDrawItems.erase(item);
 		}
 	}
 }

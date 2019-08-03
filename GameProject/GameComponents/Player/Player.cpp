@@ -69,48 +69,31 @@ void Player::Update(float deltaTime)
 	//
 	//assign position for shield
 	//
-	if (shield->curState == ShieldState::Flying) //shield flying is true when start attack shiled state
+	if (!shieldFlying)
 	{
-		if (currentAnim->_isFinished) //if sprite throw is finish, start to throw shield
+		shield->SetPosition(GetPosition());
+		shield->SetTranslationToPlayer(isReverse, shield->curState, currentAnim->_curIndex);
+		if (shield->curState == ShieldState::Flying && currentAnim->_isFinished)
 		{
 			shieldFlying = true;
+
 		}
-		if (!shieldFlying) //shield is still with player, at sprite no 0 and 1
-		{
-			shield->SetPosition(GetPosition());
-			shield->SetTranslationToPlayer(isReverse, ShieldState::Flying, currentAnim->_curIndex);
-		}
-		else
-		{
-			//player catch the the Shield
-			auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox(), deltaTime);
-			
-			if (colRes.isCollide) //caught shield
-			{
-				shield->Update(colRes.entryTime);
-				shieldFlying = false;
-				shield->SetState(ShieldState::Normal);
-				if (currentState->GetState() == StateName::Spinning)
-					shield->isVisible = false;
-			}
-			else //shield flying
-			{
-				shield->playerVy = vY;
-				shield->playerPos = GetPosition();
-				//shield->Update(deltaTime);// update at Grid
-			}
-		}	
 	}
 	else
 	{
-		//set shield position to player position
-		shield->SetPosition(GetPosition());
-		shield->SetTranslationToPlayer(isReverse, shield->curState);
-	}
-	//
-	//COLLISION
-	//
-	
+		shield->playerVy = vY;
+		shield->playerPos = GetPosition();
+		shield->Update(deltaTime);
+		//check collision for catch shield
+		auto colRes = COLLISION->SweptAABB(shield->GetBoundingBox(), GetBoundingBox());
+		if (colRes.isCollide)
+		{
+			shield->posX += shield->vX*colRes.entryTime;
+			shield->posY += shield->vY*colRes.entryTime;
+			shieldFlying = false;
+			shield->SetState(Normal);
+		}
+	}	
 }
 
 void Player::Draw()
@@ -183,10 +166,13 @@ void Player::ChangeState(StateName stateName)
 	}
 	delete currentState;
 	currentState = newState;
-	currentAnim = animations[currentState->GetState()];
-	width = currentAnim->_frameWidth;
-	height = currentAnim->_frameHeight;
-	currentAnim->ResetAnim();
+	if (currentState->GetState() != Attacking)
+	{
+		currentAnim = animations[currentState->GetState()];
+		width = currentAnim->_frameWidth;
+		height = currentAnim->_frameHeight;
+		currentAnim->ResetAnim();
+	}
 }
 
 void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, float deltaTime)
@@ -199,6 +185,7 @@ void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, floa
 
 void Player::OnCollision(GameObject * object, float deltaTime)
 {
+	currentState->OnCollision(object, deltaTime);
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

@@ -4,38 +4,38 @@
 
 Domesto::Domesto(int level)
 {
-	std::unordered_set<GameObject*> rs;
-	if (level == 1)
-	{
-		//insert to grid
-		std::ifstream file("Resources/enemy/domesto/domesto.txt");
-		if (file.good())
-		{
-			while (!file.eof())
-			{
-				int x, y, t;
-				file >> x;
-				file >> y;
-				file >> t;
-				GameObject* obj = NULL;
-				if (t == 0)
-				{
-					obj = new Domesto(x, y + 50, EnemyDomestoType::DomestoRunning);
-				}
-				else
-				{
-					obj = new Domesto(x, y, EnemyDomestoType::DomestoJumping);
-				}
-				if (obj)
-				{
-					rs.insert(obj);
-				}
-			}
-			file.close();
-		}
-	}
-	if(rs.size()>0)
-		GRID->InsertToGrid(rs);
+	//std::unordered_set<GameObject*> rs;
+	//if (level == 1)
+	//{
+	//	//insert to grid
+	//	std::ifstream file("Resources/enemy/domesto/domesto.txt");
+	//	if (file.good())
+	//	{
+	//		while (!file.eof())
+	//		{
+	//			int x, y, t;
+	//			file >> x;
+	//			file >> y;
+	//			file >> t;
+	//			GameObject* obj = NULL;
+	//			if (t == 0)
+	//			{
+	//				obj = new Domesto(x, y + 50, EnemyDomestoType::DomestoRunning);
+	//			}
+	//			else
+	//			{
+	//				obj = new Domesto(x, y, EnemyDomestoType::DomestoJumping);
+	//			}
+	//			if (obj)
+	//			{
+	//				rs.insert(obj);
+	//			}
+	//		}
+	//		file.close();
+	//	}
+	//}
+	//if(rs.size()>0)
+	//	GRID->InsertToGrid(rs);
 }
 
 Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
@@ -51,11 +51,51 @@ Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
 	startTime = 0;
 	isReverse = true;
 	isPauseMissile = false;
+	enemySubTag = EnemySubTag::DomestoTag;
 }
 
 Domesto::Domesto(float posX, float posY, EnemyDomestoType type) :Domesto(posX, posY)
 {
 	this->domestoType = type;
+}
+
+void Domesto::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::ifstream file;
+	if (level == 1)
+	{
+		file.open("Resources/enemy/domesto/domesto.txt");
+	}
+	//insert to grid
+	
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y, t;
+			file >> x;
+			file >> y;
+			file >> t;
+			GameObject* obj = NULL;
+			if (t == 0)
+			{
+				obj = new Domesto(x, y + 50, EnemyDomestoType::DomestoRunning);
+			}
+			else
+			{
+				obj = new Domesto(x, y, EnemyDomestoType::DomestoJumping);
+			}
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
 }
 
 void Domesto::ChangeEnemyState(EnemyStateName state)

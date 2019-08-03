@@ -6,7 +6,8 @@ PlayerSittingState::PlayerSittingState()
 	PLAYER->isOnGround = true;
 	PLAYER->allow[Attacking_SitBump] = true;
 	PLAYER->vX = PLAYER->vY = 0;
-	PLAYER->shield->SetState(ShieldState::Normal_Sit);
+	if(!PLAYER->shieldFlying)
+		PLAYER->shield->SetState(ShieldState::Normal_Sit);
 	PLAYER->posY += 10;		//make sure sprite is sitting on the ground
 	PLAYER->shield->isVisible = true;
 }
@@ -22,7 +23,8 @@ void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->posY -= 10;
 		PLAYER->ChangeState(Standing);
-		PLAYER->shield->SetState(ShieldState::Normal);
+		if(!PLAYER->shieldFlying)
+			PLAYER->shield->SetState(ShieldState::Normal);
 	}
 	if (!keys['X'])
 	{

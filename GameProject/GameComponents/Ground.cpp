@@ -38,6 +38,16 @@ BoundingBox Ground::GetBoundingBox()
 	return b;
 }
 
+RECT Ground::GetBound()
+{
+	RECT r;
+	r.left = posX;
+	r.top = posY;
+	r.right = r.left + width;
+	r.bottom = r.top + height;
+	return r;
+}
+
 void Ground::Release()
 {
 }

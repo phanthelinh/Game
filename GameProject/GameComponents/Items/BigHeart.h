@@ -6,7 +6,7 @@
 class BigHeart : public GameObject
 {
 private:
-	Sprite* energy;
+	Sprite* bigHeart;
 public:
 	BigHeart(int x, int y, int width, int height);
 	BigHeart(RECT rect);

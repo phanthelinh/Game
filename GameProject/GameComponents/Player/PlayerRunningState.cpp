@@ -1,7 +1,5 @@
 #include "PlayerRunningState.h"
 
-#define PLAYER_RUNNING_SPEED 7.5f
-
 PlayerRunningState::PlayerRunningState()
 {
 	PLAYER->allow[Attacking] = true;

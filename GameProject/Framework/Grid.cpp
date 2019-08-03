@@ -24,21 +24,7 @@ Grid::Grid()
 			cells[i][j] = new Cell(j*CELL_WIDTH, i*CELL_HEIGHT);
 		}
 	}
-	//add ground from file to cell
-	grounds = Util::GetAllObjectFromFile(GroundTag, 1);
-	for (auto g : grounds)
-	{
-		GameObject* gr = new Ground(g);
-		AddObject(gr);
-	}
-	//add water from file to cell
-	auto data = Util::GetAllObjectFromFile(WaterTag, 1);
-	for (auto w : data)
-	{
-		GameObject* water = new Water(w);
-		AddObject(water);
-	}
-
+	objects.clear();
 }
 
 Grid::Grid(int numCols, int numRows)
@@ -66,28 +52,9 @@ void Grid::InsertToGrid(std::unordered_set<GameObject*> objects)
 {
 	if (objects.empty())
 		return;
-	this->objects = objects;
-
-	for (auto it = objects.begin(); it != objects.end(); ++it)
+	for (auto o : objects)
 	{
-		RECT objBound = (*it)->GetBound();
-		//calculate which cell is valid
-		int startX = floor(objBound.left / CELL_WIDTH);
-		int endX = floor(objBound.right / CELL_WIDTH);
-		int startY = floor(objBound.top / CELL_HEIGHT);
-		int endY = floor(objBound.bottom / CELL_HEIGHT);
-
-		if (endX >= numCols || endY >= numRows)
-			continue;
-		for (int i = startY; i <= endY; i++)
-		{
-			if (cells[i] == NULL)
-				continue;
-			for (int j = startX; j <= endX; j++)
-			{
-				cells[i][j]->Add(*it);
-			}
-		}
+		AddObject(o);
 	}
 }
 
@@ -95,6 +62,7 @@ void Grid::AddObject(GameObject * object)
 {
 	if (object == NULL)
 		return;
+	this->objects.insert(object);
 	auto objBound = object->GetBound();
 	//calculate which cell is valid
 	int startX = floor(objBound.left / CELL_WIDTH);
@@ -119,6 +87,10 @@ void Grid::RemoveObject(GameObject * object)
 {
 	if (object == NULL)
 		return;
+	if (this->objects.find(object) != this->objects.end())
+	{
+		this->objects.erase(object);
+	}
 	auto objBound = object->GetBound();
 	//calculate which cell is valid
 	int startX = floor(objBound.left / CELL_WIDTH);
@@ -239,7 +211,62 @@ void Grid::ObjectMoving(float deltaTime)
 	for (auto obj : lst)
 	{
 		RemoveObject(obj);
-		obj->Update(deltaTime);
+		if(obj->tag != Tag::ShieldTag)
+			obj->Update(deltaTime);
 		AddObject(obj);
+	}
+}
+
+std::vector<GameObject*> Grid::GetVisibleWater()
+{
+	std::vector<GameObject*> rs;
+	for (auto c : visibleCells)
+	{
+		for (auto g : c->objects)
+		{
+			if (g->tag == Tag::WaterTag && g->IsCollide(CAMERA->GetBound()))
+			{
+				rs.push_back(g);
+			}
+		}
+	}
+
+	return rs;
+}
+
+void Grid::Release()
+{
+	objects.clear();
+	visibleCells.clear();
+	if (cells != NULL)
+	{
+		for (int j = 0; j < numRows; j++)
+		{
+			for (int i = 0; i < numCols; i++)
+			{
+				cells[j][i]->Release();
+				delete cells[j][i];
+			}
+			//break;
+		}
+		delete cells;
+	}
+}
+
+void Grid::ResetGrid()
+{
+	Release();
+	numCols = GLOBAL->g_WorldMapWidth / CELL_WIDTH;
+	numRows = GLOBAL->g_WorldMapHeight / CELL_HEIGHT;
+	std::vector<RECT> grounds;
+
+	cells = new Cell**[numRows];
+	for (int i = 0; i < numRows; i++)
+	{
+		cells[i] = new Cell*[numCols];
+		for (int j = 0; j < numCols; j++)
+		{
+			cells[i][j] = new Cell(j*CELL_WIDTH, i*CELL_HEIGHT);
+		}
 	}
 }

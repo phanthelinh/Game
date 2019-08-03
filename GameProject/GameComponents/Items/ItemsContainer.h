@@ -10,6 +10,7 @@
 #include "KeyCrystals.h"
 #include "OneUp.h"
 #include "Rescue.h"
+#include "BigHeart.h"
 
 class ItemsContainer :public GameObject
 {
@@ -19,13 +20,17 @@ private:
 	bool	isStartFallingItems;
 	DWORD	startTime;
 	std::unordered_set<GameObject*> listDrawItems;
-	bool isSpawnExit;	//check if exit gem is spawned
+	
+	bool isSpawnExit;	// is exit spawned
 public:
 	std::unordered_set<GameObject*> listItems;
+	int hasExit;
+	std::string strItems; //save string items 
 
-	ItemsContainer(int left, int top, int width, int height, bool hasExit = false);
+	ItemsContainer(int left, int top, int width, int height, std::string items,int hasExit = 0);
 	ItemsContainer(RECT rect);
 
+	static void InsertFromFile(int level);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);
 	//Draw to its left-top position

@@ -32,22 +32,19 @@ void PowerStone::OnCollision(GameObject * object, float deltaTime)
 			return;
 		}
 		CollisionResult collideRes;
-		if (object->tag == GroundTag)
-		{
-			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
-		}
-		else
-		{
-			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
-		}
+		collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+		
 		if (collideRes.isCollide)
 		{
 			switch (object->tag)
 			{
 			case Tag::GroundTag:
-				posY += vY * collideRes.entryTime;
+				posY += vY * collideRes.entryTime + 20;
 				vY = 0;
-				firstTimeCollideGround = GetTickCount();
+				//firstTimeCollideGround = GetTickCount();
+				break;
+			case Tag::Captain:
+				isDead = true;
 				break;
 			default:
 				break;
@@ -68,9 +65,8 @@ void PowerStone::Update(float deltaTime)
 		posY += deltaTime * vY;
 		vY = vY == 0 ? 0 : vY + 2;
 		auto now = GetTickCount();
-		if ((now - firstTimeCollideGround) / 1000.0f >= 3.0f)
+		if ((now - firstTimeCollideGround) / 1000.0f >= 10.0f)
 		{
-			//start to flashing
 		}
 	}
 }

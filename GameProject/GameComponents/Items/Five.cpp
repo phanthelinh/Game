@@ -1,4 +1,5 @@
 #include "Five.h"
+#include "../../Framework/Collision.h"
 
 Five::Five(int x, int y, int width, int height)
 {
@@ -17,6 +18,36 @@ Five::Five(RECT rect):Five(rect.left, rect.top, rect.right - rect.left, rect.bot
 
 void Five::OnCollision(GameObject * object, float deltaTime)
 {
+	if (!isDead)
+	{
+		if (object->tag != Tag::Captain && object->tag != Tag::GroundTag)
+		{
+			return;
+		}
+		CollisionResult collideRes;
+		collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+
+		if (collideRes.isCollide)
+		{
+			switch (object->tag)
+			{
+			case Tag::GroundTag:
+				posY += vY * collideRes.entryTime;
+				vY = 0;
+				//firstTimeCollideGround = GetTickCount();
+				break;
+			case Tag::Captain:
+				isDead = true;
+				break;
+			default:
+				break;
+			}
+		}
+		//if collide with captain america
+		//isDead = true;
+		//display EXIT item
+		//..
+	}
 }
 
 void Five::Update(float deltaTime)

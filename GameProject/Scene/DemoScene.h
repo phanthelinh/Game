@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <unordered_set>
+#include <iostream>
 #include "Scene.h"
 #include "../Framework/Animation.h"
 #include "../Framework/GameMap.h"
@@ -16,11 +17,8 @@ class DemoScene:public Scene
 {
 private:
 	GameMap*	map;
-	std::unordered_set<GameObject*> itemsContainer;
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
-	std::vector<RECT> lstItemContainerRect;
-	Domesto* domesto;
 	WizardBoss* wizard;
 	RunningMan* runningman;
 	bool isSpawned = false;
@@ -45,7 +43,11 @@ public:
 	void CheckCollision(BoundingBox player, std::unordered_set<GameObject*> listObj, float deltaTime);
 	void CheckForNextStage();
 	void ChangingStage();
-	void ReloadResources(int nextLevel);
+	void ReloadResources(int level);
 
-	std::unordered_map<int, std::string> lstItems;
+	void SaveGridToFile(int level);
+	void LoadGridFromFile(int level);
+
+
+	
 };

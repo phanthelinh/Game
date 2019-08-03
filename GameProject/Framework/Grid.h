@@ -14,13 +14,12 @@ class Grid
 {
 private:
 	Cell*** cells;
-	std::unordered_set<GameObject*> objects;
 	int numCols, numRows;
 	static Grid*	instance;
 
 public:
 	std::vector<Cell*> visibleCells;
-	std::vector<GameObject*> listGround;
+	std::unordered_set<GameObject*> objects;
 
 	static Grid* GetInstance();
 	Grid();
@@ -43,4 +42,7 @@ public:
 	std::vector<GameObject*> GetVisibleGround();
 	std::unordered_set<GameObject*> GetVisibleObjects();
 	void ObjectMoving(float deltaTime);
+	std::vector<GameObject*> GetVisibleWater();
+	void Release();
+	void ResetGrid();
 };

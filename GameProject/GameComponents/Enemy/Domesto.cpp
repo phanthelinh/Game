@@ -1,41 +1,10 @@
 #include "Domesto.h"
 #define MAX_DISTANCE_START_TO_JUMP_PLAYER	50.0f
-#define MAX_DISTANCE_RUNNING				30.0f
+#define MAX_DISTANCE_RUNNING				50.0f
 
 Domesto::Domesto(int level)
 {
-	//std::unordered_set<GameObject*> rs;
-	//if (level == 1)
-	//{
-	//	//insert to grid
-	//	std::ifstream file("Resources/enemy/domesto/domesto.txt");
-	//	if (file.good())
-	//	{
-	//		while (!file.eof())
-	//		{
-	//			int x, y, t;
-	//			file >> x;
-	//			file >> y;
-	//			file >> t;
-	//			GameObject* obj = NULL;
-	//			if (t == 0)
-	//			{
-	//				obj = new Domesto(x, y + 50, EnemyDomestoType::DomestoRunning);
-	//			}
-	//			else
-	//			{
-	//				obj = new Domesto(x, y, EnemyDomestoType::DomestoJumping);
-	//			}
-	//			if (obj)
-	//			{
-	//				rs.insert(obj);
-	//			}
-	//		}
-	//		file.close();
-	//	}
-	//}
-	//if(rs.size()>0)
-	//	GRID->InsertToGrid(rs);
+	
 }
 
 Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
@@ -150,7 +119,7 @@ void Domesto::Update(float deltaTime)
 {
 	auto now = GetTickCount();
 	isReverse = posX <= PLAYER->posX;
-	currentAnim->_isFlipHor = isReverse;
+	currentAnim->_isFlipHor = false;
 	if (isStopUpdate)
 	{
 		if ((now - startTime)/1000.0f >= 0.5f)
@@ -219,7 +188,7 @@ void Domesto::Update(float deltaTime)
 		{
 			if (this->domestoType == EnemyDomestoType::DomestoRunning)
 			{
-				mis = new Missile(posX, posY - height, MissileType::StraightMissile);
+				mis = new Missile(posX, posY - height + 5, MissileType::StraightMissile);
 				mis->isReverse = isReverse;
 				missles.push_back(mis);
 				ChangeEnemyState(EnemyStand);
@@ -238,7 +207,7 @@ void Domesto::Update(float deltaTime)
 		{
 			//attack
 			startTime = now;
-			mis = new Missile(posX, posY - 48, MissileType::StraightMissile);
+			mis = new Missile(posX, posY - 40, MissileType::StraightMissile);
 			mis->isReverse = isReverse;
 			missles.push_back(mis);
 			ChangeEnemyState(EnemyStand);

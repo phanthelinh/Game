@@ -14,13 +14,13 @@ void PlayerHurt::Update(float deltaTime)
 {
 	if (PLAYER->isReverse)
 	{
-		PLAYER->vX = -5.0f;
-		PLAYER->vY = -5.0f;
+		PLAYER->vX = -3.0f;
+		PLAYER->vY = 0.0f;
 	}
 	else
 	{
-		PLAYER->vX = 5.0f;
-		PLAYER->vY = -5.0f;
+		PLAYER->vX = 3.0f;
+		PLAYER->vY = 0.0f;
 	}
 	PLAYER->posX = PLAYER->posX + PLAYER->vX * deltaTime;
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;

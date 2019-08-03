@@ -6,7 +6,6 @@ PlayerKickingState::PlayerKickingState()
 {
 	PLAYER->allow[Attacking] = true;
 	PLAYER->allow[Jumping] = false;
-	PLAYER->isOnGround = true;
 	if (PLAYER->shieldFlying == false)
 		PLAYER->shield->SetState(ShieldState::OnKick);
 }

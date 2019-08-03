@@ -2,7 +2,7 @@
 #include "../../Player/Player.h"
 
 #define MISSILE_VX	6.5f
-#define MISSILE_MAX_DISTANCE_BEFORE_DIRECTION_CHANGE 50.0f
+#define MISSILE_MAX_DISTANCE_BEFORE_DIRECTION_CHANGE 30.0f
 
 
 Missile::Missile(float posX, float posY, MissileType type):Weapon(posX,posY,0,0)
@@ -62,7 +62,7 @@ BoundingBox Missile::GetBoundingBox()
 
 void Missile::Update(float deltaTime)
 {
-	posX += vX * deltaTime*(isReverse ? 1.0f : -1.0f);
+	posX += vX * deltaTime*(-1.0f); //always fly to the left side
 	posY += vY * deltaTime;
 	if (missileType == MissileType::StraightUpwardMissile)
 	{
@@ -84,7 +84,7 @@ void Missile::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT source
 {
 	if (!isDead)
 	{
-		currAnim->_isFlipHor = isReverse;
+		currAnim->_isFlipHor = false;
 		currAnim->Draw(position, cameraPosition, sourceRect, center);
 	}
 }

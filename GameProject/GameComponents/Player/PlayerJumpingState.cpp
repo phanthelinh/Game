@@ -61,4 +61,32 @@ StateName PlayerJumpingState::GetState()
 
 void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 {
+	if (entity->tag == GroundTag)
+	{
+		auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide)
+		{
+			switch (colRes.sideCollided)
+			{
+			case CollisionSide::Top:
+			{
+				PLAYER->posX += PLAYER->vX*deltaTime;
+				PLAYER->posY += PLAYER->vY*deltaTime;
+				PLAYER->vY = 0.0f;
+				PLAYER->ChangeState(Falling);
+				break;
+			}
+			case CollisionSide::Right:
+			case CollisionSide::Left:
+			{
+				PLAYER->posX += PLAYER->vX*deltaTime;
+				PLAYER->posY += PLAYER->vY*deltaTime;
+				PLAYER->vX = 0.0f;
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
 }

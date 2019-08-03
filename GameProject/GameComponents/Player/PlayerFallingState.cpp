@@ -55,7 +55,7 @@ StateName PlayerFallingState::GetState()
 
 void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 {
-	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner());
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnGround = true;
@@ -63,14 +63,16 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 		PLAYER->ChangeState(Standing);
 		PLAYER->shield->SetState(ShieldState::Normal);
 	}
+	else if (res.isCollide && entity->tag == GroundTag && (res.sideCollided == Left || res.sideCollided == Right))
+	{
+		PLAYER->posX += PLAYER->vX*deltaTime;
+		PLAYER->posY += PLAYER->vY*deltaTime;
+		PLAYER->vX = 0.0f;
+	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{
-		PLAYER->posY = entity->GetBoundFromCorner().top;
+		PLAYER->posY += PLAYER->vY*res.entryTime;
 		PLAYER->isOnWater = true;
 		PLAYER->ChangeState(WaterStand);
-	}
-	else
-	{
-		PLAYER->ChangeState(Falling);
 	}
 }

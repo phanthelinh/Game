@@ -13,6 +13,7 @@ PlayerDashingState::PlayerDashingState()
 	else
 		PLAYER->vX -= PLAYER_DASHING_SPEED;
 	PLAYER->shield->isVisible = false;
+	PLAYER->isOnGround = false; //temporary for checking falling when going out of ground
 }
 
 void PlayerDashingState::Update(float deltaTime)
@@ -21,6 +22,7 @@ void PlayerDashingState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	if (PLAYER->currentAnim->_isFinished)
 	{
+		PLAYER->isOnGround = true; //remove temporary state
 		PLAYER->ChangeState(Standing);
 	}
 }

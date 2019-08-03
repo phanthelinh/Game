@@ -50,12 +50,13 @@ void DemoScene::Update(float deltaTime)
 	//COLLISION
 	//
 	//check collision Ground <> Player
-	bool test = false;
+	bool onGround = false;
+	bool onWater = false;
 	for (auto g : GRID->GetVisibleGround())
 	{
 		if (g->IsCollide(PLAYER->GetBound()))
 		{
-			test = true;
+			onGround = true;
 			auto m = g->IsCollide(PLAYER->GetBound());
 			auto b = PLAYER->GetBound();
 			break;
@@ -65,14 +66,16 @@ void DemoScene::Update(float deltaTime)
 	{
 		if (COLLISION->IsCollide(w->GetBoundingBox(), PLAYER->GetBoundingBox()))
 		{
-			test = true;
+			onWater = true;
 			break;
 		}
 	}
-	if (!test)
+	if (!onGround && !onWater)
 	{
-		if(PLAYER->isOnGround)
+		if (PLAYER->isOnGround)
+		{
 			PLAYER->ChangeState(Falling);
+		}
 	}
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);

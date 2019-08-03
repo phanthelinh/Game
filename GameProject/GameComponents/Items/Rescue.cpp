@@ -1,4 +1,5 @@
 #include "Rescue.h"
+#include "../../Framework/Collision.h"
 
 Rescue::Rescue(int x, int y, int width, int height)
 {
@@ -17,6 +18,36 @@ Rescue::Rescue(RECT rect) :Rescue(rect.left, rect.top, rect.right - rect.left, r
 
 void Rescue::OnCollision(GameObject * object, float deltaTime)
 {
+	if (!isDead)
+	{
+		if (object->tag != Tag::Captain && object->tag != Tag::GroundTag)
+		{
+			return;
+		}
+		CollisionResult collideRes;
+		collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+
+		if (collideRes.isCollide)
+		{
+			switch (object->tag)
+			{
+			case Tag::GroundTag:
+				posY += vY * collideRes.entryTime + 20;
+				vY = 0;
+				//firstTimeCollideGround = GetTickCount();
+				break;
+			case Tag::Captain:
+				isDead = true;
+				break;
+			default:
+				break;
+			}
+		}
+		//if collide with captain america
+		//isDead = true;
+		//display EXIT item
+		//..
+	}
 }
 
 void Rescue::Update(float deltaTime)

@@ -1,22 +1,21 @@
-#include "Five.h"
-#include "../../Framework/Collision.h"
+#include "BigHeart.h"
 
-Five::Five(int x, int y, int width, int height)
+BigHeart::BigHeart(int x, int y, int width, int height)
 {
-	tag = Tag::FiveTag;
 	posX = x;
 	posY = y;
 	this->width = width;
 	this->height = height;
-	five = new Sprite("Resources/items/life_health_five_24_16.png", { 16,0,24,16 });
-	vY = 12.0f;
+	vY = 12.0f; 
+	bigHeart = new Sprite("Resources/items/bigheart_12_12.png", { 0,0,12,12 });
+	tag = Tag::BigHeartTag;
 }
 
-Five::Five(RECT rect):Five(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
+BigHeart::BigHeart(RECT rect):BigHeart(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top)
 {
 }
 
-void Five::OnCollision(GameObject * object, float deltaTime)
+void BigHeart::OnCollision(GameObject* object, float deltaTime)
 {
 	if (!isDead)
 	{
@@ -32,9 +31,8 @@ void Five::OnCollision(GameObject * object, float deltaTime)
 			switch (object->tag)
 			{
 			case Tag::GroundTag:
-				posY += vY * collideRes.entryTime;
+				posY += vY * collideRes.entryTime + 5;
 				vY = 0;
-				//firstTimeCollideGround = GetTickCount();
 				break;
 			case Tag::Captain:
 				isDead = true;
@@ -50,7 +48,7 @@ void Five::OnCollision(GameObject * object, float deltaTime)
 	}
 }
 
-void Five::Update(float deltaTime)
+void BigHeart::Update(float deltaTime)
 {
 	if (!isDead)
 	{
@@ -58,23 +56,19 @@ void Five::Update(float deltaTime)
 	}
 }
 
-void Five::Draw()
+void BigHeart::Draw()
 {
 	if (!isDead)
-	{
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(0, 0, 0));
-	}
 }
 
-void Five::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+void BigHeart::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if (!isDead)
-	{
-		five->Draw(position, cameraPosition, sourceRect, center);
-	}
+		bigHeart->Draw(position, cameraPosition, sourceRect, center);
 }
 
-BoundingBox Five::GetBoundingBox()
+BoundingBox BigHeart::GetBoundingBox()
 {
 	BoundingBox b;
 	b.left = posX;
@@ -86,10 +80,10 @@ BoundingBox Five::GetBoundingBox()
 	return b;
 }
 
-void Five::Release()
+void BigHeart::Release()
 {
-	if (five != NULL)
+	if (bigHeart != nullptr)
 	{
-		delete five;
+		delete bigHeart;
 	}
 }

@@ -7,7 +7,7 @@ Energy::Energy(int x, int y, int width, int height)
 	this->width = width;
 	this->height = height;
 	vY = 12.0f;
-	energy = new Animation("Resources/items/heart_24_12.png", 2, 1, 2, true, 0.5);
+	energy = new Sprite("Resources/items/smallheart_12_12.png", { 0,0,12,12 });
 	tag = Tag::EnergyTag;
 }
 
@@ -17,36 +17,42 @@ Energy::Energy(RECT rect):Energy(rect.left,rect.top, rect.right-rect.left,rect.b
 
 void Energy::OnCollision(GameObject * object, float deltaTime)
 {
-	if (isDead)
-		return;
-	if (object->tag != Tag::Captain || object->tag != Tag::GroundTag)
+	if (!isDead)
 	{
-		return;
-	}
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
-	if (collideRes.isCollide)
-	{
-		switch (object->tag)
+		if (object->tag != Tag::Captain && object->tag != Tag::GroundTag)
 		{
-		case Tag::GroundTag:
-			posY += vY * collideRes.entryTime;
-			vY = 0;
-			break;
-		default:
-			break;
+			return;
 		}
+		CollisionResult collideRes;
+		collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+
+		if (collideRes.isCollide)
+		{
+			switch (object->tag)
+			{
+			case Tag::GroundTag:
+				posY += vY * collideRes.entryTime;
+				vY = 0;
+				//firstTimeCollideGround = GetTickCount();
+				break;
+			case Tag::Captain:
+				isDead = true;
+				break;
+			default:
+				break;
+			}
+		}
+		//if collide with captain america
+		//isDead = true;
+		//display EXIT item
+		//..
 	}
-	//if collide with captain america
-	isDead = true;
-	//increase score
-	//..
 }
 
 void Energy::Update(float deltaTime)
 {
 	if (!isDead)
 	{
-		energy->Update(deltaTime);
 		posY += vY * deltaTime;
 	}
 }

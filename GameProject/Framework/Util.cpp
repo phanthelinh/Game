@@ -67,3 +67,22 @@ std::vector<RECT> Util::GetAllObjectFromFile(Tag tag, int level)
 	}
 	return data;
 }
+
+std::unordered_map<int, std::string> Util::GetItemsList(const char* filePath)
+{
+	std::unordered_map<int, std::string> mItems;
+	std::ifstream file(filePath);
+	if (file.good())
+	{
+		int posX;
+		std::string items;
+		while (!file.eof())
+		{
+			file >> posX;
+			file >> items;
+			mItems[posX] = items;
+		}
+		file.close();
+	}
+	return mItems;
+}

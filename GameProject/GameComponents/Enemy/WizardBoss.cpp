@@ -5,13 +5,12 @@
 
 WizardBoss::WizardBoss() :Enemy()
 {
-	tag = Wizard;
+	enemySubTag = EnemySubTag::WizardBossTag;
 	maxHealth = 14;
 }
 
 WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 {
-	tag = Wizard;
 	point = 1000;	//score when kill this boss
 	currHealth = maxHealth = 14;
 	animations[StandingWizard] = new Animation("Resources/boss/Wizard_Standing.png", 2, 1, 2, false);
@@ -33,8 +32,8 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 
 WizardBoss::WizardBoss(RECT r) :Enemy(r)
 {
+	enemySubTag = EnemySubTag::WizardBossTag;
 	maxHealth = 50;
-	tag = Wizard;
 }
 
 void WizardBoss::ChangeEnemyState(WizardState state)
@@ -60,7 +59,7 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 			if (currentState == FlyAttackWizard && (currHealth <= 5 || isReverse))	
 				continue;
 			ChangeEnemyState(StandingWizard);
-			posY = g->posY;
+			posY += vY * deltaTime;
 			isOnGround = true;
 		}
 	}

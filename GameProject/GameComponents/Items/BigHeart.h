@@ -3,13 +3,13 @@
 #include "../../Framework/Collision.h"
 #include "../../Framework/Sprite.h"
 
-class Energy : public GameObject
+class BigHeart : public GameObject
 {
 private:
-	Sprite*	energy;
+	Sprite* bigHeart;
 public:
-	Energy(int x, int y, int width, int height);
-	Energy(RECT rect);
+	BigHeart(int x, int y, int width, int height);
+	BigHeart(RECT rect);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	void Update(float deltaTime);

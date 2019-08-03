@@ -15,31 +15,40 @@ KeyCrystals::KeyCrystals(RECT rect):KeyCrystals(rect.left,rect.top,rect.right-re
 {
 }
 
-void KeyCrystals::OnCollision(GameObject * object, float deltaTime)
+void KeyCrystals::OnCollision(GameObject* object, float deltaTime)
 {
-	if (isDead)
-		return;
-	if (object->tag != Tag::Captain || object->tag != Tag::GroundTag)
+	if (!isDead)
 	{
-		return;
-	}
-	auto collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
-	if (collideRes.isCollide)
-	{
-		switch (object->tag)
+		if (object->tag != Tag::Captain && object->tag != Tag::GroundTag)
 		{
-		case Tag::GroundTag:
-			posY += vY * collideRes.entryTime;
-			vY = 0;
-			break;
-		default:
-			break;
+			return;
 		}
+		CollisionResult collideRes;
+		if (object->tag == GroundTag)
+		{
+			collideRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox());
+		}
+		else
+		{
+			collideRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox());
+		}
+		if (collideRes.isCollide)
+		{
+			switch (object->tag)
+			{
+			case Tag::GroundTag:
+				posY += vY * collideRes.entryTime;
+				vY = 0;
+				break;
+			case Tag::Captain:
+				isDead = true;
+				break;
+			default:
+				break;
+			}
+		}
+		
 	}
-	//if collide with captain america
-	isDead = true;
-	//increase score
-	//..
 }
 
 void KeyCrystals::Update(float deltaTime)

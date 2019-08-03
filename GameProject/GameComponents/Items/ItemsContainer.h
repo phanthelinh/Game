@@ -5,6 +5,13 @@
 #include "../../Framework/Grid.h"
 #include <unordered_set>
 #include "PowerStone.h"
+#include "Five.h"
+#include "Energy.h"
+#include "KeyCrystals.h"
+#include "OneUp.h"
+#include "Rescue.h"
+#include "BigHeart.h"
+
 class ItemsContainer :public GameObject
 {
 private:
@@ -13,12 +20,14 @@ private:
 	bool	isStartFallingItems;
 	DWORD	startTime;
 	std::unordered_set<GameObject*> listDrawItems;
-	int		maxItemsNum;
+	
+	bool isSpawnExit;	// is exit spawned
 public:
 	std::unordered_set<GameObject*> listItems;
 	int hasExit;
+	std::string strItems; //save string items 
 
-	ItemsContainer(int left, int top, int width, int height, int hasExit = 0);
+	ItemsContainer(int left, int top, int width, int height, std::string items,int hasExit = 0);
 	ItemsContainer(RECT rect);
 
 	static void InsertFromFile(int level);

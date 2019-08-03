@@ -17,6 +17,7 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	LoadGridFromFile(1);
+
 }
 
 DemoScene::~DemoScene()
@@ -261,7 +262,7 @@ void DemoScene::SaveGridToFile(int level)
 			auto item = (ItemsContainer*)o;
 			int hasExit = item->hasExit > 0 ? item->hasExit : 0;
 			file << "\nitemscontainer ";
-			file << item->posX << " " << item->posY << " " << item->width << " " << item->height << " "<<hasExit;
+			file << item->posX << " " << item->posY << " " << item->width << " " << item->height << " "<<hasExit <<" "<<item->strItems;
 			break;
 		}
 		default:
@@ -294,9 +295,10 @@ void DemoScene::LoadGridFromFile(int level)
 			GameObject* water = new Water(w);
 			GRID->AddObject(water);
 		}
+		//load items and container
+		ItemsContainer::InsertFromFile(level);
 		//add enemy
 		//domesto
-		ItemsContainer::InsertFromFile(level);
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
 		SaveGridToFile(level);
@@ -357,12 +359,14 @@ void DemoScene::LoadGridFromFile(int level)
 		else if (objectname._Equal("itemscontainer"))
 		{
 			int x, y, w, h, hs;
+			std::string items;
 			file >> x;
 			file >> y;
 			file >> w;
 			file >> h;
 			file >> hs;
-			GRID->AddObject(new ItemsContainer(x, y, w, h, hs));
+			file >> items;
+			GRID->AddObject(new ItemsContainer(x, y, w, h, items, hs));
 		}
 	}
 	file.close();

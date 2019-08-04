@@ -204,6 +204,9 @@
     <ClCompile Include="GameComponents\Items\BigHeart.cpp">
       <Filter>GameComponents\Items</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\Enemy\Tank.cpp">
+      <Filter>GameComponents\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Items\BigHeart.h">
       <Filter>GameComponents\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\Enemy\Tank.h">
+      <Filter>GameComponents\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

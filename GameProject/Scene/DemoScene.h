@@ -12,6 +12,7 @@
 #include "../GameComponents/Enemy/Domesto.h"
 #include "../GameComponents/Enemy/WizardBoss.h"
 #include "../GameComponents/Enemy/RunningMan.h"
+#include "../GameComponents/Enemy/Tank.h"
 
 class DemoScene:public Scene
 {
@@ -20,7 +21,7 @@ private:
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
 	WizardBoss* wizard;
-	RunningMan* runningman;
+	Tank* tank;
 	bool isSpawned = false;
 	bool		shieldInserted;
 	int			currentLevel;

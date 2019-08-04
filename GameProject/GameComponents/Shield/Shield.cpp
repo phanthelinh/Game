@@ -12,6 +12,7 @@ Shield::Shield()
 	isDead = false;
 	isVisible = true;
 	playerPos = { 0,0,0 };
+	shieldPower = 1;
 }
 
 void Shield::SetState(ShieldState state)
@@ -237,4 +238,18 @@ void Shield::Update(float deltaTime)
 			}
 		}
 	}
+}
+
+BoundingBox Shield::GetBoundingBox()
+{
+	BoundingBox bound;
+
+	bound.left = posX - width/2;
+	bound.top = posY - height/2;
+	bound.right = posX + width;
+	bound.bottom = posY + height;
+	bound.vX = this->vX;
+	bound.vY = this->vY;
+
+	return bound;
 }

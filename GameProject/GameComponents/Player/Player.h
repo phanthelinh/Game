@@ -65,6 +65,7 @@ public:
 	bool			isOnGround, isAttacking, shieldFlying, isOnWater;
 	bool			isImmu;
 	Shield*			shield;
+	float			scores;
 private:
 	static Player*	instance;
 };

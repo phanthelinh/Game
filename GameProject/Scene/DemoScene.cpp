@@ -17,7 +17,7 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	LoadGridFromFile(1);
-
+	//ReloadResources(3); //test tank
 }
 
 DemoScene::~DemoScene()
@@ -193,11 +193,14 @@ void DemoScene::ReloadResources(int level)
 		CAMERA->isFollowY = false;
 		wizard = new WizardBoss(240, 52);
 		GRID->AddObject(wizard);
-		LoadGridFromFile(currentLevel);
+		LoadGridFromFile(level);
 		break;
 	case 3:
-		map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-		LoadGridFromFile(currentLevel);
+		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");
+		PLAYER->SetPosition(D3DXVECTOR3(320, 870, 0));
+		PLAYER->shield = new Shield();
+		CAMERA->isFollowY = true;
+		LoadGridFromFile(level);
 		break;
 	case 4:
 		break;
@@ -252,6 +255,13 @@ void DemoScene::SaveGridToFile(int level)
 				file << wizardbo->posX << " " << wizardbo->posY;
 				break;
 			}
+			case TankTag:
+			{
+				auto tnk = (Tank*)enemy;
+				file << "\ntank ";
+				file << tnk->posX << " " << tnk->posY << " " << tnk->initState;
+				break;
+			}
 			default:
 				break;
 			}
@@ -301,6 +311,7 @@ void DemoScene::LoadGridFromFile(int level)
 		//domesto
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
+		Tank::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}
@@ -367,6 +378,14 @@ void DemoScene::LoadGridFromFile(int level)
 			file >> hs;
 			file >> items;
 			GRID->AddObject(new ItemsContainer(x, y, w, h, items, hs));
+		}
+		else if (objectname._Equal("tank"))
+		{
+			int x, y, t;
+			file >> x;
+			file >> y;
+			file >> t;
+			GRID->AddObject(new Tank(x, y, t));
 		}
 	}
 	file.close();

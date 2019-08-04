@@ -150,6 +150,7 @@
     <ClCompile Include="GameComponents\Enemy\Domesto.cpp" />
     <ClCompile Include="GameComponents\Enemy\Enemy.cpp" />
     <ClCompile Include="GameComponents\Enemy\RunningMan.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Tank.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Bullet.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Missile.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="GameComponents\Enemy\Domesto.h" />
     <ClInclude Include="GameComponents\Enemy\Enemy.h" />
     <ClInclude Include="GameComponents\Enemy\RunningMan.h" />
+    <ClInclude Include="GameComponents\Enemy\Tank.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Bullet.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Missile.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h" />

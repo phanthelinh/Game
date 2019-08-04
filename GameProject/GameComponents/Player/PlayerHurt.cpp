@@ -49,5 +49,6 @@ void PlayerHurt::OnCollision(GameObject* entity, float deltaTime)
 	{
 		PLAYER->isOnGround = true;
 		PLAYER->vY = 0;
+		PLAYER->ChangeState(Standing);
 	}
 }

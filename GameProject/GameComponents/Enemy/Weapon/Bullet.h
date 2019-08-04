@@ -3,6 +3,8 @@
 #include "../../../Framework/Collision.h"
 #include "../../Player/Player.h"
 
+#define BULLET_SPEED 5.0f
+
 class Bullet : public Weapon
 {
 	D3DXVECTOR3		startingPoint;

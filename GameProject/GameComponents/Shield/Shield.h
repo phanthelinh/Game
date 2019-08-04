@@ -25,6 +25,7 @@ public:
 	bool isVisible;
 	D3DXVECTOR3 playerPos;
 	float		playerVy;
+	int			shieldPower;
 	Shield();
 
 	void SetState(ShieldState state);
@@ -32,4 +33,5 @@ public:
 	void Draw();
 	virtual void Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect = RECT(), D3DXVECTOR3 center = D3DXVECTOR3()) override;
 	void Update(float deltaTime);
+	BoundingBox GetBoundingBox();
 };

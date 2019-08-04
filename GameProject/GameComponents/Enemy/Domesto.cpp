@@ -31,11 +31,8 @@ Domesto::Domesto(float posX, float posY, EnemyDomestoType type) :Domesto(posX, p
 void Domesto::InsertFromFile(int level)
 {
 	std::unordered_set<GameObject*> rs;
-	std::ifstream file;
-	if (level == 1)
-	{
-		file.open("Resources/enemy/domesto/domesto.txt");
-	}
+	std::string filename = "Resources/enemy/domesto/lv" + std::to_string(level) + "_domesto.txt";
+	std::ifstream file(filename);
 	//insert to grid
 	
 	if (file.good())

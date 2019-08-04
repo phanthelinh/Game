@@ -39,7 +39,8 @@ Player::Player()
 	shield = new Shield();
 	shieldFlying = false;
 
-	health = 10;
+	health = 100;
+	scores = 0;
 }
 
 Player * Player::GetInstance()

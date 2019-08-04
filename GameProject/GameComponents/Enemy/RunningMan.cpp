@@ -51,11 +51,8 @@ RunningMan::RunningMan(RECT r):RunningMan(r.left,r.top)
 void RunningMan::InsertFromFile(int level)
 {
 	std::unordered_set<GameObject*> rs;
-	std::ifstream file;
-	if (level == 1)
-	{
-		file.open("Resources/enemy/runningman/runningmanlevel1.txt");
-	}
+	std::string filename = "Resources/enemy/runningman/lv" + std::to_string(level) + "_runningman.txt";
+	std::ifstream file(filename);
 	//insert to grid
 	
 	if (file.good())

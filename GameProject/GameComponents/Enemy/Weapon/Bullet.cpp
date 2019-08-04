@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-#define BULLET_SPEED 5.0f
+
 
 Bullet::Bullet(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 {

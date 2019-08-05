@@ -15,9 +15,9 @@ namespace CreateTile
         public Dictionary<int, Bitmap> lstTileSet = new Dictionary<int, Bitmap>();
         public static string enviroment = System.Environment.CurrentDirectory;
         public string projectDirectory = Directory.GetParent(enviroment).Parent.FullName;
-        public static string CSVNAME = "Charleston.csv";
-        public static string InputFilName = "Charleston_1.png";
-        public static string OutputFileName = "Charleston.png";
+        public static string CSVNAME = "scene4.csv";
+        public static string InputFilName = "scene4_1.png";
+        public static string OutputFileName = "scene4.png";
         public bool IsEqual(Bitmap bmp1, Bitmap bmp2)
         {
             if (object.Equals(bmp1, bmp2))

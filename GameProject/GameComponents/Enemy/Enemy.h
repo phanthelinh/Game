@@ -18,6 +18,7 @@ enum EnemySubTag
 	DomestoTag,
 	RunningManTag,
 	WizardBossTag,
+	DMBossTag,
 	TankTag
 };
 

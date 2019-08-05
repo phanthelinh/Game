@@ -148,10 +148,13 @@
     <ClCompile Include="Framework\Util.cpp" />
     <ClCompile Include="GameComponents\Effect\Explode.cpp" />
     <ClCompile Include="GameComponents\Enemy\Domesto.cpp" />
+    <ClCompile Include="GameComponents\Enemy\DynamiteNapalm.cpp" />
     <ClCompile Include="GameComponents\Enemy\Enemy.cpp" />
     <ClCompile Include="GameComponents\Enemy\RunningMan.cpp" />
     <ClCompile Include="GameComponents\Enemy\Tank.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Bullet.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Weapon\DMBarrel.cpp" />
+    <ClCompile Include="GameComponents\Enemy\Weapon\DMBullet.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Missile.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\WizardBullet.cpp" />
@@ -205,10 +208,13 @@
     <ClInclude Include="Framework\Util.h" />
     <ClInclude Include="GameComponents\Effect\Explode.h" />
     <ClInclude Include="GameComponents\Enemy\Domesto.h" />
+    <ClInclude Include="GameComponents\Enemy\DynamiteNapalm.h" />
     <ClInclude Include="GameComponents\Enemy\Enemy.h" />
     <ClInclude Include="GameComponents\Enemy\RunningMan.h" />
     <ClInclude Include="GameComponents\Enemy\Tank.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Bullet.h" />
+    <ClInclude Include="GameComponents\Enemy\Weapon\DMBarrel.h" />
+    <ClInclude Include="GameComponents\Enemy\Weapon\DMBullet.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Missile.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\WizardBullet.h" />

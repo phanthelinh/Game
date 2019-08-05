@@ -5,14 +5,14 @@
 #include "Weapon/DMBarrel.h"
 
 enum DMState {
-	DMStand,
-	DMRun,
-	DMThrowWait,
-	DMBarrelExplode,
+	DMBarrelThrow,
 	DMHurt,
-	DMInjuredStand,
 	DMInjuredRun,
-	DMDie
+	DMInjuredStand,
+	DMRun,
+	DMShot,
+	DMStand,
+	DMThrowWait
 };
 
 class DynamiteNapalm :public Enemy
@@ -32,7 +32,7 @@ public:
 	virtual void Draw();
 	virtual void Release();
 private:
-	std::unordered_map<DynamiteNapalm, Animation*> animations;
+	std::unordered_map<DMState, Animation*> animations;
 	DMState	currentState, prevState;
 	DMBullet* dmbullet;
 	DMBarrel* dmbarrel;

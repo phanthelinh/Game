@@ -6,7 +6,7 @@ DMBullet::DMBullet(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 {
 	startingPoint = { posX, posY, 0};
 	vX = BULLET_SPEED * direction;
-	currAnim = new Animation("Resources/weapon/RunningManBullet.png", 1, 1, 1);
+	currAnim = new Animation("Resources/weapon/DMBullet.png", 1, 1, 1);
 	weaponDamage = 2;
 	tag = Tag::WeaponTag;
 }

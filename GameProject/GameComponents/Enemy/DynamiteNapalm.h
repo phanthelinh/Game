@@ -39,4 +39,5 @@ private:
 	DMBullet* dmbullet;
 	DMBarrel* dmbarrel;
 	bool isOnGround;
+	float StateTime = 0.0f;
 };

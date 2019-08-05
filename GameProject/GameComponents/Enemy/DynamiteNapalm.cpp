@@ -1,7 +1,7 @@
 #include "DynamiteNapalm.h"
 #include "../Ground.h"
 
-
+#define RUN_SPEED 5.0f
 
 DynamiteNapalm::DynamiteNapalm() :Enemy()
 {
@@ -16,7 +16,7 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 0.5f);
 	animations[DMInjuredRun] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredRun.png", 3, 1, 3, true, 0.3f);
 	animations[DMInjuredStand] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredStand.png", 1, 1, 1);
-	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 0.3f);
+	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 1.5f);
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
@@ -46,35 +46,20 @@ void DynamiteNapalm::SetState(DMState state)
 	this->height = animations[state]->_frameHeight;
 }
 
-void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
-{
-	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
-	CollisionResult res;
-	for (auto g : grounds)
-	{
-		BoundingBox temp = GetBoundingBox();
-		res = COLLISION->SweptAABB(temp, g->GetBoundingBox(), deltaTime);
-		if (res.isCollide && res.sideCollided == Bottom)
-		{
-			isOnGround = true;
-			posY += vY*res.entryTime;
-			SetState(DMStand);
-		}
-	}
-}
 
 void DynamiteNapalm::Update(float deltaTime)
 {
-	auto now = GetTickCount();
+	float currTime = GetTickCount();
 
 	switch (currentState)
 	{
 	case DMStand:
 	{
-		dmbarrel = new DMBarrel(posX, posY, isReverse);
-		GRID->AddObject(dmbarrel);
-		if (vY != 0)
-			vY = 0;
+		if (prevState == DMFall || (currTime - StateTime >= 1500 && StateTime != 0))
+		{
+			SetState(DMRun);
+			StateTime = currTime;
+		}
 		break;
 	}
 	case DMFall:
@@ -93,9 +78,14 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMRun:
 	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
+		vX = (!isReverse) ? RUN_SPEED * -1 : RUN_SPEED;
+		posX += vX * deltaTime;
+		if (currTime - StateTime >= 3500)
+		{
+			SetState(DMStand);
+			StateTime = currTime;
+			isReverse = !isReverse;
+		}
 		break;
 	}
 	case DMBarrelThrow:
@@ -142,6 +132,26 @@ void DynamiteNapalm::Update(float deltaTime)
 	currentAnim->_isFlipHor = isReverse;
 	currentAnim->Update(deltaTime);
 }
+
+void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
+{
+	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
+	CollisionResult res;
+	for (auto g : grounds)
+	{
+		BoundingBox temp = GetBoundingBox();
+		res = COLLISION->SweptAABB(temp, g->GetBoundingBox(), deltaTime);
+		if (res.isCollide && res.sideCollided == Bottom && isOnGround == false)
+		{
+			isOnGround = true;
+			posY += vY * res.entryTime;
+			vY = 0;
+			SetState(DMStand);
+		}
+	}
+}
+
+
 
 void DynamiteNapalm::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {

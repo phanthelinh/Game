@@ -5,8 +5,6 @@
 
 DynamiteNapalm::DynamiteNapalm() :Enemy()
 {
-	enemySubTag = EnemySubTag::DMBossTag;
-	maxHealth = 14;
 }
 
 DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
@@ -15,7 +13,7 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	currHealth = maxHealth = 14;
 
 	animations[DMBarrelThrow] = new Animation("Resources/enemy/Dynamite Napalm/DMBarrelThrow.png", 2, 1, 2, false, 0.7f);
-	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 4, 1, 2, false, 0.5f);
+	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 0.5f);
 	animations[DMInjuredRun] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredRun.png", 3, 1, 3, true, 0.3f);
 	animations[DMInjuredStand] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredStand.png", 1, 1, 1);
 	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 0.3f);
@@ -24,7 +22,8 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 2, 1, 2, false, 0.7f);
 
-	SetState(DMStand);
+	currentState = DMFall;
+	SetState(DMFall);
 	isReverse = false;
 	isDead = false;
 	isOnGround = false;
@@ -49,31 +48,31 @@ void DynamiteNapalm::SetState(DMState state)
 
 void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 {
-	//check collision with ground
-	auto grounds = GRID->GetVisibleGround();
+	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
+	CollisionResult res;
 	for (auto g : grounds)
 	{
-		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), g->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide)
+		BoundingBox temp = GetBoundingBox();
+		res = COLLISION->SweptAABB(temp, g->GetBoundingBox(), deltaTime);
+		if (res.isCollide && res.sideCollided == Bottom)
 		{
 			isOnGround = true;
-			posY += vY * colRes.entryTime;
+			posY += vY*res.entryTime;
 			SetState(DMStand);
 		}
 	}
-	
 }
 
 void DynamiteNapalm::Update(float deltaTime)
 {
 	auto now = GetTickCount();
 
-	currentAnim->_isFlipHor = isReverse;
-
 	switch (currentState)
 	{
 	case DMStand:
 	{
+		dmbarrel = new DMBarrel(posX, posY, isReverse);
+		GRID->AddObject(dmbarrel);
 		if (vY != 0)
 			vY = 0;
 		break;
@@ -82,7 +81,56 @@ void DynamiteNapalm::Update(float deltaTime)
 	{
 		if (vY == 0)
 			vY = 10.0f;
-		posY = posY + vY * deltaTime;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMShot:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMRun:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMBarrelThrow:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMHurt:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMInjuredRun:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMInjuredStand:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
+		break;
+	}
+	case DMThrowWait:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY += vY * deltaTime;
 		break;
 	}
 
@@ -90,28 +138,9 @@ void DynamiteNapalm::Update(float deltaTime)
 
 		break;
 	}
-}
 
-RECT DynamiteNapalm::GetBound()
-{
-	RECT r;
-	r.left = posX;
-	r.top = posY;
-	r.right = posX + width;
-	r.bottom = posY + height;
-	return r;
-}
-
-BoundingBox DynamiteNapalm::GetBoundingBox()
-{
-	BoundingBox b;
-	b.top = posY;
-	b.left = posX;
-	b.right = posX + width;
-	b.bottom = posY + height;
-	b.vX = vX;
-	b.vY = vY;
-	return b;
+	currentAnim->_isFlipHor = isReverse;
+	currentAnim->Update(deltaTime);
 }
 
 void DynamiteNapalm::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
@@ -134,3 +163,28 @@ void DynamiteNapalm::Draw()
 void DynamiteNapalm::Release()
 {
 }
+
+//running man
+
+RECT DynamiteNapalm::GetBound()
+{
+	RECT r;
+	r.left = posX - width / 2;
+	r.top = posY - height;
+	r.right = r.left + width;
+	r.bottom = r.top + height;
+	return r;
+}
+
+BoundingBox DynamiteNapalm::GetBoundingBox()
+{
+	BoundingBox r;
+	r.left = posX - width / 2;
+	r.top = posY - height;
+	r.right = r.left + width;
+	r.bottom = r.top + height;
+	r.vX = vX;
+	r.vY = vY;
+	return r;
+}
+

@@ -13,7 +13,8 @@ enum DMState {
 	DMShot,
 	DMStand,
 	DMFall,
-	DMThrowWait
+	DMThrowWait,
+	DMDie
 };
 
 class DynamiteNapalm :public Enemy

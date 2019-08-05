@@ -19,7 +19,7 @@ Scene4::Scene4()
 	CAMERA->camPosition = PLAYER->GetPosition();
 	CAMERA->isFollowY = true;
 
-	boss = new DynamiteNapalm(230, 150);
+	boss = new DynamiteNapalm(230, 100);
 	GRID->AddObject(boss);
 }
 
@@ -49,24 +49,7 @@ void Scene4::Update(float deltaTime)
 		GRID->AddObject(PLAYER->shield);
 		shieldInserted = true;
 	}
-	//
-	//COLLISION
-	//
-	//check collision Ground <> Player
-	bool isBossOnGround = false;
-	for (auto g : GRID->GetVisibleGround())
-	{
-		if (g->IsCollide(PLAYER->GetBound()))
-		{
-			isBossOnGround = true;
-			break;
-		}
-	}
-
-	if (!isBossOnGround)
-	{
-		boss->SetState(DMFall);
-	}
+	
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision

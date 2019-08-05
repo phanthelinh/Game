@@ -216,6 +216,9 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\DMBullet.cpp">
       <Filter>GameComponents\Enemy\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\Scene4.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\Enemy\Weapon\DMBullet.h">
       <Filter>GameComponents\Enemy\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene4.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "Global.h"
 #include "../Scene/SceneManager.h"
+#include "../Scene/Scene4.h"
 
 class Game
 {

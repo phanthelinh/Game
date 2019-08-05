@@ -4,7 +4,7 @@
 
 Scene4::Scene4()
 {
-	map = new GameMap(16, 16, 25, 20, "Resources/map/scene4.png", "Resources/map/scene4.csv");
+	map = new GameMap(16, 16, 16, 15, "Resources/map/scene4.png", "Resources/map/scene4.csv");
 	currentLevel = 4;
 	//implement grid
 	GRID;
@@ -13,11 +13,11 @@ Scene4::Scene4()
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 50;
-	PLAYER->posY = 180;
+	PLAYER->posY = 150;
 	PLAYER->isOnGround = false;
 	PLAYER->ChangeState(Falling);
 	CAMERA->camPosition = PLAYER->GetPosition();
-	CAMERA->isFollowY = false;
+	CAMERA->isFollowY = true;
 
 	boss = new DynamiteNapalm(100, 180);
 	GRID->AddObject(boss);
@@ -91,12 +91,6 @@ void Scene4::Update(float deltaTime)
 	{
 		obj->OnCollision(PLAYER, deltaTime);
 		obj->OnCollision(PLAYER->shield, deltaTime);
-	}
-	if (PLAYER->posX >= 350 && isSpawned == false)
-	{
-		isSpawned = true;
-		RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
-		GRID->AddObject(runningman3);
 	}
 }
 

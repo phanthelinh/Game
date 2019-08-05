@@ -55,6 +55,14 @@ void DynamiteNapalm::Update(float deltaTime)
 	auto now = GetTickCount();
 
 	currentAnim->_isFlipHor = isReverse;
+
+	switch (currentState)
+	{
+
+	default:
+
+		break;
+	}
 }
 
 RECT DynamiteNapalm::GetBound()

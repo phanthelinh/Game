@@ -13,6 +13,7 @@
 #include "../GameComponents/Enemy/WizardBoss.h"
 #include "../GameComponents/Enemy/RunningMan.h"
 #include "../GameComponents/Enemy/Tank.h"
+#include "../GameComponents//Enemy/DynamiteNapalm.h"
 
 class Scene4:public Scene
 {
@@ -20,8 +21,7 @@ private:
 	GameMap*	map;
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
-	WizardBoss* wizard;
-	Tank* tank;
+	DynamiteNapalm* boss;
 	bool isSpawned = false;
 	bool		shieldInserted;
 	int			currentLevel;

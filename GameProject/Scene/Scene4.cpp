@@ -6,17 +6,21 @@ Scene4::Scene4()
 {
 	map = new GameMap(16, 16, 25, 20, "Resources/map/scene4.png", "Resources/map/scene4.csv");
 	currentLevel = 4;
+	//implement grid
+	GRID;
+	LoadGridFromFile(4);
+
 	//init for Player
 	PLAYER; //get instance
-	PLAYER->posX = 9;
+	PLAYER->posX = 50;
 	PLAYER->posY = 180;
 	PLAYER->isOnGround = false;
 	PLAYER->ChangeState(Falling);
 	CAMERA->camPosition = PLAYER->GetPosition();
 	CAMERA->isFollowY = false;
-	//implement grid
-	GRID;
-	LoadGridFromFile(4);
+
+	boss = new DynamiteNapalm(100, 180);
+	GRID->AddObject(boss);
 }
 
 Scene4::~Scene4()
@@ -157,14 +161,14 @@ void Scene4::ReloadResources(int level)
 		return;
 	switch (level)
 	{
-	case 2://boss 1
-		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
-		PLAYER->shield = new Shield();
-		CAMERA->isFollowY = false;
-		wizard = new WizardBoss(240, 52);
-		GRID->AddObject(wizard);
-		LoadGridFromFile(level);
+	//case 2://boss 1
+	//	map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
+	//	PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
+	//	PLAYER->shield = new Shield();
+	//	CAMERA->isFollowY = false;
+	//	wizard = new WizardBoss(240, 52);
+	//	GRID->AddObject(wizard);
+	//	LoadGridFromFile(level);
 		break;
 	case 3:
 		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");

@@ -49,13 +49,19 @@ void DynamiteNapalm::SetState(DMState state)
 
 void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 {
-	CollisionResult res = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBoxFromCorner());
-	if (res.isCollide && object->tag == GroundTag && res.sideCollided == Bottom)
+	//check collision with ground
+	auto grounds = GRID->GetVisibleGround();
+	for (auto g : grounds)
 	{
-		isOnGround = true;
-		posY += vY*res.entryTime;
-		SetState(DMStand);
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), g->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide)
+		{
+			isOnGround = true;
+			posY += vY * colRes.entryTime;
+			SetState(DMStand);
+		}
 	}
+	
 }
 
 void DynamiteNapalm::Update(float deltaTime)

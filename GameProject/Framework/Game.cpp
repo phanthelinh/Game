@@ -242,8 +242,8 @@ bool Game::GameInit()
 	{
 		return false;
 	}
-	SceneManager::GetInstance()->ReplaceScene(new DemoScene());
-	//SceneManager::GetInstance()->ReplaceScene(new Scene4());
+	//SceneManager::GetInstance()->ReplaceScene(new DemoScene());
+	SceneManager::GetInstance()->ReplaceScene(new Scene4());
 	return true;
 }
 

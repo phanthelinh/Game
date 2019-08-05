@@ -21,11 +21,13 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 0.3f);
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
+	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 2, 1, 2, false, 0.7f);
 
 	SetState(DMStand);
 	isReverse = false;
 	isDead = false;
+	isOnGround = false;
 	enemySubTag = EnemySubTag::DMBossTag;
 }
 
@@ -47,7 +49,13 @@ void DynamiteNapalm::SetState(DMState state)
 
 void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 {
-	
+	CollisionResult res = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBoxFromCorner());
+	if (res.isCollide && object->tag == GroundTag && res.sideCollided == Bottom)
+	{
+		isOnGround = true;
+		posY += vY*res.entryTime;
+		SetState(DMStand);
+	}
 }
 
 void DynamiteNapalm::Update(float deltaTime)
@@ -58,6 +66,19 @@ void DynamiteNapalm::Update(float deltaTime)
 
 	switch (currentState)
 	{
+	case DMStand:
+	{
+		if (vY != 0)
+			vY = 0;
+		break;
+	}
+	case DMFall:
+	{
+		if (vY == 0)
+			vY = 10.0f;
+		posY = posY + vY * deltaTime;
+		break;
+	}
 
 	default:
 

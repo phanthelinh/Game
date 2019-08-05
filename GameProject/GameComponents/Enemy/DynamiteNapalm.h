@@ -12,6 +12,7 @@ enum DMState {
 	DMRun,
 	DMShot,
 	DMStand,
+	DMFall,
 	DMThrowWait
 };
 
@@ -36,4 +37,5 @@ private:
 	DMState	currentState, prevState;
 	DMBullet* dmbullet;
 	DMBarrel* dmbarrel;
+	bool isOnGround;
 };

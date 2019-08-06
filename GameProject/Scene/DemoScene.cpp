@@ -178,18 +178,15 @@ void DemoScene::ChangingStage()
 
 void DemoScene::ReloadResources(int level)
 {
-	std::vector<RECT> grounds;
 	if (level == 1)
 		return;
 	switch (level)
 	{
 	case 2://boss 1
 		map = new GameMap(16, 16, 16, 15, "Resources/map/Charleston_boss.png", "Resources/map/Charleston_boss.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(16, 168, 0));
+		PLAYER->SetPosition(D3DXVECTOR3(16, 140, 0));
 		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = false;
-		wizard = new WizardBoss(240, 52);
-		GRID->AddObject(wizard);
 		LoadGridFromFile(currentLevel);
 		break;
 	case 3:
@@ -294,6 +291,12 @@ void DemoScene::LoadGridFromFile(int level)
 		}
 		//load items and container
 		ItemsContainer::InsertFromFile(level);
+		
+		//add boss
+		std::unordered_set<GameObject*> wBoss;
+		wBoss.insert(new WizardBoss(220, 50));
+		GRID->InsertToGrid(wBoss);
+		
 		//add enemy
 		//domesto
 		Domesto::InsertFromFile(level);

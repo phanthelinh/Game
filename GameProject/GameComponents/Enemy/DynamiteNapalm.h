@@ -34,6 +34,7 @@ public:
 	//Draw at its position
 	virtual void Draw();
 	virtual void Release();
+	DMState GetState();
 private:
 	bool waitfornextshot = false; //handle the shooting state
 	int shotcount = 0; //count the shots

@@ -13,14 +13,14 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	currHealth = maxHealth = 14;
 
 	animations[DMBarrelThrow] = new Animation("Resources/enemy/Dynamite Napalm/DMBarrelThrow.png", 2, 1, 2, false, 0.7f);
-	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 0.5f);
+	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 1.5f);
 	animations[DMInjuredRun] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredRun.png", 3, 1, 3, true, 0.3f);
 	animations[DMInjuredStand] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredStand.png", 1, 1, 1);
 	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 1.5f);
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
-	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 2, 1, 2, false, 0.7f);
+	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 2, 1, 2, false, 1.5f);
 
 	currentState = DMFall;
 	SetState(DMFall);
@@ -72,11 +72,11 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMThrowWait:
 	{
-		/*if (currTime - StateTime >= 1000)
+		if (currTime - StateTime >= 1500)
 		{
 			SetState(DMBarrelThrow);
 			StateTime = currTime;
-		}*/
+		}
 		break;
 	}
 	case DMBarrelThrow:
@@ -186,17 +186,17 @@ void DynamiteNapalm::Update(float deltaTime)
 
 void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 {
-	CollisionResult result = COLLISION->SweptAABB(GetBoundingBox(), PLAYER->GetBoundingBoxFromCorner(), deltaTime);
-	if (result.isCollide && object->tag == Captain && PLAYER->currentState->GetState() == Kicking)
+	if (object->tag == Tag::Captain)
 	{
-		currHealth -= 4;
-		if (currHealth <= 8)
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide && PLAYER->isImmu == false)
 		{
-			SetState(DMInjuredStand);
+			PLAYER->health -= 2;
+			if (PLAYER->health <= 0)
+				PLAYER->ChangeState(Die);
+			else
+				PLAYER->ChangeState(Hurt);
 		}
-		else
-			SetState(DMHurt);
-		StateTime = GetTickCount();
 	}
 
 	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
@@ -238,6 +238,13 @@ void DynamiteNapalm::Release()
 {
 	if (currentAnim != NULL)
 		delete currentAnim;
+}
+
+DMState DynamiteNapalm::GetState()
+{
+	if (currentState == NULL)
+		currentState = DMStand;
+	return currentState;
 }
 
 //running man

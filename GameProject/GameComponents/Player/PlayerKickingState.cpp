@@ -1,6 +1,7 @@
 #include "PlayerKickingState.h"
 #include "../Enemy/Enemy.h"
 #include "../Enemy/DynamiteNapalm.h"
+#include "../Effect/Explode.h"
 #define GRAVITY 3.0f
 
 PlayerKickingState::PlayerKickingState()
@@ -56,6 +57,22 @@ StateName PlayerKickingState::GetState()
 
 void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime) 
 {
+	if (entity->tag == Tag::EnemyTag)
+	{
+		Enemy* temp = (Enemy*)entity;
+		if (temp->enemySubTag == DMBossTag)
+		{
+			DynamiteNapalm* dmboss = (DynamiteNapalm*)temp;
+			auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBox(), deltaTime);
+			if (colRes.isCollide/* && dmboss->GetState() == DMThrowWait*/)
+			{
+				EXPLODE->ExplodeAt(dmboss->posX, dmboss->posY - 40);
+				dmboss->SetState(DMHurt);
+				dmboss->StateTime = GetTickCount();
+			}
+		}	
+	}
+
 	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
@@ -69,22 +86,6 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 		PLAYER->posY = entity->GetBoundFromCorner().top;
 		PLAYER->isOnWater = true;
 		PLAYER->ChangeState(WaterStand);
-	}
-	else if (res.isCollide && entity->tag == EnemyTag)
-	{
-		Enemy* temp = (Enemy*)entity;
-		if (temp->enemySubTag == DMBossTag)
-		{
-			DynamiteNapalm* dm = (DynamiteNapalm*)temp;
-			dm->currHealth -= 4;
-			if (dm->currHealth <= 8)
-			{
-				dm->SetState(DMInjuredStand);
-			}
-			else
-				dm->SetState(DMHurt);
-			dm->StateTime = GetTickCount();
-		}
 	}
 	else
 	{

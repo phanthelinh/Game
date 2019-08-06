@@ -6,11 +6,15 @@ enum WizardBulletType
 {
 	HorizontalBullet,	//ngang
 	VerticalBullet,		//doc
+	BigVerticalBullet	//bullet when entering boss map
 };
+
 class WizardBullet : public Weapon
 {
 	WizardBulletType		bulletType;
 	D3DXVECTOR3		startingPoint;
+	DWORD			startTime;
+	int				nBigBullet;	//number of big vertical bullet in boss map
 public:
 	//posX, posY is the left, top of weapon
 	WizardBullet(float posX, float posY, WizardBulletType type);

@@ -7,15 +7,22 @@ WizardBullet::WizardBullet(float posX, float posY, WizardBulletType type):Weapon
 	startingPoint = { posX, posY, 0 };
 	if (type == HorizontalBullet)
 	{
-		vX = 5.0f;
+		vX = 7.0f;
 		vY = 0;
 		currAnim = new Animation("Resources/weapon/Bullet_Small.png", 1, 1, 1, true, 0.8);
 	}
-	else
+	else if(type == VerticalBullet)
 	{
 		vX = 0;
-		vY = 5.0f;
+		vY = 10.0f;
 		currAnim = new Animation("Resources/weapon/Bullet_Doc.png", 1, 1, 1, true, 0.8);
+	}
+	else
+	{
+		vX = -7.0f;
+		vY = 0;
+		nBigBullet = 3;
+		currAnim = new Animation("Resources/weapon/Bullet_Small.png", 1, 1, 1, true, 0.8);
 	}
 	weaponDamage = 5;
 }
@@ -25,9 +32,24 @@ void WizardBullet::OnCollision(GameObject* object, float deltaTime)
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide)
+		if (colRes.isCollide && PLAYER->isImmu == false)
 		{
-			PLAYER->ChangeState(Injuring);
+			PLAYER->health -= weaponDamage;
+			if (PLAYER->health <= 0)
+				PLAYER->ChangeState(Die);
+			else
+				PLAYER->ChangeState(Injuring);
+		}
+	}
+	if (object->tag == Tag::ShieldTag && bulletType != VerticalBullet)
+	{
+		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
+		if (colRes.isCollide && PLAYER->shieldFlying == false)
+		{
+			posX += vX * colRes.entryTime;
+			posY += vY * colRes.entryTime;
+			this->vY = abs(vX) * -1;
+			this->vX = 0.0;
 		}
 	}
 }
@@ -56,16 +78,34 @@ BoundingBox WizardBullet::GetBoundingBox()
 
 void WizardBullet::Update(float deltaTime)
 {
+	auto now = GetTickCount();
+	if (startTime == 0)
+	{
+		startTime = now;
+	}
 	if (bulletType == HorizontalBullet)
 	{
 		posX += vX * deltaTime * (isReverse ? 1.0f : -1.0f);
 	}
-	else 
+	else if(bulletType == VerticalBullet)
 	{
 		posY += vY * deltaTime;
 	}
+	else
+	{
+		if (nBigBullet > 0)
+		{
+			if ((now - startTime) / 1000.0f >= 0.2f)
+			{
+				startTime = now;
+				posX += vX * deltaTime;
+				nBigBullet--;
+				vX = -vX;
+			}
+		}
+	}
 	currAnim->Update(deltaTime);
-	//check for if missle is out of camera bound
+	//check for if bullet is out of camera bound
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
 		isDead = true;

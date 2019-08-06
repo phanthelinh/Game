@@ -1,7 +1,7 @@
 #include "DynamiteNapalm.h"
 #include "../Ground.h"
 
-#define RUN_SPEED 5.0f
+#define RUN_SPEED 8.0f
 
 DynamiteNapalm::DynamiteNapalm() :Enemy()
 {
@@ -53,15 +53,6 @@ void DynamiteNapalm::Update(float deltaTime)
 
 	switch (currentState)
 	{
-	case DMStand:
-	{
-		if (prevState == DMFall || (currTime - StateTime >= 1500 && StateTime != 0))
-		{
-			SetState(DMRun);
-			StateTime = currTime;
-		}
-		break;
-	}
 	case DMFall:
 	{
 		if (vY == 0)
@@ -69,18 +60,58 @@ void DynamiteNapalm::Update(float deltaTime)
 		posY += vY * deltaTime;
 		break;
 	}
+	case DMStand:
+	{
+		if (prevState == DMFall || (currTime - StateTime >= 800 && StateTime != 0))
+		{
+			SetState(DMThrowWait);
+			StateTime = currTime;
+		}
+		break;
+	}
+	case DMThrowWait:
+	{
+		if (currTime - StateTime >= 1000)
+		{
+			SetState(DMBarrelThrow);
+			StateTime = currTime;
+		}
+		break;
+	}
+	case DMBarrelThrow:
+	{
+		if (currTime - StateTime >= 800)
+		{
+			SetState(DMShot);
+			StateTime = currTime;
+		}
+		break;
+	}
 	case DMShot:
 	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
+		if (currentAnim->_isFinished && currTime - StateTime > 1000)
+		{
+			//spawn bullet
+			shotcount++;
+			if (shotcount >= 2)
+			{
+				SetState(DMRun);
+				shotcount = 0;
+				StateTime = currTime;
+			}
+			else
+			{
+				SetState(DMShot);
+				StateTime = currTime;
+			}
+		}
 		break;
 	}
 	case DMRun:
 	{
 		vX = (!isReverse) ? RUN_SPEED * -1 : RUN_SPEED;
 		posX += vX * deltaTime;
-		if (currTime - StateTime >= 3500)
+		if (currTime - StateTime >= 1900)
 		{
 			SetState(DMStand);
 			StateTime = currTime;
@@ -88,39 +119,17 @@ void DynamiteNapalm::Update(float deltaTime)
 		}
 		break;
 	}
-	case DMBarrelThrow:
-	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
-		break;
-	}
 	case DMHurt:
 	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
+
 		break;
 	}
 	case DMInjuredRun:
 	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
 		break;
 	}
 	case DMInjuredStand:
 	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
-		break;
-	}
-	case DMThrowWait:
-	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
 		break;
 	}
 

@@ -19,7 +19,7 @@ Scene4::Scene4()
 	CAMERA->camPosition = PLAYER->GetPosition();
 	CAMERA->isFollowY = true;
 
-	boss = new DynamiteNapalm(230, 100);
+	boss = new DynamiteNapalm(200, 100);
 	GRID->AddObject(boss);
 }
 

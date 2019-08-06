@@ -34,6 +34,7 @@ public:
 	virtual void Draw();
 	virtual void Release();
 private:
+	int shotcount = 0; //count the shot of DM;
 	std::unordered_map<DMState, Animation*> animations;
 	DMState	currentState, prevState;
 	DMBullet* dmbullet;

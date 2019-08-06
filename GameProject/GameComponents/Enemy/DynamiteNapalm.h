@@ -20,6 +20,7 @@ enum DMState {
 class DynamiteNapalm :public Enemy
 {
 public:
+	float StateTime = 0.0f;
 	DynamiteNapalm();
 	DynamiteNapalm(float posX, float posY);
 	DynamiteNapalm(RECT r);
@@ -41,5 +42,4 @@ private:
 	std::vector<DMBullet*>	dmbullet;
 	std::vector<DMBarrel*>	dmbarrel;
 	bool isOnGround;
-	float StateTime = 0.0f;
 };

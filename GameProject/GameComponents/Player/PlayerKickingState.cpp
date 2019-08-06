@@ -1,5 +1,6 @@
 #include "PlayerKickingState.h"
-
+#include "../Enemy/Enemy.h"
+#include "../Enemy/DynamiteNapalm.h"
 #define GRAVITY 3.0f
 
 PlayerKickingState::PlayerKickingState()
@@ -68,6 +69,22 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 		PLAYER->posY = entity->GetBoundFromCorner().top;
 		PLAYER->isOnWater = true;
 		PLAYER->ChangeState(WaterStand);
+	}
+	else if (res.isCollide && entity->tag == EnemyTag)
+	{
+		Enemy* temp = (Enemy*)entity;
+		if (temp->enemySubTag == DMBossTag)
+		{
+			DynamiteNapalm* dm = (DynamiteNapalm*)temp;
+			dm->currHealth -= 4;
+			if (dm->currHealth <= 8)
+			{
+				dm->SetState(DMInjuredStand);
+			}
+			else
+				dm->SetState(DMHurt);
+			dm->StateTime = GetTickCount();
+		}
 	}
 	else
 	{

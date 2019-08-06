@@ -27,6 +27,7 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	isReverse = false;
 	isDead = false;
 	isOnGround = false;
+	tag = EnemyTag;
 	enemySubTag = EnemySubTag::DMBossTag;
 }
 
@@ -71,11 +72,11 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMThrowWait:
 	{
-		if (currTime - StateTime >= 1000)
+		/*if (currTime - StateTime >= 1000)
 		{
 			SetState(DMBarrelThrow);
 			StateTime = currTime;
-		}
+		}*/
 		break;
 	}
 	case DMBarrelThrow:
@@ -136,7 +137,11 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMHurt:
 	{
-
+		if (currTime - StateTime > 1500)
+		{
+			SetState(DMRun);
+			StateTime = currTime;
+		}
 		break;
 	}
 	case DMInjuredRun:
@@ -181,6 +186,19 @@ void DynamiteNapalm::Update(float deltaTime)
 
 void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 {
+	CollisionResult result = COLLISION->SweptAABB(GetBoundingBox(), PLAYER->GetBoundingBoxFromCorner(), deltaTime);
+	if (result.isCollide && object->tag == Captain && PLAYER->currentState->GetState() == Kicking)
+	{
+		currHealth -= 4;
+		if (currHealth <= 8)
+		{
+			SetState(DMInjuredStand);
+		}
+		else
+			SetState(DMHurt);
+		StateTime = GetTickCount();
+	}
+
 	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
 	CollisionResult res;
 	for (auto g : grounds)

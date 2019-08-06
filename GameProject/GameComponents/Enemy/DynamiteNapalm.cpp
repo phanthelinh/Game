@@ -20,7 +20,7 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
-	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 2, 1, 2, false, 1.5f);
+	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 1, 1, 1, false, 1.5f);
 
 	currentState = DMFall;
 	SetState(DMFall);
@@ -29,6 +29,10 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	isOnGround = false;
 	tag = EnemyTag;
 	enemySubTag = EnemySubTag::DMBossTag;
+
+	dmbarrel = new DMBarrel(posX, posY, isReverse);
+	dmbarrel->isVisible = false;
+	GRID->AddObject(dmbarrel);
 }
 
 DynamiteNapalm::DynamiteNapalm(RECT r) :Enemy(r)
@@ -72,10 +76,17 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMThrowWait:
 	{
+		if (waitfornextshot == false)
+		{
+			float x = (isReverse) ? 10 : -10;
+			dmbarrel->StartWait(posX + x, posY - 60, isReverse);
+			waitfornextshot = true;
+		}
 		if (currTime - StateTime >= 1500)
 		{
 			SetState(DMBarrelThrow);
 			StateTime = currTime;
+			waitfornextshot = false;
 		}
 		break;
 	}
@@ -83,10 +94,7 @@ void DynamiteNapalm::Update(float deltaTime)
 	{
 		if (currentAnim->_isFinished && waitfornextshot == false)
 		{
-			float x = (isReverse) ? 30 : -30;
-			DMBarrel* dmbar = new DMBarrel(posX + x, posY - 60, isReverse);
-			GRID->AddObject(dmbar);
-			dmbarrel.push_back(dmbar);
+			dmbarrel->StartFall();
 			waitfornextshot = true;
 		}
 		if (currTime - StateTime >= 800)
@@ -137,6 +145,8 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMHurt:
 	{
+		dmbarrel->isVisible = false;
+		waitfornextshot = false;
 		if (currTime - StateTime > 1500)
 		{
 			SetState(DMRun);
@@ -169,13 +179,12 @@ void DynamiteNapalm::Update(float deltaTime)
 		}
 	}
 
-	for (int i = 0; i < dmbarrel.size(); i++)
+	if (dmbarrel != nullptr)
 	{
-		dmbarrel[i]->Update(deltaTime);
-		if (dmbarrel[i]->isDead)
+		dmbarrel->Update(deltaTime);
+		if (dmbarrel->isDead)
 		{
-			GRID->RemoveObject(dmbarrel[i]);
-			dmbarrel.erase(dmbarrel.begin() + i);
+			GRID->RemoveObject(dmbarrel);
 
 		}
 	}

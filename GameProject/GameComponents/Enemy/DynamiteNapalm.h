@@ -41,6 +41,6 @@ private:
 	std::unordered_map<DMState, Animation*> animations;
 	DMState	currentState, prevState;
 	std::vector<DMBullet*>	dmbullet;
-	std::vector<DMBarrel*>	dmbarrel;
+	DMBarrel*	dmbarrel;
 	bool isOnGround;
 };

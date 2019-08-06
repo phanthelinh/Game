@@ -63,10 +63,10 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 		if (temp->enemySubTag == DMBossTag)
 		{
 			DynamiteNapalm* dmboss = (DynamiteNapalm*)temp;
-			auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBox(), deltaTime);
+			auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), dmboss->GetBoundingBox(), deltaTime);
 			if (colRes.isCollide/* && dmboss->GetState() == DMThrowWait*/)
 			{
-				EXPLODE->ExplodeAt(dmboss->posX, dmboss->posY - 40);
+				EXPLODE->ExplodeAt(dmboss->posX, dmboss->posY - 50);
 				dmboss->SetState(DMHurt);
 				dmboss->StateTime = GetTickCount();
 			}

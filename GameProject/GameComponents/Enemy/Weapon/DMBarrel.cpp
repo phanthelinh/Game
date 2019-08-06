@@ -2,15 +2,12 @@
 
 #define BARREL_SPEED 5.0f
 
-DMBarrel::DMBarrel(float posX, float posY, int direction): Weapon(posX,posY,0,0)
+DMBarrel::DMBarrel(float posX, float posY, bool direction): Weapon(posX,posY,0,0)
 {
 	currAnim = new Animation("Resources/weapon/DMBarrel.png", 1, 1, 1);
 	weaponDamage = 2;
 	tag = Tag::WeaponTag;
 	startingPoint = { posX, posY, 0 };
-	float direct = (direction) ? 1 : -1;
-	savedvX = BARREL_SPEED * direct;
-	vY = 10.0f;
 	isReverse = direction;
 }
 
@@ -22,8 +19,40 @@ void DMBarrel::Update(float deltaTime)
 	currAnim->Update(deltaTime);
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
-		isDead = true;
+		//isDead = true;
+		isVisible = false;
 	}
+}
+
+void DMBarrel::StartFall()
+{
+	if (isReverse)
+	{
+		posX += 20;
+	}
+	else
+	{
+		posX += -20;
+	}
+	vY = 10.0f;
+	isVisible = true;
+}
+
+void DMBarrel::StartWait(float posX, float posY, bool isReverse)
+{
+	if (isReverse)
+	{
+		savedvX = BARREL_SPEED;
+	}
+	else
+	{
+		savedvX = -BARREL_SPEED;
+	}
+	this->posX = posX;
+	this->posY = posY;
+	vY = vX = 0;
+	isVisible = true;
+	this->isReverse = isReverse;
 }
 
 void DMBarrel::OnCollision(GameObject * object, float deltaTime)
@@ -57,7 +86,7 @@ void DMBarrel::OnCollision(GameObject * object, float deltaTime)
 
 void DMBarrel::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
-	if (!isDead)
+	if (!isDead && isVisible == true)
 	{
 		currAnim->_isFlipHor = isReverse;
 		currAnim->Draw(position, cameraPosition, sourceRect, center);

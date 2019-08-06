@@ -9,9 +9,12 @@ class DMBarrel : public Weapon
 	float savedvX;
 	D3DXVECTOR3		startingPoint;
 public:
+	bool isVisible = false;
 	//posX, posY is the left, top of weapon
-	DMBarrel(float posX, float posY, int direction);
+	DMBarrel(float posX, float posY, bool direction);
 
+	void StartFall();
+	void StartWait(float posX, float posY, bool isReverse);
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	RECT GetBound();
 	BoundingBox GetBoundingBox();

@@ -3,14 +3,13 @@
 #include "../../../Framework/Collision.h"
 #include "../../Player/Player.h"
 
-#define BULLET_SPEED 5.0f
 
 class DMBullet : public Weapon
 {
 	D3DXVECTOR3		startingPoint;
 public:
 	//posX, posY is the left, top of weapon
-	DMBullet(float posX, float posY, int direction);
+	DMBullet(float posX, float posY, bool direction);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	RECT GetBound();

@@ -80,30 +80,45 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMBarrelThrow:
 	{
+		if (currentAnim->_isFinished && waitfornextshot == false)
+		{
+			float x = (isReverse) ? 30 : -30;
+			DMBarrel* dmbar = new DMBarrel(posX + x, posY - 60, isReverse);
+			GRID->AddObject(dmbar);
+			dmbarrel.push_back(dmbar);
+			waitfornextshot = true;
+		}
 		if (currTime - StateTime >= 800)
 		{
 			SetState(DMShot);
 			StateTime = currTime;
+			waitfornextshot = false;
 		}
 		break;
 	}
 	case DMShot:
 	{
-		if (currentAnim->_isFinished && currTime - StateTime > 1000)
+		if (shotcount == 2 && currTime - StateTime > 1500)
 		{
-			//spawn bullet
+			SetState(DMRun);
+			shotcount = 0;
+			waitfornextshot = false;
+			StateTime = currTime;
+		}
+		if (currentAnim->_isFinished && waitfornextshot == false)
+		{
+			float x = (isReverse) ? 30 : -30;
+			DMBullet* dmbllet = new DMBullet(posX + x, posY - 38, isReverse);
+			GRID->AddObject(dmbllet);
+			dmbullet.push_back(dmbllet);
+			waitfornextshot = true;
 			shotcount++;
-			if (shotcount >= 2)
-			{
-				SetState(DMRun);
-				shotcount = 0;
-				StateTime = currTime;
-			}
-			else
-			{
-				SetState(DMShot);
-				StateTime = currTime;
-			}
+		}
+		if (currTime - StateTime > 1500) //kiem tra de ban lan tiep theo
+		{
+			SetState(DMShot);
+			StateTime = currTime;
+			waitfornextshot = false;
 		}
 		break;
 	}
@@ -136,6 +151,28 @@ void DynamiteNapalm::Update(float deltaTime)
 	default:
 
 		break;
+	}
+
+	for (int i = 0; i < dmbullet.size(); i++)
+	{
+		dmbullet[i]->Update(deltaTime);
+		if (dmbullet[i]->isDead)
+		{
+			GRID->RemoveObject(dmbullet[i]);
+			dmbullet.erase(dmbullet.begin() + i);
+
+		}
+	}
+
+	for (int i = 0; i < dmbarrel.size(); i++)
+	{
+		dmbarrel[i]->Update(deltaTime);
+		if (dmbarrel[i]->isDead)
+		{
+			GRID->RemoveObject(dmbarrel[i]);
+			dmbarrel.erase(dmbarrel.begin() + i);
+
+		}
 	}
 
 	currentAnim->_isFlipHor = isReverse;
@@ -181,6 +218,8 @@ void DynamiteNapalm::Draw()
 
 void DynamiteNapalm::Release()
 {
+	if (currentAnim != NULL)
+		delete currentAnim;
 }
 
 //running man

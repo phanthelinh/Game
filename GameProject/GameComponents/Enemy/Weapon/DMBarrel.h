@@ -3,10 +3,10 @@
 #include "../../../Framework/Collision.h"
 #include "../../Player/Player.h"
 
-#define BULLET_SPEED 5.0f
 
 class DMBarrel : public Weapon
 {
+	float savedvX;
 	D3DXVECTOR3		startingPoint;
 public:
 	//posX, posY is the left, top of weapon

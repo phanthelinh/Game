@@ -34,11 +34,12 @@ public:
 	virtual void Draw();
 	virtual void Release();
 private:
-	int shotcount = 0; //count the shot of DM;
+	bool waitfornextshot = false; //handle the shooting state
+	int shotcount = 0; //count the shots
 	std::unordered_map<DMState, Animation*> animations;
 	DMState	currentState, prevState;
-	DMBullet* dmbullet;
-	DMBarrel* dmbarrel;
+	std::vector<DMBullet*>	dmbullet;
+	std::vector<DMBarrel*>	dmbarrel;
 	bool isOnGround;
 	float StateTime = 0.0f;
 };

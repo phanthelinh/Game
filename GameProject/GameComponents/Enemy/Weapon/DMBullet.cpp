@@ -1,21 +1,22 @@
 #include "DMBullet.h"
 
+#define DMBULLET_SPEED 5.0f
 
-
-DMBullet::DMBullet(float posX, float posY, int direction): Weapon(posX,posY,0,0)
+DMBullet::DMBullet(float posX, float posY, bool direction): Weapon(posX,posY,0,0)
 {
-	startingPoint = { posX, posY, 0};
-	vX = BULLET_SPEED * direction;
 	currAnim = new Animation("Resources/weapon/DMBullet.png", 1, 1, 1);
 	weaponDamage = 2;
 	tag = Tag::WeaponTag;
+	startingPoint = { posX, posY, 0 };
+	float direct = (direction) ? 1 : -1;
+	vX = DMBULLET_SPEED * direct;
+	isReverse = direction;
 }
 
 
 void DMBullet::Update(float deltaTime)
 {
 	posX += vX * deltaTime;
-	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
@@ -25,17 +26,6 @@ void DMBullet::Update(float deltaTime)
 
 void DMBullet::OnCollision(GameObject * object, float deltaTime)
 {
-	if (object->tag == Tag::ShieldTag)
-	{
-		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide && PLAYER->shieldFlying == false)
-		{
-			posX += vX * colRes.entryTime;
-			posY += vY * colRes.entryTime;
-			this->vY = abs(vX) * -1;
-			this->vX = 0.0;
-		}
-	}
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
@@ -70,8 +60,8 @@ void DMBullet::Draw()
 RECT DMBullet::GetBound()
 {
 	RECT r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	return r;
@@ -80,8 +70,8 @@ RECT DMBullet::GetBound()
 BoundingBox DMBullet::GetBoundingBox()
 {
 	BoundingBox r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	r.vX = vX;

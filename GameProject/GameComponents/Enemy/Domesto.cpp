@@ -94,6 +94,14 @@ void Domesto::OnCollision(GameObject * object, float deltaTime)
 	{
 		switch (object->tag)
 		{
+		case Captain:
+		{
+			if (PLAYER->currentState->GetState() == Dashing)
+			{
+				currHealth -= 10;
+			}
+			break;
+		}
 		case Tag::ShieldTag:
 			if (PLAYER->shieldFlying)
 			{

@@ -20,7 +20,7 @@ DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
-	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 1, 1, 1, false, 1.5f);
+	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 1, 1, 1, false, 0.5f);
 
 	currentState = DMFall;
 	SetState(DMFall);
@@ -107,7 +107,7 @@ void DynamiteNapalm::Update(float deltaTime)
 	}
 	case DMShot:
 	{
-		if (shotcount == 2 && currTime - StateTime > 1500)
+		if (shotcount == 2 && currTime - StateTime > 1300)
 		{
 			SetState(DMRun);
 			shotcount = 0;

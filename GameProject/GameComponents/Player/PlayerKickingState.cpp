@@ -64,7 +64,7 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 		{
 			DynamiteNapalm* dmboss = (DynamiteNapalm*)temp;
 			auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), dmboss->GetBoundingBox(), deltaTime);
-			if (colRes.isCollide/* && dmboss->GetState() == DMThrowWait*/)
+			if (colRes.isCollide && dmboss->GetState() == DMThrowWait)
 			{
 				EXPLODE->ExplodeAt(dmboss->posX, dmboss->posY - 50);
 				dmboss->SetState(DMHurt);

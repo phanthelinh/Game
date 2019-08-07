@@ -29,7 +29,11 @@ void PlayerHurt::Update(float deltaTime)
 	if (PLAYER->currentAnim->_isFinished)
 	{
 		PLAYER->isImmu = false;
-		PLAYER->ChangeState(StateName::Falling);
+		if (PLAYER->isOnGround == true)
+			PLAYER->ChangeState(Standing);
+		else
+			PLAYER->ChangeState(Falling);
+			
 	}
 }
 

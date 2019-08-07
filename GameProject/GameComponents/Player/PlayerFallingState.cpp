@@ -12,6 +12,8 @@ PlayerFallingState::PlayerFallingState()
 	PLAYER->shield->isVisible = true;
 	if (!PLAYER->shieldFlying)
 		PLAYER->shield->SetState(ShieldState::OnJump);
+	if (PLAYER->isImmu != false)
+		PLAYER->isImmu = false;
 }
 
 void PlayerFallingState::Update(float deltaTime)

@@ -7,6 +7,8 @@ PlayerStandingState::PlayerStandingState()
 	PLAYER->allow[Moving] = true;
 	PLAYER->allow[Attacking_Shield] = true;
 	PLAYER->shield->isVisible = true;
+	if (PLAYER->isImmu != false)
+		PLAYER->isImmu = false;
 	//sitting?
 }
 

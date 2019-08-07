@@ -1,7 +1,12 @@
 #include "DynamiteNapalm.h"
 #include "../Ground.h"
+#include "../Effect/Explode.h"
 
 #define RUN_SPEED 8.0f
+#define STATE_DELAY_TIME 1500.0f
+#define RUN_TIME 1800.0f
+#define SHOT_DELAY_TIME 600.0f
+#define DIE_STAY_TIME 3000.0f
 
 DynamiteNapalm::DynamiteNapalm() :Enemy()
 {
@@ -10,17 +15,18 @@ DynamiteNapalm::DynamiteNapalm() :Enemy()
 DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 {
 	point = 1000;	//score when kill this boss
-	currHealth = maxHealth = 14;
+	currHealth = maxHealth = 18;
 
 	animations[DMBarrelThrow] = new Animation("Resources/enemy/Dynamite Napalm/DMBarrelThrow.png", 2, 1, 2, false, 0.7f);
 	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 1.5f);
-	animations[DMInjuredRun] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredRun.png", 3, 1, 3, true, 0.3f);
+	animations[DMInjuredRun] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredRun.png", 3, 1, 3, true, 1.0f);
 	animations[DMInjuredStand] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredStand.png", 1, 1, 1);
 	animations[DMRun] = new Animation("Resources/enemy/Dynamite Napalm/DMRun.png", 3, 1, 3, true, 1.5f);
 	animations[DMShot] = new Animation("Resources/enemy/Dynamite Napalm/DMShot.png", 2, 1, 2, false, 1.5f);
 	animations[DMStand] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMFall] = new Animation("Resources/enemy/Dynamite Napalm/DMStand.png", 1, 1, 1);
 	animations[DMThrowWait] = new Animation("Resources/enemy/Dynamite Napalm/DMThrowWait.png", 1, 1, 1, false, 0.5f);
+	animations[DMDie] = new Animation("Resources/enemy/Dynamite Napalm/DMInjuredStand.png", 1, 1, 1);
 
 	currentState = DMFall;
 	SetState(DMFall);
@@ -41,6 +47,20 @@ DynamiteNapalm::DynamiteNapalm(RECT r) :Enemy(r)
 	maxHealth = 50;
 }
 
+void DynamiteNapalm::ChangeState(DMState state)
+{
+	SetState(state);
+	StateTime = GetTickCount();
+}
+
+bool DynamiteNapalm::CheckStateTime(float offset, float compared)
+{
+	float currTime = GetTickCount();
+	if (currTime - StateTime + offset > compared)
+		return true;
+	return false;
+}
+
 void DynamiteNapalm::SetState(DMState state)
 {
 	prevState = currentState;
@@ -55,117 +75,138 @@ void DynamiteNapalm::SetState(DMState state)
 void DynamiteNapalm::Update(float deltaTime)
 {
 	float currTime = GetTickCount();
-
 	switch (currentState)
 	{
-	case DMFall:
-	{
-		if (vY == 0)
-			vY = 10.0f;
-		posY += vY * deltaTime;
-		break;
-	}
-	case DMStand:
-	{
-		if (prevState == DMFall || (currTime - StateTime >= 800 && StateTime != 0))
+		case DMFall:
 		{
-			SetState(DMThrowWait);
-			StateTime = currTime;
+			if (vY == 0)
+				vY = 10.0f;
+			posY += vY * deltaTime;
+			break;
 		}
-		break;
-	}
-	case DMThrowWait:
-	{
-		if (waitfornextshot == false)
+		case DMStand:
 		{
-			float x = (isReverse) ? 10 : -10;
-			dmbarrel->StartWait(posX + x, posY - 60, isReverse);
-			waitfornextshot = true;
+			if (prevState == DMFall || (CheckStateTime(0, 800) && StateTime != 0))
+			{
+				ChangeState(DMThrowWait);
+			}
+			break;
 		}
-		if (currTime - StateTime >= 1500)
+		case DMThrowWait:
 		{
-			SetState(DMBarrelThrow);
-			StateTime = currTime;
+			if (waitfornextshot == false)
+			{
+				float x = (isReverse) ? 10 : -10;
+				dmbarrel->StartWait(posX + x, posY - 60, isReverse);
+				waitfornextshot = true;
+			}
+			if (CheckStateTime(0, STATE_DELAY_TIME))
+			{
+				ChangeState(DMBarrelThrow);
+				waitfornextshot = false;
+			}
+			break;
+		}
+		case DMBarrelThrow:
+		{
+			if (currentAnim->_isFinished && waitfornextshot == false)
+			{
+				dmbarrel->StartFall();
+				waitfornextshot = true;
+			}
+			if (CheckStateTime(0, 800))
+			{
+				ChangeState(DMShot);
+				waitfornextshot = false;
+			}
+			break;
+		}
+		case DMShot:
+		{
+			if (shotcount == 2 && CheckStateTime(-200.0f, STATE_DELAY_TIME))
+			{
+				ChangeState(DMRun);
+				shotcount = 0;
+				waitfornextshot = false;
+			}
+			if (currentAnim->_isFinished && waitfornextshot == false)
+			{
+				float x = (isReverse) ? 30 : -30;
+				DMBullet* dmbllet = new DMBullet(posX + x, posY - 38, isReverse);
+				GRID->AddObject(dmbllet);
+				dmbullet.push_back(dmbllet);
+				waitfornextshot = true;
+				shotcount++;
+			}
+			if (CheckStateTime(-200.0f, STATE_DELAY_TIME)) //kiem tra de ban lan tiep theo
+			{
+				ChangeState(DMShot);
+				waitfornextshot = false;
+			}
+			break;
+		}
+		case DMRun:
+		{
+			vX = (!isReverse) ? RUN_SPEED * -1 : RUN_SPEED;
+			posX += vX * deltaTime;
+			if (CheckStateTime(0, RUN_TIME))
+			{
+				ChangeState(DMStand);
+				isReverse = !isReverse;
+			}
+			break;
+		}
+		case DMHurt:
+		{
+			dmbarrel->isVisible = false;
 			waitfornextshot = false;
+			if (CheckStateTime(0, STATE_DELAY_TIME))
+			{
+				ChangeState(DMRun);
+			}
+			break;
 		}
-		break;
-	}
-	case DMBarrelThrow:
-	{
-		if (currentAnim->_isFinished && waitfornextshot == false)
+		case DMInjuredStand:
 		{
-			dmbarrel->StartFall();
-			waitfornextshot = true;
+			dmbarrel->isVisible = false;
+			if (CheckStateTime(0, STATE_DELAY_TIME))
+			{
+				ChangeState(DMInjuredRun);
+				shotcount = 0;
+			}
+			break;
 		}
-		if (currTime - StateTime >= 800)
+		case DMInjuredRun:
 		{
-			SetState(DMShot);
-			StateTime = currTime;
-			waitfornextshot = false;
+			vX = (!isReverse) ? RUN_SPEED * -1 : RUN_SPEED;
+			posX += vX * deltaTime;
+			if (LastShotTime == 0 || currTime - LastShotTime > SHOT_DELAY_TIME)
+			{
+				float x = (isReverse) ? 30 : -30;
+				DMBullet* dmbllet = new DMBullet(posX + x, posY - 38, isReverse, 2);
+				GRID->AddObject(dmbllet);
+				dmbullet.push_back(dmbllet);
+				shotcount++;
+				LastShotTime = currTime;
+			}
+			if (CheckStateTime(0, RUN_TIME))
+			{
+				ChangeState(DMInjuredStand);
+				isReverse = !isReverse;
+				shotcount = 0;
+				LastShotTime = 0.0f;
+			}
+			break;
 		}
-		break;
-	}
-	case DMShot:
-	{
-		if (shotcount == 2 && currTime - StateTime > 1300)
+		case DMDie:
 		{
-			SetState(DMRun);
-			shotcount = 0;
-			waitfornextshot = false;
-			StateTime = currTime;
-		}
-		if (currentAnim->_isFinished && waitfornextshot == false)
-		{
-			float x = (isReverse) ? 30 : -30;
-			DMBullet* dmbllet = new DMBullet(posX + x, posY - 38, isReverse);
-			GRID->AddObject(dmbllet);
-			dmbullet.push_back(dmbllet);
-			waitfornextshot = true;
-			shotcount++;
-		}
-		if (currTime - StateTime > 1500) //kiem tra de ban lan tiep theo
-		{
-			SetState(DMShot);
-			StateTime = currTime;
-			waitfornextshot = false;
-		}
-		break;
-	}
-	case DMRun:
-	{
-		vX = (!isReverse) ? RUN_SPEED * -1 : RUN_SPEED;
-		posX += vX * deltaTime;
-		if (currTime - StateTime >= 1900)
-		{
-			SetState(DMStand);
-			StateTime = currTime;
 			isReverse = !isReverse;
+			if (CheckStateTime(0, DIE_STAY_TIME) && isDead != true)
+			{
+				isDead = true;
+				EXPLODE->ExplodeAt(posX, posY - 30);
+			}
 		}
-		break;
-	}
-	case DMHurt:
-	{
-		dmbarrel->isVisible = false;
-		waitfornextshot = false;
-		if (currTime - StateTime > 1500)
-		{
-			SetState(DMRun);
-			StateTime = currTime;
-		}
-		break;
-	}
-	case DMInjuredRun:
-	{
-		break;
-	}
-	case DMInjuredStand:
-	{
-		break;
-	}
-
-	default:
-
-		break;
 	}
 
 	for (int i = 0; i < dmbullet.size(); i++)
@@ -208,6 +249,16 @@ void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 		}
 	}
 
+	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
+	if (colRes.isCollide && object->tag == ShieldTag)
+	{
+		currHealth -= 3;
+		if (currHealth <= 0)
+		{
+			ChangeState(DMDie);
+		}
+	}
+
 	std::vector<GameObject*> grounds = GRID->GetVisibleGround();
 	CollisionResult res;
 	for (auto g : grounds)
@@ -219,7 +270,7 @@ void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 			isOnGround = true;
 			posY += vY * res.entryTime;
 			vY = 0;
-			SetState(DMStand);
+			ChangeState(DMStand);
 		}
 	}
 }

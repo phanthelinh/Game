@@ -21,10 +21,13 @@ class DynamiteNapalm :public Enemy
 {
 public:
 	float StateTime = 0.0f;
+	float LastShotTime = 0.0f;
 	DynamiteNapalm();
 	DynamiteNapalm(float posX, float posY);
 	DynamiteNapalm(RECT r);
 
+	void ChangeState(DMState state);
+	bool CheckStateTime(float offset, float compared);
 	void SetState(DMState state);
 	virtual void OnCollision(GameObject* object, float deltaTime = 0);
 	virtual void Update(float deltaTime);

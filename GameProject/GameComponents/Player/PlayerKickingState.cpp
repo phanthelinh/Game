@@ -67,8 +67,17 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 			if (colRes.isCollide && dmboss->GetState() == DMThrowWait)
 			{
 				EXPLODE->ExplodeAt(dmboss->posX, dmboss->posY - 50);
-				dmboss->SetState(DMHurt);
-				dmboss->StateTime = GetTickCount();
+				dmboss->currHealth -= 3;
+				if (dmboss->currHealth <= 6)
+				{
+					dmboss->SetState(DMInjuredStand);
+					dmboss->StateTime = GetTickCount();
+				}
+				else
+				{
+					dmboss->SetState(DMHurt);
+					dmboss->StateTime = GetTickCount();
+				}
 			}
 		}	
 	}

@@ -9,7 +9,7 @@ class DMBullet : public Weapon
 	D3DXVECTOR3		startingPoint;
 public:
 	//posX, posY is the left, top of weapon
-	DMBullet(float posX, float posY, bool direction);
+	DMBullet(float posX, float posY, bool direction, float speedmultiplier = 1);
 
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	RECT GetBound();

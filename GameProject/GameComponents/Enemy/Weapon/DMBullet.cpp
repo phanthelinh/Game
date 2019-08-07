@@ -2,14 +2,14 @@
 
 #define DMBULLET_SPEED 5.0f
 
-DMBullet::DMBullet(float posX, float posY, bool direction): Weapon(posX,posY,0,0)
+DMBullet::DMBullet(float posX, float posY, bool direction, float speedmultiplier): Weapon(posX,posY,0,0)
 {
 	currAnim = new Animation("Resources/weapon/DMBullet.png", 1, 1, 1);
 	weaponDamage = 2;
 	tag = Tag::WeaponTag;
 	startingPoint = { posX, posY, 0 };
 	float direct = (direction) ? 1 : -1;
-	vX = DMBULLET_SPEED * direct;
+	vX = DMBULLET_SPEED * direct * speedmultiplier;
 	isReverse = direction;
 }
 

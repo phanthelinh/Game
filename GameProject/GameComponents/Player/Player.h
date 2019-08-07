@@ -66,6 +66,8 @@ public:
 	bool			isImmu;
 	Shield*			shield;
 	float			scores;
+	bool			isStandOnFlyingBar;
+	GameObject*		barObject;
 private:
 	static Player*	instance;
 };

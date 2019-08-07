@@ -16,8 +16,9 @@ DemoScene::DemoScene()
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	LoadGridFromFile(1);
-	//ReloadResources(3); //test tank
+	//LoadGridFromFile(1);
+	ReloadResources(3); //test tank
+	fly = new FlyingBar(120, 900, 120, 790, 0);
 }
 
 DemoScene::~DemoScene()
@@ -26,6 +27,8 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
+	fly->Update(deltaTime);
+	PLAYER->OnCollision(fly, deltaTime);
 	auto now = GetTickCount();
 	if ((now - timePause) / 1000.0f >= GLOBAL->g_ChangeScene_Delay && isGamePause)
 	{
@@ -78,6 +81,12 @@ void DemoScene::Update(float deltaTime)
 			PLAYER->ChangeState(Falling);
 		}
 	}
+
+	if (PLAYER->isStandOnFlyingBar && !COLLISION->IsCollide(PLAYER->GetBoundingBox(), PLAYER->barObject->GetBoundingBox()))
+	{
+		PLAYER->isStandOnFlyingBar = false;
+	}
+
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision
@@ -111,6 +120,7 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	EXPLODE->Draw();
+	fly->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)
@@ -197,7 +207,7 @@ void DemoScene::ReloadResources(int level)
 		break;
 	case 3:
 		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(320, 870, 0));
+		PLAYER->SetPosition(D3DXVECTOR3(16, 870, 0));
 		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = true;
 		LoadGridFromFile(level);

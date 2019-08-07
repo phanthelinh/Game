@@ -219,6 +219,9 @@
     <ClCompile Include="Scene\Scene4.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\FlyingBar.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Scene\Scene4.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\FlyingBar.h">
+      <Filter>GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

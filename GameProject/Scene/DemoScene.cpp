@@ -163,9 +163,13 @@ void DemoScene::CheckForNextStage()
 			ChangingStage();
 		}
 		break;
-		/*case 2:
-			map = new GameMap(16, 16, 80, 60, "Resources/map/Pittsburgh_1_1.bmp", "Resources/map/Pittsburgh_1_1.csv");
-			break;*/
+	case 2:
+		if (PLAYER->posX >= 240 && PLAYER->isBossKilled)
+		{
+			currentLevel++;
+			ChangingStage();
+		}
+		break;
 	case 4:
 		break;
 	}
@@ -306,9 +310,7 @@ void DemoScene::LoadGridFromFile(int level)
 		ItemsContainer::InsertFromFile(level);
 		
 		//add boss
-		std::unordered_set<GameObject*> wBoss;
-		wBoss.insert(new WizardBoss(220, 50));
-		GRID->InsertToGrid(wBoss);
+		WizardBoss::InsertFromFile(level);
 		
 		//add enemy
 		//domesto

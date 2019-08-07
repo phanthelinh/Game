@@ -66,6 +66,7 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 		PLAYER->posY += PLAYER->vY*res.entryTime;//= entity->GetBoundFromCorner().top - PLAYER->height / 2;
 		PLAYER->ChangeState(Standing);
 		PLAYER->shield->SetState(ShieldState::Normal);
+		PLAYER->standingGround = entity->GetBoundFromCorner();
 	}
 	else if (res.isCollide && entity->tag == GroundTag && (res.sideCollided == Left || res.sideCollided == Right))
 	{

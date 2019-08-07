@@ -23,7 +23,7 @@ WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 	currentState = FlyingWizard;
 	ChangeEnemyState(FlyingWizard);
 	isReverse = false;
-	isDead = false;
+	isDead = PLAYER->isBossKilled = false;
 	isOnGround = false; //falling down
 	nHorizontalBullet = NUM_OF_HORIZONTAL_BULLET;
 	nVerticalBullet = NUM_OF_VERTICAL_BULLET;
@@ -54,33 +54,19 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 	for (auto g: grounds)
 	{
 		res = COLLISION->SweptAABB(this->GetBoundingBox(), g->GetBoundingBox(), deltaTime);
-		if (res.isCollide)
+		if (res.isCollide && res.sideCollided == Bottom)
 		{
-			//OutputDebugStringA("colission: ");
-			//low health, then not check small ground collision
-			/*if ((currentState == FlyAttackWizard && (currHealth <= 5 || isReverse)) || (currentState == StandingWizard && !isReverse))
-			{
-				OutputDebugStringA("skip \r\n");
-				continue;
-			}*/
 			switch (currentState)
 			{
 			case FlyAttackWizard:
-				//OutputDebugStringA("a\r\n");
-				//ChangeEnemyState(FlyingWizard);
 				break;
 			case FlyingWizard:
-				//OutputDebugStringA("b\r\n");
 				isOnGround = true;
 				startTime = GetTickCount();
 				ChangeEnemyState(StandingWizard);
 				
 				break;
-				//OutputDebugStringA("nothing \r\n");
 			}
-			
-			//posY += vY * deltaTime;
-			//isOnGround = true;
 		}
 	}
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
@@ -134,7 +120,6 @@ void WizardBoss::Update(float deltaTime)
 			nVerticalBullet = NUM_OF_VERTICAL_BULLET;
 			if (posY < 98)	//is standing on small ground
 			{
-				//OutputDebugStringA("staanding\r\n");
 				isReverse = !isReverse;
 				ChangeEnemyState(FlyingWizard);
 				break;
@@ -146,10 +131,8 @@ void WizardBoss::Update(float deltaTime)
 	}
 	case RunningWizard:
 	{
-		//OutputDebugStringA("running\r\n");
 		vX = (isReverse == false) ? -15.0f : 15.0f;
 		posX += vX * deltaTime;
-		//posY += vY * deltaTime;
 		if (abs(PLAYER->posX - posX) <= 100)	//run toward and closer to captain, then shoot
 		{
 			ChangeEnemyState(AttackingWizard);
@@ -214,13 +197,14 @@ void WizardBoss::Update(float deltaTime)
 		{
 			startTime = now;
 			isDead = true;
+			PLAYER->isBossKilled = true;
 		}
 		break;
 	}
 	default:
 		break;
 	}
-
+	//boss is on small ground or is low health, then fly up to the right
 	if ((posX < 60) && (currentState == FlyAttackWizard) && currHealth > 5 && !isReverse)
 	{
 		ChangeEnemyState(FlyingWizard);
@@ -277,4 +261,35 @@ void WizardBoss::Draw()
 
 void WizardBoss::Release()
 {
+}
+
+void WizardBoss::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::ifstream file;
+	if (level == 2)
+	{
+		file.open("Resources/boss/wizardBoss.txt");
+	}
+	//insert to grid
+
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y;
+			file >> x;
+			file >> y;
+			
+			GameObject* obj = new WizardBoss(x, y);
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
 }

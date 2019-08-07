@@ -37,6 +37,17 @@ BoundingBox Water::GetBoundingBox()
 	return b;
 }
 
+RECT Water::GetBound()
+{
+	RECT b;
+	b.left = posX;
+	b.top = posY;
+	b.right = b.left + width;
+	b.bottom = b.top + height;
+	
+	return b;
+}
+
 void Water::Release()
 {
 }

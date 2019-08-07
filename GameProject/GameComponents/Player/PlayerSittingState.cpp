@@ -30,6 +30,16 @@ void PlayerSittingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	{
 		PLAYER->LastKeyState[X] = false;
 	}
+	if (keys[VK_X])
+	{
+		if (PLAYER->standingGround.bottom - PLAYER->standingGround.top > 16)
+			PLAYER->ChangeState(Jumping);
+		else
+		{
+			PLAYER->ChangeState(Falling);
+		}
+		
+	}
 }
 
 StateName PlayerSittingState::GetState()

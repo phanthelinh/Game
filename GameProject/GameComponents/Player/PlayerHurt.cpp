@@ -53,6 +53,7 @@ void PlayerHurt::OnCollision(GameObject* entity, float deltaTime)
 	{
 		PLAYER->isOnGround = true;
 		PLAYER->vY = 0;
+		PLAYER->standingGround = entity->GetBoundFromCorner();
 		PLAYER->ChangeState(Standing);
 	}
 }

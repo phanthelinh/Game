@@ -89,6 +89,7 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 		PLAYER->posY = entity->GetBoundFromCorner().top - PLAYER->height / 2;
 		PLAYER->ChangeState(Standing);
 		PLAYER->shield->SetState(ShieldState::Normal);
+		PLAYER->standingGround = entity->GetBoundFromCorner();
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{

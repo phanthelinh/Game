@@ -65,6 +65,8 @@ public:
 	bool			isOnGround, isAttacking, shieldFlying, isOnWater;
 	bool			isImmu;
 	Shield*			shield;
+	RECT standingGround;	//save ground player is standing on
+	bool			isBossKilled;	//flag for boss is killed
 private:
 	static Player*	instance;
 };

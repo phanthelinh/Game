@@ -49,8 +49,8 @@ std::vector<RECT> Util::GetAllObjectFromFile(Tag tag, int level)
 	case ItemContainerTag:
 		if (level == 1)
 			data = GetObjectDataFromFile("Resources/items/itemcontainer.txt");
-		else
-			data = GetObjectDataFromFile("Resources/items/itemcontainer2.txt");
+		else if(level == 3)
+			data = GetObjectDataFromFile("Resources/items/itemcontainer3.txt");
 		break;
 	case GroundTag:
 	{

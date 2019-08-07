@@ -24,7 +24,7 @@ WizardBullet::WizardBullet(float posX, float posY, WizardBulletType type):Weapon
 		nBigBullet = 3;
 		currAnim = new Animation("Resources/weapon/Bullet_Small.png", 1, 1, 1, true, 0.8);
 	}
-	weaponDamage = 5;
+	weaponDamage = 2;
 }
 
 void WizardBullet::OnCollision(GameObject* object, float deltaTime)

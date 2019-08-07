@@ -59,4 +59,9 @@ StateName PlayerRunningState::GetState()
 
 void PlayerRunningState::OnCollision(GameObject* entity, float deltaTime) 
 {
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);
+	if (res.isCollide && entity->tag == GroundTag && (res.sideCollided == Left || res.sideCollided == Right))
+	{
+		PLAYER->vX = 0;
+	}
 }

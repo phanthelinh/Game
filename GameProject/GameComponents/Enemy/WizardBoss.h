@@ -29,6 +29,7 @@ public:
 	//Draw at its position
 	virtual void Draw();
 	virtual void Release();
+	static void InsertFromFile(int level);
 private:
 	std::unordered_map<WizardState, Animation*> animations;
 	WizardState	currentState, prevState;

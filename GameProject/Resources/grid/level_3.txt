@@ -1,0 +1,90 @@
+
+ground 1054 820 28 108
+ground 703 595 64 12
+ground 575 20 64 68
+ground 592 547 32 12
+ground 255 196 64 44
+ground 256 483 64 124
+ground 319 212 32 12
+ground 143 884 32 36
+ground 335 84 48 28
+ground 574 196 48 4
+ground 1087 596 48 12
+ground 431 211 32 12
+ground 1055 563 32 44
+ground 543 83 32 4
+ground 559 675 208 4
+ground 512 163 64 36
+ground 1167 595 48 12
+ground 463 196 48 44
+ground 624 163 32 36
+ground 1087 916 32 12
+ground 863 196 224 4
+ground 655 196 32 4
+ground 175 803 32 12
+ground 687 164 32 36
+itemscontainer 340 744 16 16 0 5333
+ground 112 803 32 12
+ground 1119 676 160 12
+ground 719 196 80 4
+itemscontainer 468 884 16 16 0 4433
+ground 815 196 32 4
+itemscontainer 1236 644 16 16 0 3333
+ground 768 115 128 12
+ground 928 115 64 12
+ground 1087 212 32 12
+ground 1103 84 48 28
+ground 1199 212 32 12
+ground 479 564 32 44
+ground 1231 196 48 44
+ground 1119 308 64 12
+ground 1039 356 48 12
+ground 1023 596 32 12
+ground 1215 356 48 12
+ground 1023 436 24 4
+ground 1023 675 32 12
+ground 1257 436 24 4
+ground 975 836 48 12
+ground 1135 564 32 44
+ground 15 564 224 4
+ground 63 452 128 12
+ground 256 675 32 44
+ground 175 915 32 4
+ground 287 692 32 28
+ground 463 692 32 28
+ground 15 884 32 36
+ground 495 676 16 44
+ground 671 564 32 32
+ground 1216 563 32 44
+ground 1247 596 32 12
+ground 1071 676 32 12
+ground 48 803 32 12
+ground 47 916 32 4
+ground 79 884 32 36
+ground 256 915 800 12
+ground 111 916 32 4
+ground 207 884 32 36
+ground 767 804 64 44
+ground 865 787 80 28
+ground 1199 916 80 12
+itemscontainer 132 416 16 16 0 5333
+itemscontainer 132 528 16 16 0 333
+itemscontainer 196 852 16 16 0 5
+itemscontainer 292 640 16 16 0 133
+itemscontainer 356 52 16 16 0 5333
+itemscontainer 404 148 16 16 0 333
+itemscontainer 164 772 16 16 0 2
+itemscontainer 484 532 16 16 0 6
+itemscontainer 644 836 16 16 0 2
+itemscontainer 708 52 16 16 0 1
+itemscontainer 724 644 16 16 0 5333
+itemscontainer 788 84 16 16 0 5
+itemscontainer 788 772 16 16 0 1
+itemscontainer 932 884 16 16 0 5
+itemscontainer 1124 52 16 16 0 3333
+itemscontainer 1236 548 16 16 0 5
+itemscontainer 1252 324 16 16 0 7
+itemscontainer 1172 148 16 16 0 5
+wizard -8.58993e+08 -8.58993e+08
+domesto -8.58993e+08 -8.58993e+08 1
+runningman -8.58993e+08 -8.58993e+08 -858993460 -858993460

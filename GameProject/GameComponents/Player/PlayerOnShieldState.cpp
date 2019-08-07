@@ -73,6 +73,7 @@ void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 	{
 		PLAYER->isOnGround = true;
 		PLAYER->vY = 0;
+		PLAYER->standingGround = entity->GetBoundFromCorner();
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{

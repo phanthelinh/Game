@@ -1,4 +1,5 @@
 #include "Gigi.h"
+#include "../Effect/Explode.h"
 
 #define DETECT_RANGE 150
 #define SHOOTING_RANGE 150
@@ -20,8 +21,8 @@ Gigi::Gigi(float posX, float posY):Enemy(posX,posY,0,0)
 	animations[GigiSuprised] = new Animation("Resources/enemy/Gigi/Gigi_Suprised.png", 2, 1, 2, false, 1.5f);
 	animations[GigiDie] = new Animation("Resources/enemy/Gigi/Gigi_Die.png", 2, 1, 2, true, 0.3f);
 
-	currentState = GigiState::GigiStand;
-	SetState(GigiState::GigiStand);
+	currentState = GigiState::GigiDie;
+	SetState(GigiState::GigiDie);
 	
 	savedvX = FLYING_SPEED * -1;
 	isReverse = false;
@@ -43,7 +44,7 @@ void Gigi::Update(float deltaTime)
 	{
 		case GigiStand:
 		{
-			if (CheckPosition() != 0 && isWaiting == true) //state dau, doi player di vao tam thi bat dau di chuyen
+			if (CheckPosition() != 0 && isWaiting == true) 
 			{
 				isWaiting = false;
 				SetState(GigiSuprised);
@@ -112,6 +113,12 @@ void Gigi::Update(float deltaTime)
 			}
 			break;
 		}
+		case GigiDie:
+		{
+			vY = FLYING_SPEED * 2;
+			vX = 0;
+			posY += vY * deltaTime;
+		}
 	}
 
 	for (int i = 0; i < missiles.size(); i++)
@@ -124,14 +131,7 @@ void Gigi::Update(float deltaTime)
 
 		}
 	}
-	/*if (PLAYER->posX < posX)
-	{
-		isReverse = false;
-	}
-	else
-	{
-		isReverse = true;
-	}*/
+
 	currentAnim->_isFlipHor = isReverse;
 	currentAnim->Update(deltaTime);
 }
@@ -167,13 +167,14 @@ void Gigi::OnCollision(GameObject * object, float deltaTime)
 	for (auto g : grounds)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), g->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide)
+		if (colRes.isCollide && currentState == GigiDie)
 		{
 			posX += vX * colRes.entryTime;
 			posY += vY * colRes.entryTime;
 			vY = 0;
 			vX = 0;
 			isDead = true;
+			EXPLODE->ExplodeAt(posX, posY);
 		}
 	}
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);

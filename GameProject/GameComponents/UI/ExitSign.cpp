@@ -1,10 +1,15 @@
 #include "ExitSign.h"
+#include "../Player/Player.h"
+
+#define X_OFFSET 40
+#define Y_OFFSET 30
 
 ExitSign::ExitSign()
 {
 	isDead = false;
 	isVisible = true;
-	playerPos = { 0,0,0 };
+	currAnim = new Animation("Resources/UI/Exit.png", 2, 1, 2, true, 1.5f);
+	isReverse = false;
 }
 
 void ExitSign::Draw()
@@ -16,12 +21,15 @@ void ExitSign::Draw()
 void ExitSign::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
 {
 	if (isVisible == true)
-		Draw(position, cameraPosition, sourceRect, center);
+		currAnim->Draw(position, cameraPosition, sourceRect, center);
 }
 
 void ExitSign::Update(float deltaTime)
 {
-	
+	posX = CAMERA->GetBound().left + X_OFFSET;
+	posY = CAMERA->GetBound().top + Y_OFFSET;
+
+	currAnim->Update(deltaTime);
 }
 
 BoundingBox ExitSign::GetBoundingBox()

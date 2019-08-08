@@ -70,8 +70,8 @@ void Bullet::Draw()
 RECT Bullet::GetBound()
 {
 	RECT r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	return r;
@@ -80,8 +80,8 @@ RECT Bullet::GetBound()
 BoundingBox Bullet::GetBoundingBox()
 {
 	BoundingBox r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	r.vX = vX;

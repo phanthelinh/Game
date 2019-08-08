@@ -1,4 +1,5 @@
 #include "HomingMissile.h"
+#include "../../Effect/Explode.h"
 
 #define MISSLE_SPEED 5.0f
 
@@ -88,22 +89,13 @@ void HomingMissile::CalculateHoming()
 
 void HomingMissile::OnCollision(GameObject * object, float deltaTime)
 {
-	if (object->tag == Tag::ShieldTag)
-	{
-		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (colRes.isCollide && PLAYER->shieldFlying == false)
-		{
-			posX += vX * colRes.entryTime;
-			posY += vY * colRes.entryTime;
-			this->vY = abs(vX) * -1;
-			this->vX = 0.0;
-		}
-	}
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (colRes.isCollide && PLAYER->isImmu == false)
 		{
+			isDead = true;
+			EXPLODE->ExplodeAt(posX, posY);
 			PLAYER->health -= weaponDamage;
 			if (PLAYER->health <= 0)
 				PLAYER->ChangeState(Die);
@@ -133,8 +125,8 @@ void HomingMissile::Draw()
 RECT HomingMissile::GetBound()
 {
 	RECT r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	return r;
@@ -143,8 +135,8 @@ RECT HomingMissile::GetBound()
 BoundingBox HomingMissile::GetBoundingBox()
 {
 	BoundingBox r;
-	r.left = posX;
-	r.top = posY;
+	r.left = posX - width / 2;
+	r.top = posY - height;
 	r.right = r.left + width;
 	r.bottom = r.top + height;
 	r.vX = vX;

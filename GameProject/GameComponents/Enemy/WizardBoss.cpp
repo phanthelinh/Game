@@ -6,13 +6,13 @@
 WizardBoss::WizardBoss() :Enemy()
 {
 	enemySubTag = EnemySubTag::WizardBossTag;
-	maxHealth = 14;
+	maxHealth = 70;
 }
 
 WizardBoss::WizardBoss(float posX, float posY) :Enemy(posX, posY, 0, 0)
 {
 	point = 1000;	//score when kill this boss
-	currHealth = maxHealth = 14;
+	currHealth = maxHealth = 70;
 	animations[StandingWizard] = new Animation("Resources/boss/Wizard_Standing.png", 2, 1, 2, false);
 	currentAnim = animations[FlyingWizard] = new Animation("Resources/boss/Wizard_Flying.png", 1, 1, 1);
 	animations[RunningWizard] = new Animation("Resources/boss/Wizard_Running.png", 3, 1, 3, true, 0.09);
@@ -70,10 +70,28 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 		}
 	}
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
-	if (colRes.isCollide && object->tag == ShieldTag)
+	if (colRes.isCollide)
 	{
-		currHealth -= 5;
-		ChangeEnemyState(InjuringWizard);
+		switch (object->tag)
+		{
+		case Captain:
+		{
+			if (PLAYER->currentState->GetState() == Dashing)
+			{
+				currHealth -= 10;
+			}
+			break;
+		}
+		case Tag::ShieldTag:
+			if (PLAYER->shieldFlying)
+			{
+				currHealth -= 5;
+				ChangeEnemyState(InjuringWizard);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -183,7 +201,6 @@ void WizardBoss::Update(float deltaTime)
 	}
 	case InjuringWizard:
 	{
-		posX += vX > 0 ? -0.5 : 0.5;
 		if ((now - startTime) / 1000.0f >= 0.7f)	
 		{
 			startTime = now;

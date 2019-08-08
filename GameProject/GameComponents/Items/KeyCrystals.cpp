@@ -42,6 +42,7 @@ void KeyCrystals::OnCollision(GameObject* object, float deltaTime)
 				vY = 0;
 				break;
 			case Tag::Captain:
+				PLAYER->hasExit = true;
 				isDead = true;
 				PLAYER->scores += 10;
 				break;

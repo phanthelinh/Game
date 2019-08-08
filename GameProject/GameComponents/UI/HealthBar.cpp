@@ -1,7 +1,7 @@
 #include "HealthBar.h"
 #include "../Player/Player.h"
 
-#define X_OFFSET 40
+#define X_OFFSET 20
 #define Y_OFFSET 40
 
 HealthBar::HealthBar()

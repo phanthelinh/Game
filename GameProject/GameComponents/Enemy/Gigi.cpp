@@ -21,8 +21,8 @@ Gigi::Gigi(float posX, float posY):Enemy(posX,posY,0,0)
 	animations[GigiSuprised] = new Animation("Resources/enemy/Gigi/Gigi_Suprised.png", 2, 1, 2, false, 1.5f);
 	animations[GigiDie] = new Animation("Resources/enemy/Gigi/Gigi_Die.png", 2, 1, 2, true, 0.3f);
 
-	currentState = GigiState::GigiDie;
-	SetState(GigiState::GigiDie);
+	currentState = GigiState::GigiStand;
+	SetState(GigiState::GigiStand);
 	
 	savedvX = FLYING_SPEED * -1;
 	isReverse = false;
@@ -98,7 +98,7 @@ void Gigi::Update(float deltaTime)
 		}
 		case GigiShot:
 		{
-			if (currentAnim->_isFinished)
+			if (currentAnim->_isFinished && isAttacking == false)
 			{
 				HomingMissile* temp = new HomingMissile(posX, posY, isReverse);
 				GRID->AddObject(temp);

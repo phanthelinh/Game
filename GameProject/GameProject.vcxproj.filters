@@ -40,6 +40,9 @@
     <Filter Include="GameComponents\Enemy\Weapon">
       <UniqueIdentifier>{baa53ce3-9f23-406d-9473-3e52ec8602bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\UI">
+      <UniqueIdentifier>{5468d8b4-7131-47ff-9baa-2180e5382c0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -228,6 +231,12 @@
     <ClCompile Include="GameComponents\FlyingBar.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\UI\ExitSign.cpp">
+      <Filter>GameComponents\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\UI\HealthBar.cpp">
+      <Filter>GameComponents\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -415,6 +424,12 @@
     </ClInclude>
     <ClInclude Include="GameComponents\FlyingBar.h">
       <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\UI\ExitSign.h">
+      <Filter>GameComponents\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\UI\HealthBar.h">
+      <Filter>GameComponents\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

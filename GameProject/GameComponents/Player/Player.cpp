@@ -39,6 +39,8 @@ Player::Player()
 	shield = new Shield();
 	shieldFlying = false;
 
+	healthbar = new HealthBar();
+
 	health = 100;
 	scores = 0;
 }
@@ -95,6 +97,7 @@ void Player::Update(float deltaTime)
 			shield->SetState(Normal);
 		}
 	}
+	healthbar->Update(deltaTime);
 	//
 	//assign for standing on bar flying
 	//
@@ -115,6 +118,7 @@ void Player::Draw()
 	}
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
+	healthbar->Draw();
 }
 
 void Player::ChangeState(StateName stateName)
@@ -287,6 +291,10 @@ void Player::Release()
 	}
 	if (shield != nullptr)
 		delete shield;
+	if (healthbar != nullptr)
+	{
+		delete healthbar;
+	}
 	LastKeyState.clear();
 }
 

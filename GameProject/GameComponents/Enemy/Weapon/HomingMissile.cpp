@@ -28,18 +28,17 @@ void HomingMissile::Update(float deltaTime)
 	{
 		case down:
 		{
-			/*vX = 0;
-			vY = MISSLE_SPEED;*/
+			vX = 0;
+			vY = MISSLE_SPEED;
 			break;
 		}
 	}
 
-	CalculateHoming();
-
-	/*posX += vX * deltaTime;
-	posY += vY * deltaTime;*/
+	//CalculateHoming();
 
 
+	posX += vX * deltaTime;
+	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
@@ -59,6 +58,12 @@ void HomingMissile::CalculateHoming()
 	float distance = sqrt(relativePosX * relativePosX + relativePosY * relativePosY); //distance between homing missle and the player
 	float velocity = relativePosX + relativePosY; //relative velo
 	float timetoImpact = distance / velocity;
+
+	float newPosX = PLAYER->posX + timetoImpact * PLAYER->vX;
+	float newPosY = PLAYER->posX + timetoImpact * PLAYER->vY;
+
+	vX = newPosX - posX;
+	vY = newPosY - posY;
 }
 
 void HomingMissile::OnCollision(GameObject * object, float deltaTime)

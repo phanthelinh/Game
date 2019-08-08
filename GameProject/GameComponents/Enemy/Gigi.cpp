@@ -98,7 +98,7 @@ void Gigi::Update(float deltaTime)
 		}
 		case GigiShot:
 		{
-			if (currentAnim->_isFinished)
+			if (currentAnim->_isFinished && isAttacking == false)
 			{
 				HomingMissile* temp = new HomingMissile(posX, posY, isReverse);
 				GRID->AddObject(temp);

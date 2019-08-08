@@ -19,7 +19,8 @@ enum EnemySubTag
 	RunningManTag,
 	WizardBossTag,
 	DMBossTag,
-	TankTag
+	TankTag,
+	GigiTag
 };
 
 class Enemy: public GameObject

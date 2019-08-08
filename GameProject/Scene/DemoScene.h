@@ -13,6 +13,7 @@
 #include "../GameComponents/Enemy/WizardBoss.h"
 #include "../GameComponents/Enemy/RunningMan.h"
 #include "../GameComponents/Enemy/Tank.h"
+#include "../GameComponents/Enemy/Gigi.h"
 
 class DemoScene:public Scene
 {

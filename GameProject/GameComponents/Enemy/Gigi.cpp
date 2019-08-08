@@ -1,199 +1,156 @@
 #include "Gigi.h"
 
-#define RUNNING_RANGE 150
-#define SHOOTING_RANGE 100
-#define SIT_RANGE 100
+#define DETECT_RANGE 150
+#define SHOOTING_RANGE 150
+#define FLYING_SPEED 5.0f
 
 Gigi::Gigi(int level):Enemy()
 {
 	
 }
 
-Gigi::Gigi(float posX, float posY, int type, int color):Enemy(posX,posY,0,0)
+Gigi::Gigi(float posX, float posY):Enemy(posX,posY,0,0)
 {
-	this->type = type;
-	this->color = color;
-	if (color == 0)
-	{
-		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/RunningMan_Stand.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/RunningMan_Sit.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/RunningMan_Die.png", 1, 1, 1, false);
-		animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/RunningMan_Run.png", 3, 1, 3, true, 0.5f);
-	}
-	else
-	{
-		animations[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/runningman/GreenRunningMan_Stand.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyJump] = animations[EnemyStateName::EnemySit] = new Animation("Resources/enemy/runningman/GreenRunningMan_Sit.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyDie] = new Animation("Resources/enemy/runningman/GreenRunningMan_Die.png", 1, 1, 1);
-		animations[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/runningman/GreenRunningMan_Run.png", 3, 1, 3, true, 0.5f);
-	}
-
 	currHealth = maxHealth = 10;
-	if (type == 0)
-	{
-		currentState = EnemyStateName::EnemyStand;
-		SetState(EnemyStateName::EnemyStand);
-	}
-	else
-	{
-		currentState = EnemyStateName::EnemySit;
-		SetState(EnemyStateName::EnemySit);
-	}
+
+	animations[GigiStand] = new Animation("Resources/enemy/Gigi/Gigi_Shooting.png", 1, 1, 1);
+	animations[GigiShot] = new Animation("Resources/enemy/Gigi/Gigi_Shooting.png", 1, 1, 1);
+	animations[GigiFly] = new Animation("Resources/enemy/Gigi/Gigi_Flying.png", 3, 1, 3, true, 1.0f);
+	animations[GigiFlyStill] = new Animation("Resources/enemy/Gigi/Gigi_FlyStill.png", 3, 1, 3, true, 1.0f);
+	animations[GigiSuprised] = new Animation("Resources/enemy/Gigi/Gigi_Suprised.png", 2, 1, 2, false, 1.5f);
+	animations[GigiDie] = new Animation("Resources/enemy/Gigi/Gigi_Die.png", 2, 1, 2, true, 0.3f);
+
+	currentState = GigiState::GigiStand;
+	SetState(GigiState::GigiStand);
+	
+	savedvX = FLYING_SPEED * -1;
 	isReverse = false;
 	isWaiting = true;
-	enemySubTag = EnemySubTag::RunningManTag;
+	enemySubTag = EnemySubTag::GigiTag;
 }
-
-Gigi::Gigi(RECT r):Gigi(r.left,r.top)
-{
-}
-
-void Gigi::InsertFromFile(int level)
-{
-	std::unordered_set<GameObject*> rs;
-	std::string filename = "Resources/enemy/runningman/lv" + std::to_string(level) + "_runningman.txt";
-	std::ifstream file(filename);
-	//insert to grid
-	
-	if (file.good())
-	{
-		while (!file.eof())
-		{
-			int x, y, t, c;
-			file >> x;
-			file >> y;
-			file >> t;
-			file >> c;
-			GameObject* obj = new Gigi(x, y, t, c);
-			if (obj)
-			{
-				rs.insert(obj);
-			}
-		}
-		file.close();
-	}
-	if (rs.size() > 0)
-		GRID->InsertToGrid(rs);
-	rs.clear();
-}
-
-void Gigi::SetState(EnemyStateName state)
-{
-	prevState = currentState;
-	currentState = state;
-	currentAnim = animations[state];
-	currentAnim->ResetAnim();
-	this->width = animations[state]->_frameWidth;
-	this->height = animations[state]->_frameHeight;
-}
-
-
 void Gigi::Update(float deltaTime)
 {
 	float currTime = GetTickCount();
 
 	if (currHealth <= 0 && isDying == false)
 	{
-		SetState(EnemyStateName::EnemyDie);
+		isDying = true;
+		SetState(GigiDie);
+		StateTime = currTime;
 	}
+
 	switch (currentState)
 	{
-		case EnemyStand:
+		case GigiStand:
 		{
-			if (isWaiting == true && CheckPosition() == 1) //player vao tam thi chay toi
+			if (CheckPosition() != 0 && isWaiting == true) //state dau, doi player di vao tam thi bat dau di chuyen
 			{
 				isWaiting = false;
-				SetState(EnemyStateName::EnemyRun);
+				SetState(GigiSuprised);
+				StateTime = currTime;
 			}
-			if (isAttacking == true && CheckPosition() == 1) //player ra khoi tam thi duoi theo
+			if (isWaiting == false && currTime - StateTime > 1000 && CheckPosition() == 2 && isAttacking == false)
 			{
+				SetState(GigiShot);
+				StateTime = currTime;
+			}
+			else if (isWaiting == false && currTime - StateTime > 1000 && prevState == GigiShot)
+			{
+				SetState(GigiFly);
+				savedvX *= -1;
+				isReverse = !isReverse;
+				StateTime = currTime;
 				isAttacking = false;
-				SetState(EnemyStateName::EnemyRun);
-			}
-			if (isAttacking == true && CheckPosition() == 0) //trong tam thi ban
-			{
-				if (currTime - LastShotTime >= 1200.0f)
-				{
-					LastShotTime = currTime;
-					Bullet* bull = new Bullet(posX, posY - 35, (PLAYER->posX - posX > 0) ? 1 : -1);
-					GRID->AddObject(bull);
-					bullets.push_back(bull);
-				}
 			}
 			break;
 		}
-		case EnemyRun:
+		case GigiSuprised:
 		{
-			vX = (isReverse == false) ? -8.0f : 8.0f;
+			if (currTime - StateTime > 1000)
+			{
+				SetState(GigiFlyStill);
+				StateTime = currTime;
+			}
+			break;
+		}
+		case GigiFlyStill:
+		{
+			if (currTime - StateTime > 1000)
+			{
+				SetState(GigiFly);
+				savedvX *= -1;
+				CheckReverse();
+				StateTime = currTime;
+			}
+			break;
+		}
+		case GigiFly:
+		{
+			vX = savedvX;
 			posX += vX * deltaTime;
-			posY += vY * deltaTime;
-			if (CheckPosition() == 0)
+			if (currTime - StateTime > 2500)
 			{
-				isAttacking = true;
-				SetState(EnemyStateName::EnemyStand);
+				SetState(GigiStand);
+				StateTime = currTime;
 			}
 			break;
 		}
-		case EnemyDie:
+		case GigiShot:
 		{
-			if (isDying == false) //vong lap dau tien khi running man moi chet
+			if (currentAnim->_isFinished)
 			{
-				if (isReverse == true)
-				{
-					vX = -5.0f;
-					vY = -5.0f;
-				}
-				else
-				{
-					vX = 5.0f;
-					vY = 5.0f;
-				}
-				posX += vX * deltaTime;
-				posY += vY * deltaTime;
-				EXPLODE->ExplodeAt(posX - 8, posY - 24);
-				DeadStartTime = GetTickCount();
-				isDying = true;
-			}
-			else
-			{
-				if (currTime - DeadStartTime >= 200.0f && DeadStartTime != 0.0f)
-				{
-					isDead = true;
-				}
-			}
-			break;
-		}
-		case EnemySit:
-		{
-			if (isAttacking == true)
-			{
-				if (currTime - LastShotTime >= 1200.0f)
-				{
-					LastShotTime = currTime;
-					Bullet* bull = new Bullet(posX, posY - 20, (PLAYER->posX - posX > 0) ? 1 : -1);
-					GRID->AddObject(bull);
-					bullets.push_back(bull);
-				}
-			}
-			if (CheckPosition() == 2)
-			{
-				isWaiting = false;
+				HomingMissile* temp = new HomingMissile(posX, posY, isReverse);
+				GRID->AddObject(temp);
+				missiles.push_back(temp);
 				isAttacking = true;
+			}
+			vX = vY = 0.0f;
+			if (currTime - StateTime > 1000 && isAttacking == true)
+			{
+				SetState(GigiStand);
+				StateTime = currTime;
 			}
 			break;
 		}
 	}
 
-	for (int i = 0; i < bullets.size(); i++)
+	for (int i = 0; i < missiles.size(); i++)
 	{
-		bullets[i]->Update(deltaTime);
-		if (bullets[i]->isDead)
+		missiles[i]->Update(deltaTime);
+		if (missiles[i]->isDead)
 		{
-			GRID->RemoveObject(bullets[i]);
-			bullets.erase(bullets.begin() + i);
+			GRID->RemoveObject(missiles[i]);
+			missiles.erase(missiles.begin() + i);
 
 		}
 	}
+	/*if (PLAYER->posX < posX)
+	{
+		isReverse = false;
+	}
+	else
+	{
+		isReverse = true;
+	}*/
+	currentAnim->_isFlipHor = isReverse;
+	currentAnim->Update(deltaTime);
+}
+
+int Gigi::CheckPosition()
+{
+	if (abs(PLAYER->posX - posX) <= SHOOTING_RANGE && abs(PLAYER->posY - posY) <= SHOOTING_RANGE)
+	{
+		return 2;
+	}
+	if (abs(PLAYER->posX - posX) <= DETECT_RANGE && abs(PLAYER->posY - posY) <= DETECT_RANGE)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+void Gigi::CheckReverse()
+{
 	if (PLAYER->posX < posX)
 	{
 		isReverse = false;
@@ -201,34 +158,6 @@ void Gigi::Update(float deltaTime)
 	else
 	{
 		isReverse = true;
-	}
-	currentAnim->_isFlipHor = isReverse;
-	currentAnim->Update(deltaTime);
-}
-
-int Gigi::CheckPosition()
-{
-	float distance = abs(PLAYER->posX - posX);
-	if (distance <= RUNNING_RANGE && distance > SHOOTING_RANGE)
-	{
-		return 1;
-	}
-	if (distance <= SHOOTING_RANGE && currentState != EnemyStateName::EnemySit)
-	{
-		return 0;
-	}
-	if (distance <= SIT_RANGE && currentState == EnemyStateName::EnemySit)
-	{
-		return 2;
-	}
-	return -1;
-}
-
-void Gigi::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
-{
-	if (!isDead)
-	{
-		currentAnim->Draw(position, cameraPosition, sourceRect, center);
 	}
 }
 
@@ -243,7 +172,8 @@ void Gigi::OnCollision(GameObject * object, float deltaTime)
 			posX += vX * colRes.entryTime;
 			posY += vY * colRes.entryTime;
 			vY = 0;
-			SetState(EnemyStateName::EnemyStand);
+			vX = 0;
+			isDead = true;
 		}
 	}
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
@@ -253,27 +183,59 @@ void Gigi::OnCollision(GameObject * object, float deltaTime)
 		{
 		case Captain:
 		{
-			if (PLAYER->currentState->GetState() == Dashing)
+			if (PLAYER->currentState->GetState() == Kicking)
 			{
 				currHealth -= 10;
 			}
 			break;
 		}
-		case Tag::ShieldTag:
-			if (PLAYER->shieldFlying)
-			{
-				currHealth -= 10;
-			}
-			else
-			{
-				vX = vY = 0;
-				currHealth = 0;
-				SetState(EnemyStateName::EnemyDie);
-			}
-			break;
 		default:
 			break;
 		}
+	}
+}
+
+void Gigi::InsertFromFile(int level)
+{
+	std::unordered_set<GameObject*> rs;
+	std::string filename = "Resources/enemy/gigi/lv" + std::to_string(level) + "_gigi.txt";
+	std::ifstream file(filename);
+
+	if (file.good())
+	{
+		while (!file.eof())
+		{
+			int x, y, t, c;
+			file >> x;
+			file >> y;
+			GameObject* obj = new Gigi(x, y);
+			if (obj)
+			{
+				rs.insert(obj);
+			}
+		}
+		file.close();
+	}
+	if (rs.size() > 0)
+		GRID->InsertToGrid(rs);
+	rs.clear();
+}
+
+void Gigi::SetState(GigiState state)
+{
+	prevState = currentState;
+	currentState = state;
+	currentAnim = animations[state];
+	currentAnim->ResetAnim();
+	this->width = animations[state]->_frameWidth;
+	this->height = animations[state]->_frameHeight;
+}
+
+void Gigi::Draw(D3DXVECTOR3 position, D3DXVECTOR3 cameraPosition, RECT sourceRect, D3DXVECTOR3 center)
+{
+	if (!isDead)
+	{
+		currentAnim->Draw(position, cameraPosition, sourceRect, center);
 	}
 }
 
@@ -282,6 +244,12 @@ void Gigi::Draw()
 	if(!isDead)
 		Draw(D3DXVECTOR3(posX, posY, 0), CAMERA->camPosition, RECT(), D3DXVECTOR3(width/2, height, 0));
 }
+
+Gigi::Gigi(RECT r) :Gigi(r.left, r.top)
+{
+}
+
+
 
 RECT Gigi::GetBound()
 {

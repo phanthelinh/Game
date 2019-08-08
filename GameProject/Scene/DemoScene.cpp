@@ -21,9 +21,6 @@ DemoScene::DemoScene()
 	LoadGridFromFile(3);
 	ReloadResources(3); //test tank
 	
-	//tesing homing missile
-	HomingMissile* temp = new HomingMissile(300, 870, false);
-	GRID->AddObject(temp);
 }
 
 DemoScene::~DemoScene()
@@ -323,6 +320,7 @@ void DemoScene::LoadGridFromFile(int level)
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
 		Tank::InsertFromFile(level);
+		Gigi::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}

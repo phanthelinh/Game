@@ -72,8 +72,8 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 	}
 	else if (res.isCollide && entity->tag == GroundTag && (res.sideCollided == Left || res.sideCollided == Right))
 	{
-		PLAYER->posX += PLAYER->vX*deltaTime;
-		PLAYER->posY += PLAYER->vY*deltaTime;
+		/*PLAYER->posX += PLAYER->vX*deltaTime;
+		PLAYER->posY += PLAYER->vY*deltaTime;*/
 		PLAYER->vX = 0.0f;
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)

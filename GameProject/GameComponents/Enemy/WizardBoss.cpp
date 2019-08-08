@@ -70,10 +70,28 @@ void WizardBoss::OnCollision(GameObject* object, float deltaTime)
 		}
 	}
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
-	if (colRes.isCollide && object->tag == ShieldTag)
+	if (colRes.isCollide)
 	{
-		currHealth -= 5;
-		ChangeEnemyState(InjuringWizard);
+		switch (object->tag)
+		{
+		case Captain:
+		{
+			if (PLAYER->currentState->GetState() == Dashing)
+			{
+				currHealth -= 10;
+			}
+			break;
+		}
+		case Tag::ShieldTag:
+			if (PLAYER->shieldFlying)
+			{
+				currHealth -= 5;
+				ChangeEnemyState(InjuringWizard);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }
 

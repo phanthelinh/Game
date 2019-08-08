@@ -44,7 +44,7 @@ Player::Player()
 	exitsign = new ExitSign();
 	exitsign->isVisible = false;
 
-	health = 100;
+	health = 20;
 	scores = 0;
 }
 

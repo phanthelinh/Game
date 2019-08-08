@@ -1,4 +1,5 @@
 #include "KeyCrystals.h"
+#include "../Player/Player.h"
 
 KeyCrystals::KeyCrystals(int x, int y, int width, int height)
 {
@@ -41,6 +42,7 @@ void KeyCrystals::OnCollision(GameObject* object, float deltaTime)
 				vY = 0;
 				break;
 			case Tag::Captain:
+				PLAYER->hasExit = true;
 				isDead = true;
 				break;
 			default:

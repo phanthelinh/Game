@@ -31,5 +31,6 @@ public:
 	int					g_WorldMapWidth;
 	int					g_WorldMapHeight;
 	int					g_Scene1_EndMap = 2000;
+	int					g_Scene2_EndMap = 240;
 	int					g_ChangeScene_Delay = 3.0f;
 };

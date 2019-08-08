@@ -164,7 +164,7 @@ void DemoScene::CheckForNextStage()
 		}
 		break;
 	case 2:
-		if (PLAYER->posX >= 240 && PLAYER->isBossKilled)
+		if (PLAYER->posX >= GLOBAL->g_Scene2_EndMap && PLAYER->isBossKilled)
 		{
 			currentLevel++;
 			ChangingStage();

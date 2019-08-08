@@ -46,12 +46,6 @@ std::vector<RECT> Util::GetAllObjectFromFile(Tag tag, int level)
 	std::vector<RECT> data = std::vector<RECT>();
 	switch (tag)
 	{
-	case ItemContainerTag:
-		if (level == 1)
-			data = GetObjectDataFromFile("Resources/items/itemcontainer.txt");
-		else if(level == 3)
-			data = GetObjectDataFromFile("Resources/items/itemcontainer3.txt");
-		break;
 	case GroundTag:
 	{
 		std::string filename = "Resources/map/lv" + std::to_string(level) +"_gameobject_ground.txt";

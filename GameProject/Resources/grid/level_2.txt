@@ -1,7 +1,5 @@
 
-wizard 220 50
 ground 0 192 256 16
 ground 48 98 48 16
 ground 35 53 10 10
-domesto -8.58993e+08 -8.58993e+08 1
-runningman -8.58993e+08 -8.58993e+08 -858993460 -858993460
+wizard 220 50

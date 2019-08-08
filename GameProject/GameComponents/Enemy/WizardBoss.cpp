@@ -183,7 +183,7 @@ void WizardBoss::Update(float deltaTime)
 	}
 	case InjuringWizard:
 	{
-		posX += vX > 0 ? -2 : 2;
+		posX += vX > 0 ? -0.5 : 0.5;
 		if ((now - startTime) / 1000.0f >= 0.7f)	
 		{
 			startTime = now;

@@ -1,0 +1,5 @@
+
+ground 0 192 256 16
+ground 48 98 48 16
+wizard 220 50
+ground 35 53 10 8

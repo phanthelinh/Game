@@ -1,7 +1,7 @@
 #include "HomingMissile.h"
 #include "../../Effect/Explode.h"
 
-#define MISSLE_SPEED 5.0f
+#define MISSILE_SPEED 5.0f
 
 HomingMissile::HomingMissile(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 {
@@ -40,7 +40,7 @@ void HomingMissile::Update(float deltaTime)
 		case down:
 		{
 			vX = 0;
-			vY = MISSLE_SPEED;
+			vY = MISSILE_SPEED;
 			break;
 		}
 	}
@@ -51,24 +51,44 @@ void HomingMissile::Update(float deltaTime)
 	posX += vX * deltaTime;
 	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
-	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
+	/*if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
 		isDead = true;
-	}
+	}*/
 }
 
 void HomingMissile::CalculateHoming()
 {
+	if (isDead)
+		return;
 	double d = perpDot(PLAYER->posX - posX, PLAYER->posY - posY, vX, vY);
 	if (d < 0)
 	{
 		// rotate your missile clockwise
-		vX = MISSLE_SPEED;
+		vX = MISSILE_SPEED;
+		if (PLAYER->posY < posY)
+		{
+			vY = -MISSILE_SPEED;
+			//SetState(downrightup);
+		}
+		else
+		{
+			vY = MISSILE_SPEED;
+		}
 	}
 	else if (d > 0)
 	{
 		// rotate your missile counter-clockwise
-		vX = -MISSLE_SPEED;
+		vX = -MISSILE_SPEED;
+		if (PLAYER->posY < posY)
+		{
+			vY = -MISSILE_SPEED;
+			//SetState(downleftup);
+		}
+		else
+		{
+			vY = MISSILE_SPEED;
+		}
 	}
 	else
 	{
@@ -77,7 +97,8 @@ void HomingMissile::CalculateHoming()
 		if (d < 0)
 		{
 			// headed directly away.  Rotate either CW or CCW -- doesn't matter
-			vY = -vY;
+			vY *= -1;
+			vX *= -1;
 		}
 		else
 		{
@@ -89,6 +110,8 @@ void HomingMissile::CalculateHoming()
 
 void HomingMissile::OnCollision(GameObject * object, float deltaTime)
 {
+	if (isDead)
+		return;
 	if (object->tag == Tag::Captain)
 	{
 		auto colRes = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);

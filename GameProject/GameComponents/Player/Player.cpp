@@ -103,6 +103,8 @@ void Player::Update(float deltaTime)
 	healthbar->Update(deltaTime);
 	if (hasExit == true)
 		exitsign->isVisible = true;
+	else
+		exitsign->isVisible = false;
 	exitsign->Update(deltaTime);
 	//
 	//assign for standing on bar flying

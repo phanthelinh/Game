@@ -1,0 +1,84 @@
+
+ground 296 80 80 8
+ground 344 544 16 8
+ground 0 240 8 700
+ground 0 0 8 192
+ground 248 672 256 48
+ground 88 80 32 24
+ground 16 0 1008 8
+itemscontainer 452 53 16 16 0 1
+ground 184 208 24 8
+ground 792 352 32 8
+ground 320 16 64 64
+ground 424 768 80 72
+ground 264 160 48 48
+ground 1008 432 16 16
+ground 968 560 16 32
+ground 216 192 40 16
+itemscontainer 917 149 16 16 0 5
+ground 376 160 16 48
+ground 0 912 1024 16
+ground 1016 240 8 192
+ground 440 160 16 48
+ground 520 112 112 8
+ground 680 112 48 8
+ground 16 672 8 16
+ground 856 80 32 24
+ground 320 192 504 40
+ground 832 208 24 8
+ground 954 208 24 8
+ground 984 192 40 40
+ground 1016 16 8 176
+ground 776 672 248 56
+ground 0 192 56 40
+ground 64 208 24 8
+ground 208 208 48 24
+itemscontainer 36 644 16 16 0 133
+ground 256 240 256 240
+ground 874 304 48 8
+ground 968 352 32 8
+itemscontainer 468 643 16 16 0 5333
+ground 424 592 80 8
+ground 774 434 16 16
+ground 352 720 152 40
+ground 776 448 240 24
+ground 16 480 40 120
+ground 16 688 40 24
+ground 872 736 64 120
+ground 232 560 16 48
+ground 264 592 32 96
+ground 888 560 16 32
+ground 424 560 16 32
+flyingbar 632 736 632 656 0
+ground 776 592 248 8
+itemscontainer 101 53 16 16 0 5333
+ground 808 560 16 32
+tank 32 624 2
+ground 808 816 16 111
+ground 616 784 64 24
+gigi 60 760
+ground 728 832 32 8
+itemscontainer 84 740 16 16 0 5333
+ground 264 720 80 120
+ground 512 800 56 40
+ground 1000 720 24 192
+itemscontainer 213 884 16 16 0 433
+itemscontainer 149 149 16 16 0 333
+itemscontainer 389 837 16 16 0 2
+itemscontainer 229 532 16 16 0 6
+itemscontainer 533 84 16 16 0 5
+itemscontainer 533 772 16 16 0 1
+tank 560 761 4
+itemscontainer 674 884 16 16 0 5
+itemscontainer 869 53 16 16 0 3333
+itemscontainer 981 645 16 16 0 3333
+itemscontainer 982 549 16 16 0 5
+itemscontainer 997 325 16 16 0 7
+wizard -8.58993e+08 -8.58993e+08
+tank 240 544 6
+tank 368 873 6
+tank 368 890 6
+flyingbar 112 464 112 272 0
+flyingbar 632 624 632 432 0
+flyingbar 736 416 688 416 1
+gigi 60 760

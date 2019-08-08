@@ -21,6 +21,7 @@ Scene4::Scene4()
 
 	boss = new DynamiteNapalm(200, 100);
 	GRID->AddObject(boss);
+	SOUND->play("soundtrack", true);
 }
 
 Scene4::~Scene4()

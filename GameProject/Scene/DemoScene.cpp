@@ -19,6 +19,7 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	LoadGridFromFile(3);
+	//LoadGridFromFile(1);
 	ReloadResources(3); //test tank
 	
 }
@@ -74,13 +75,24 @@ void DemoScene::Update(float deltaTime)
 			break;
 		}
 	}
-	if (!onGround && !onWater)
+	if (!onGround && !onWater && !PLAYER->isStandOnFlyingBar)
 	{
 		if (PLAYER->isOnGround)
 		{
 			PLAYER->ChangeState(Falling);
 		}
 	}
+
+	if (PLAYER->isStandOnFlyingBar && !COLLISION->IsCollide(PLAYER->GetBoundingBox(), PLAYER->barObject->GetBoundingBox()))
+	{
+		PLAYER->isStandOnFlyingBar = false;
+	}
+	//update flying bar
+	for (auto o : GRID->GetObjectsByTag(FlyingBarTag))
+	{
+		o->Update(deltaTime);
+	}
+
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
 	//player check collision
@@ -201,7 +213,7 @@ void DemoScene::ReloadResources(int level)
 		break;
 	case 3:
 		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(320, 870, 0));
+		PLAYER->SetPosition(D3DXVECTOR3(16, 870, 0));
 		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = true;
 		LoadGridFromFile(level);
@@ -279,6 +291,13 @@ void DemoScene::SaveGridToFile(int level)
 			file << item->posX << " " << item->posY << " " << item->width << " " << item->height << " "<<hasExit <<" "<<item->strItems;
 			break;
 		}
+		case FlyingBarTag:
+		{
+			auto fb = (FlyingBar*)o;
+			file << "\nflyingbar ";
+			file << fb->posX << " " << fb->posY << " " << fb->endPoint.x << " " << fb->endPoint.y << " " << fb->type;
+			break;
+		}
 		default:
 			break;
 		}
@@ -321,6 +340,7 @@ void DemoScene::LoadGridFromFile(int level)
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
 		Tank::InsertFromFile(level);
+		FlyingBar::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}
@@ -395,6 +415,12 @@ void DemoScene::LoadGridFromFile(int level)
 			file >> y;
 			file >> t;
 			GRID->AddObject(new Tank(x, y, t));
+		}
+		else if (objectname._Equal("flyingbar"))
+		{
+			int st, sy, ex, ey, t;
+			file >> st >> sy >> ex >> ey >> t;
+			GRID->AddObject(new FlyingBar(st, sy, ex, ey, t));
 		}
 	}
 	file.close();

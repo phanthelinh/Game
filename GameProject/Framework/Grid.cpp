@@ -211,7 +211,7 @@ void Grid::ObjectMoving(float deltaTime)
 	for (auto obj : lst)
 	{
 		RemoveObject(obj);
-		if(obj->tag != Tag::ShieldTag)
+		if(obj->tag != Tag::ShieldTag && obj->tag != Tag::FlyingBarTag)
 			obj->Update(deltaTime);
 		AddObject(obj);
 	}
@@ -231,6 +231,17 @@ std::vector<GameObject*> Grid::GetVisibleWater()
 		}
 	}
 
+	return rs;
+}
+
+std::unordered_set<GameObject*> Grid::GetObjectsByTag(Tag tag)
+{
+	std::unordered_set<GameObject*> rs;
+	for (auto obj : objects)
+	{
+		if (obj->tag == tag)
+			rs.insert(obj);
+	}
 	return rs;
 }
 

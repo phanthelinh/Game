@@ -68,6 +68,8 @@ public:
 	RECT standingGround;	//save ground player is standing on
 	bool			isBossKilled;	//flag for boss is killed
 	float			scores;
+	bool			isStandOnFlyingBar;
+	GameObject*		barObject;
 private:
 	static Player*	instance;
 };

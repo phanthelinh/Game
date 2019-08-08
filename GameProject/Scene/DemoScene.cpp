@@ -18,8 +18,8 @@ DemoScene::DemoScene()
 	GRID;
 	//LoadGridFromFile(1);
 	ReloadResources(3); //test tank
-	fly = new FlyingBar(120, 900, 120, 790, 0);
-	GRID->AddObject(fly);
+	/*fly = new FlyingBar(100, 900, 100, 800, 0);
+	GRID->AddObject(fly);*/
 }
 
 DemoScene::~DemoScene()
@@ -28,8 +28,6 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
-	//fly->Update(deltaTime);
-	PLAYER->OnCollision(fly, deltaTime);
 	auto now = GetTickCount();
 	if ((now - timePause) / 1000.0f >= GLOBAL->g_ChangeScene_Delay && isGamePause)
 	{
@@ -87,6 +85,11 @@ void DemoScene::Update(float deltaTime)
 	{
 		PLAYER->isStandOnFlyingBar = false;
 	}
+	//update flying bar
+	for (auto o : GRID->GetObjectsByTag(FlyingBarTag))
+	{
+		o->Update(deltaTime);
+	}
 
 	//get list colliable objects with player
 	auto lstCollideable = GRID->GetColliableObjectsWith(PLAYER, deltaTime);
@@ -121,7 +124,6 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	EXPLODE->Draw();
-	//fly->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)
@@ -286,6 +288,13 @@ void DemoScene::SaveGridToFile(int level)
 			file << item->posX << " " << item->posY << " " << item->width << " " << item->height << " "<<hasExit <<" "<<item->strItems;
 			break;
 		}
+		case FlyingBarTag:
+		{
+			auto fb = (FlyingBar*)o;
+			file << "\nflyingbar ";
+			file << fb->posX << " " << fb->posY << " " << fb->endPoint.x << " " << fb->endPoint.y << " " << fb->type;
+			break;
+		}
 		default:
 			break;
 		}
@@ -323,6 +332,7 @@ void DemoScene::LoadGridFromFile(int level)
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
 		Tank::InsertFromFile(level);
+		FlyingBar::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}
@@ -397,6 +407,12 @@ void DemoScene::LoadGridFromFile(int level)
 			file >> y;
 			file >> t;
 			GRID->AddObject(new Tank(x, y, t));
+		}
+		else if (objectname._Equal("flyingbar"))
+		{
+			int st, sy, ex, ey, t;
+			file >> st >> sy >> ex >> ey >> t;
+			GRID->AddObject(new FlyingBar(st, sy, ex, ey, t));
 		}
 	}
 	file.close();

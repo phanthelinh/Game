@@ -101,8 +101,8 @@ void Player::Update(float deltaTime)
 	if (isStandOnFlyingBar)
 	{
 		vX = barObject->vX;
-		//vY = barObject->vY;
-		posY = barObject->posY - currentAnim->_frameHeight / 2 + 1;
+		vY = barObject->vY;
+		//posY = barObject->posY - currentAnim->_frameHeight / 2 + 1;
 	}
 }
 
@@ -195,8 +195,10 @@ void Player::CheckCollision(std::unordered_set<GameObject*> lstCollideable, floa
 
 void Player::OnCollision(GameObject * object, float deltaTime)
 {
+	if (object == NULL)
+		return;
 	currentState->OnCollision(object, deltaTime);
-	if (object->tag == FlyingBarTag)
+	/*if (object->tag == FlyingBarTag)
 	{
 		auto res = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
 		if (res.isCollide && res.sideCollided == CollisionSide::Bottom)
@@ -208,7 +210,7 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 			vY = barObject->vY;
 			ChangeState(Standing);
 		}
-	}
+	}*/
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

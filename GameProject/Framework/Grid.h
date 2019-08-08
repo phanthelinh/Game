@@ -43,6 +43,7 @@ public:
 	std::unordered_set<GameObject*> GetVisibleObjects();
 	void ObjectMoving(float deltaTime);
 	std::vector<GameObject*> GetVisibleWater();
+	std::unordered_set<GameObject*> GetObjectsByTag(Tag tag);
 	void Release();
 	void ResetGrid();
 };

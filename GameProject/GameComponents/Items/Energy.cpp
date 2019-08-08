@@ -1,4 +1,5 @@
 #include "Energy.h"
+#include "../Player/Player.h"
 
 Energy::Energy(int x, int y, int width, int height)
 {
@@ -37,6 +38,7 @@ void Energy::OnCollision(GameObject * object, float deltaTime)
 				break;
 			case Tag::Captain:
 				isDead = true;
+				PLAYER->health += 10;
 				break;
 			default:
 				break;

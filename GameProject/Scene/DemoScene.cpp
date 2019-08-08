@@ -19,7 +19,7 @@ DemoScene::DemoScene()
 	//implement grid
 	GRID;
 	LoadGridFromFile(1);
-	ReloadResources(3); //test tank
+	//ReloadResources(3); //test tank
 	SOUND->play("soundtrack", true);
 	
 }

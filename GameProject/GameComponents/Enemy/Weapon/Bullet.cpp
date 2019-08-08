@@ -17,7 +17,8 @@ void Bullet::Update(float deltaTime)
 	posX += vX * deltaTime;
 	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
-	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
+	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom
+		|| abs(posX-startingPoint.x)>= 280.0f)
 	{
 		isDead = true;
 	}

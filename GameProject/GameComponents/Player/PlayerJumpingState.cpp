@@ -79,10 +79,13 @@ void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 			{
 				PLAYER->posX += PLAYER->vX*deltaTime;
 				PLAYER->posY += PLAYER->vY*deltaTime;
-				PLAYER->vY = 0.0f;
-				SOUND->stop("jump");
-				SOUND->play("jump");
-				PLAYER->ChangeState(Falling);
+				if (entity->height > 8)
+				{
+					PLAYER->vY = 0.0f;
+					SOUND->stop("jump");
+					SOUND->play("jump");
+					PLAYER->ChangeState(Falling);
+				}
 				break;
 			}
 			case CollisionSide::Right:

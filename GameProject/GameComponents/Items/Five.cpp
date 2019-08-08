@@ -1,5 +1,6 @@
 #include "Five.h"
 #include "../../Framework/Collision.h"
+#include "../Player/Player.h"
 
 Five::Five(int x, int y, int width, int height)
 {
@@ -38,6 +39,7 @@ void Five::OnCollision(GameObject * object, float deltaTime)
 				break;
 			case Tag::Captain:
 				isDead = true;
+				PLAYER->scores += 50;
 				break;
 			default:
 				break;

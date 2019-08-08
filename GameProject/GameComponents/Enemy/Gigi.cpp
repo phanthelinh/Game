@@ -42,6 +42,7 @@ Gigi::Gigi(float posX, float posY, int type, int color):Enemy(posX,posY,0,0)
 	isReverse = false;
 	isWaiting = true;
 	enemySubTag = EnemySubTag::RunningManTag;
+	point = 300;
 }
 
 Gigi::Gigi(RECT r):Gigi(r.left,r.top)
@@ -262,12 +263,13 @@ void Gigi::OnCollision(GameObject * object, float deltaTime)
 		case Tag::ShieldTag:
 			if (PLAYER->shieldFlying)
 			{
-				currHealth -= 10;
+				currHealth -= PLAYER->shield->shieldPower;
 			}
 			else
 			{
 				vX = vY = 0;
 				currHealth = 0;
+				PLAYER->scores += point;
 				SetState(EnemyStateName::EnemyDie);
 			}
 			break;

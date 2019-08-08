@@ -42,6 +42,7 @@ RunningMan::RunningMan(float posX, float posY, int type, int color):Enemy(posX,p
 	isReverse = false;
 	isWaiting = true;
 	enemySubTag = EnemySubTag::RunningManTag;
+	point = 200;
 }
 
 RunningMan::RunningMan(RECT r):RunningMan(r.left,r.top)
@@ -262,12 +263,13 @@ void RunningMan::OnCollision(GameObject * object, float deltaTime)
 		case Tag::ShieldTag:
 			if (PLAYER->shieldFlying)
 			{
-				currHealth -= 10;
+				currHealth -= PLAYER->shield->shieldPower;
 			}
 			else
 			{
 				vX = vY = 0;
 				currHealth = 0;
+				PLAYER->scores += point;
 				SetState(EnemyStateName::EnemyDie);
 			}
 			break;

@@ -93,12 +93,17 @@ void ItemsContainer::OnCollision(GameObject* object, float deltaTime)
 				}
 				case '5':
 				{
-					item = new PowerStone(posX + width / 2, posY - height / 2, 16, 16, true);
+					item = new PowerStone(posX + width / 2, posY - height / 2, 16, 16, false);
 					break;
 				}
 				case '6':
 				{
 					item = new Rescue(posX + width / 2, posY - height / 2, 16, 16);
+					break;
+				}
+				case '7':
+				{
+					item = new OneUp(posX + width / 2, posY - height / 2, 16, 16);
 					break;
 				}
 				}

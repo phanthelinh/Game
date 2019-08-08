@@ -9,7 +9,7 @@ Domesto::Domesto(int level)
 
 Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
 {
-	point = 500;//500 scores for player if he killed this object
+	point = 400;//400 scores for player if he killed this object
 	currHealth = maxHealth = 50; //attack five times
 	anims[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/domesto/domesto_stand_23_46.png", 1, 1, 1);
 	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2, true, 0.8f);
@@ -105,12 +105,13 @@ void Domesto::OnCollision(GameObject * object, float deltaTime)
 		case Tag::ShieldTag:
 			if (PLAYER->shieldFlying)
 			{
-				currHealth -= 10;
+				currHealth -= PLAYER->shield->shieldPower;
 			}
 			else
 			{
 				vX = vY = 0;
 				currHealth = 0;
+				PLAYER->scores += point;
 				ChangeEnemyState(EnemyStateName::EnemyDie);
 			}
 			break;

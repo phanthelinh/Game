@@ -1,4 +1,5 @@
 #include "PowerStone.h"
+#include "../Player/Player.h"
 
 PowerStone::PowerStone(int x, int y, int width, int height, bool isSmallType)
 {
@@ -45,6 +46,8 @@ void PowerStone::OnCollision(GameObject * object, float deltaTime)
 				break;
 			case Tag::Captain:
 				isDead = true;
+				PLAYER->scores += 100;
+				PLAYER->shield->shieldPower += 5;
 				break;
 			default:
 				break;

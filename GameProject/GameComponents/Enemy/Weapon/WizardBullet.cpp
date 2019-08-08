@@ -10,12 +10,14 @@ WizardBullet::WizardBullet(float posX, float posY, WizardBulletType type):Weapon
 		vX = 7.0f;
 		vY = 0;
 		currAnim = new Animation("Resources/weapon/Bullet_Small.png", 1, 1, 1, true, 0.8);
+		weaponDamage = 5;
 	}
 	else if(type == VerticalBullet)
 	{
 		vX = 0;
 		vY = 10.0f;
 		currAnim = new Animation("Resources/weapon/Bullet_Doc.png", 1, 1, 1, true, 0.8);
+		weaponDamage = 10;
 	}
 	else
 	{
@@ -24,7 +26,7 @@ WizardBullet::WizardBullet(float posX, float posY, WizardBulletType type):Weapon
 		nBigBullet = 3;
 		currAnim = new Animation("Resources/weapon/Bullet_Small.png", 1, 1, 1, true, 0.8);
 	}
-	weaponDamage = 2;
+	
 }
 
 void WizardBullet::OnCollision(GameObject* object, float deltaTime)

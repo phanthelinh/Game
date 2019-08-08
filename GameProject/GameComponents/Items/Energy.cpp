@@ -1,4 +1,5 @@
 #include "Energy.h"
+#include "../Player/Player.h"
 
 Energy::Energy(int x, int y, int width, int height)
 {
@@ -39,6 +40,7 @@ void Energy::OnCollision(GameObject * object, float deltaTime)
 				isDead = true;
 				SOUND->stop("item");
 				SOUND->play("item");
+				PLAYER->health += 10;
 				break;
 			default:
 				break;

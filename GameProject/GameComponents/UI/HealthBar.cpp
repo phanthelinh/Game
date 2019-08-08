@@ -1,8 +1,9 @@
 #include "HealthBar.h"
 #include "../Player/Player.h"
 
-#define X_OFFSET 40
+#define X_OFFSET 20
 #define Y_OFFSET 40
+#define DIVIDE_AMOUNT 4
 
 HealthBar::HealthBar()
 {
@@ -73,19 +74,19 @@ void HealthBar::Update(float deltaTime)
 	posX = CAMERA->GetBound().left + X_OFFSET;
 	posY = CAMERA->GetBound().top + Y_OFFSET;
 
-	if (PLAYER->health / 20 >= 5)
+	if (PLAYER->health / DIVIDE_AMOUNT >= 5)
 	{
 		SetState(HB5);
 	}
-	else if (PLAYER->health / 20 >= 4)
+	else if (PLAYER->health / DIVIDE_AMOUNT >= 4)
 	{
 		SetState(HB4);
 	}
-	else if (PLAYER->health / 20 >= 3)
+	else if (PLAYER->health / DIVIDE_AMOUNT >= 3)
 	{
 		SetState(HB3);
 	}
-	else if (PLAYER->health / 20 >= 2)
+	else if (PLAYER->health / DIVIDE_AMOUNT >= 2)
 	{
 		SetState(HB2);
 	}

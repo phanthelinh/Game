@@ -14,7 +14,7 @@ DynamiteNapalm::DynamiteNapalm() :Enemy()
 
 DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 {
-	point = 1000;	//score when kill this boss
+	point = 500;	//score when kill this boss
 	currHealth = maxHealth = 18;
 
 	animations[DMBarrelThrow] = new Animation("Resources/enemy/Dynamite Napalm/DMBarrelThrow.png", 2, 1, 2, false, 0.7f);
@@ -253,10 +253,11 @@ void DynamiteNapalm::OnCollision(GameObject* object, float deltaTime)
 	auto colRes = COLLISION->SweptAABB(object->GetBoundingBox(), GetBoundingBox(), deltaTime);
 	if (colRes.isCollide && object->tag == ShieldTag)
 	{
-		currHealth -= 3;
+		currHealth -= PLAYER->shield->shieldPower;
 		if (currHealth <= 0)
 		{
 			ChangeState(DMDie);
+			PLAYER->scores += point;
 		}
 	}
 

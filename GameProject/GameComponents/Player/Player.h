@@ -12,6 +12,7 @@
 #include "PlayerInjuringState.h"
 #include "../Shield/Shield.h"
 #include "../UI/HealthBar.h"
+#include "../UI/ExitSign.h"
 #include "../../Framework/Global.h"
 #include "../../Framework/Collision.h"
 #include "../../Framework/Animation.h"
@@ -66,8 +67,10 @@ public:
 	int				health, lives;
 	bool			isOnGround, isAttacking, shieldFlying, isOnWater;
 	bool			isImmu;
+	bool			hasExit;
 	Shield*			shield;
 	HealthBar*	    healthbar;
+	ExitSign*		exitsign;
 	RECT standingGround;	//save ground player is standing on
 	bool			isBossKilled;	//flag for boss is killed
 	float			scores;

@@ -1,5 +1,6 @@
 #include "OneUp.h"
 #include "../../Framework/Collision.h"
+#include "../Player/Player.h"
 
 OneUp::OneUp(int x, int y, int width, int height)
 {
@@ -40,6 +41,7 @@ void OneUp::OnCollision(GameObject * object, float deltaTime)
 				isDead = true;
 				SOUND->stop("item");
 				SOUND->play("item");
+				PLAYER->lives += 1;	
 				break;
 			default:
 				break;

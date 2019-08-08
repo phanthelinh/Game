@@ -36,12 +36,15 @@ Player::Player()
 	isReverse = true;
 	isOnGround = false;
 	isImmu = false;
+	hasExit = false;
 	shield = new Shield();
 	shieldFlying = false;
 
 	healthbar = new HealthBar();
+	exitsign = new ExitSign();
+	exitsign->isVisible = false;
 
-	health = 100;
+	health = 20;
 	scores = 0;
 }
 
@@ -98,6 +101,9 @@ void Player::Update(float deltaTime)
 		}
 	}
 	healthbar->Update(deltaTime);
+	if (hasExit == true)
+		exitsign->isVisible = true;
+	exitsign->Update(deltaTime);
 	//
 	//assign for standing on bar flying
 	//
@@ -119,6 +125,7 @@ void Player::Draw()
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
 	healthbar->Draw();
+	exitsign->Draw();
 }
 
 void Player::ChangeState(StateName stateName)

@@ -14,6 +14,7 @@
 #include "../GameComponents/Enemy/RunningMan.h"
 #include "../GameComponents/Enemy/Tank.h"
 #include "../GameComponents/Enemy/Gigi.h"
+#include "../GameComponents/FlyingBar.h"
 
 class DemoScene:public Scene
 {
@@ -28,6 +29,7 @@ private:
 	int			currentLevel;
 	DWORD		timePause;
 	bool		isGamePause;
+	FlyingBar*	fly;
 public:
 	DemoScene();
 	~DemoScene();

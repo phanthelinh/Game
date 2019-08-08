@@ -16,6 +16,7 @@ enum Tag {
 	RescueTag,
 	FiveTag,
 	BigHeartTag,
+	FlyingBarTag
 };
 struct BoundingBox 
 { 

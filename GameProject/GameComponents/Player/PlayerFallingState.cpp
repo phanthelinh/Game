@@ -59,6 +59,8 @@ StateName PlayerFallingState::GetState()
 
 void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 {
+	if (entity == NULL)
+		return;
 	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner());
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{

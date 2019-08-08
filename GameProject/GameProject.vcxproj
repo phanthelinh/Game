@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{831AD8D8-07BA-4966-8957-12A001248285}</ProjectGuid>
     <RootNamespace>GameProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
@@ -161,6 +161,7 @@
     <ClCompile Include="GameComponents\Enemy\Weapon\Weapon.cpp" />
     <ClCompile Include="GameComponents\Enemy\Weapon\WizardBullet.cpp" />
     <ClCompile Include="GameComponents\Enemy\WizardBoss.cpp" />
+    <ClCompile Include="GameComponents\FlyingBar.cpp" />
     <ClCompile Include="GameComponents\GameObject.cpp" />
     <ClCompile Include="GameComponents\Ground.cpp" />
     <ClCompile Include="GameComponents\Items\BigHeart.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="GameComponents\Enemy\Weapon\Weapon.h" />
     <ClInclude Include="GameComponents\Enemy\Weapon\WizardBullet.h" />
     <ClInclude Include="GameComponents\Enemy\WizardBoss.h" />
+    <ClInclude Include="GameComponents\FlyingBar.h" />
     <ClInclude Include="GameComponents\GameObject.h" />
     <ClInclude Include="GameComponents\Ground.h" />
     <ClInclude Include="GameComponents\Items\BigHeart.h" />

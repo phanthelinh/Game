@@ -2,6 +2,8 @@
 #include "../Enemy/Enemy.h"
 #include "../Enemy/DynamiteNapalm.h"
 #include "../Effect/Explode.h"
+#include "../Enemy/Gigi.h"
+
 #define GRAVITY 3.0f
 
 PlayerKickingState::PlayerKickingState()
@@ -81,7 +83,18 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 					dmboss->StateTime = GetTickCount();
 				}
 			}
-		}	
+		}
+		else if (temp->enemySubTag == GigiTag)
+		{
+			Gigi* gigi = (Gigi*)temp;
+			auto colRes = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), gigi->GetBoundingBox(), deltaTime);
+			if (colRes.isCollide)
+			{
+				EXPLODE->ExplodeAt(gigi->posX, gigi->posY);
+				gigi->currHealth -= 10;
+				gigi->SetState(GigiDie);
+			}
+		}
 	}
 
 	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner(), deltaTime);

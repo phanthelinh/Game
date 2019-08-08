@@ -31,11 +31,15 @@ void PlayerDashingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 {
 	if (keys['Z'])
 	{
+		SOUND->stop("dash");
+		SOUND->play("attack");
 		PLAYER->ChangeState(Attacking);
 	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;
+		SOUND->stop("dash");
+		SOUND->play("jump");
 		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])

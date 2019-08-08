@@ -37,6 +37,8 @@ void Energy::OnCollision(GameObject * object, float deltaTime)
 				break;
 			case Tag::Captain:
 				isDead = true;
+				SOUND->stop("item");
+				SOUND->play("item");
 				break;
 			default:
 				break;

@@ -41,6 +41,8 @@ void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 	}
 	if (keys['Z'] && PLAYER->isOnWater == false)
 	{
+		SOUND->stop("jump");
+		SOUND->play("attack");
 		PLAYER->ChangeState(Attacking);
 	}
 	if (!keys[VK_DOWN])

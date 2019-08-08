@@ -30,9 +30,17 @@ void PlayerHurt::Update(float deltaTime)
 	{
 		PLAYER->isImmu = false;
 		if (PLAYER->isOnGround == true)
+		{
+			SOUND->stop("jump");
+			SOUND->play("jump");
 			PLAYER->ChangeState(Standing);
+		}
 		else
+		{
+			SOUND->stop("jump");
+			SOUND->play("jump");
 			PLAYER->ChangeState(Falling);
+		}
 			
 	}
 }

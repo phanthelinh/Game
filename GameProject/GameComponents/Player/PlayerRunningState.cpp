@@ -39,11 +39,13 @@ void PlayerRunningState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys['C'])
 	{
+		SOUND->play("dash");
 		PLAYER->ChangeState(Dashing);
 	}
 	if (keys['X'] && PLAYER->allow[Jumping] && !PLAYER->LastKeyState[X])
 	{
 		PLAYER->LastKeyState[X] = true;
+		SOUND->play("jump");
 		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])

@@ -39,11 +39,15 @@ void PlayerFallingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys[VK_DOWN] && PLAYER->PreviousState == Spinning)
 	{
+		SOUND->stop("jump");
+		SOUND->play("jump");
 		PLAYER->ChangeState(OnShield);
 	}
 	if (keys['Z'] && PLAYER->allow[Kicking])
 	{
 		auto v = PLAYER->vY;
+		SOUND->stop("jump");
+		SOUND->play("attack");
 		PLAYER->ChangeState(Kicking);
 	}
 	if (!keys['X'])
@@ -66,20 +70,24 @@ void PlayerFallingState::OnCollision(GameObject* entity, float deltaTime)
 	{
 		PLAYER->isOnGround = true;
 		PLAYER->posY += PLAYER->vY*res.entryTime;//= entity->GetBoundFromCorner().top - PLAYER->height / 2;
+		SOUND->stop("jump");
+		SOUND->play("jump");
 		PLAYER->ChangeState(Standing);
 		PLAYER->shield->SetState(ShieldState::Normal);
 		PLAYER->standingGround = entity->GetBoundFromCorner();
 	}
 	else if (res.isCollide && entity->tag == GroundTag && (res.sideCollided == Left || res.sideCollided == Right))
 	{
-		PLAYER->posX += PLAYER->vX*deltaTime;
-		PLAYER->posY += PLAYER->vY*deltaTime;
+		/*PLAYER->posX += PLAYER->vX*deltaTime;
+		PLAYER->posY += PLAYER->vY*deltaTime;*/
 		PLAYER->vX = 0.0f;
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{
 		PLAYER->posY += PLAYER->vY*res.entryTime + 5;
 		PLAYER->isOnWater = true;
+		SOUND->stop("jump");
+		SOUND->play("jump");
 		PLAYER->ChangeState(WaterStand);
 	}
 }

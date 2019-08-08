@@ -88,8 +88,8 @@ void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 			case CollisionSide::Right:
 			case CollisionSide::Left:
 			{
-				PLAYER->posX += PLAYER->vX*deltaTime;
-				PLAYER->posY += PLAYER->vY*deltaTime;
+				/*PLAYER->posX += PLAYER->vX*deltaTime;
+				PLAYER->posY += PLAYER->vY*deltaTime;*/
 				PLAYER->vX = 0.0f;
 				break;
 			}

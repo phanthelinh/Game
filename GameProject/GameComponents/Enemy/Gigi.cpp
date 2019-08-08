@@ -174,6 +174,7 @@ void Gigi::OnCollision(GameObject * object, float deltaTime)
 			vY = 0;
 			vX = 0;
 			isDead = true;
+			SOUND->play("enemydie");
 			EXPLODE->ExplodeAt(posX, posY);
 		}
 	}

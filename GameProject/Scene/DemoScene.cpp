@@ -7,7 +7,7 @@
 DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
-	currentLevel = 3;
+	currentLevel = 1;
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 9;
@@ -21,7 +21,7 @@ DemoScene::DemoScene()
 	//LoadGridFromFile(1);
 	//LoadGridFromFile(1);
 	ReloadResources(3); //test tank
-	//SOUND->play("soundtrack", true);
+	SOUND->play("soundtrack", true);
 	
 }
 
@@ -80,6 +80,7 @@ void DemoScene::Update(float deltaTime)
 	{
 		if (PLAYER->isOnGround)
 		{
+			SOUND->play("jump");
 			PLAYER->ChangeState(Falling);
 		}
 	}

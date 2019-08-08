@@ -40,6 +40,9 @@
     <Filter Include="GameComponents\Enemy\Weapon">
       <UniqueIdentifier>{baa53ce3-9f23-406d-9473-3e52ec8602bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameComponents\UI">
+      <UniqueIdentifier>{5468d8b4-7131-47ff-9baa-2180e5382c0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -231,6 +234,12 @@
     <ClCompile Include="Framework\Sound.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
+    <ClCompile Include="GameComponents\UI\ExitSign.cpp">
+      <Filter>GameComponents\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameComponents\UI\HealthBar.cpp">
+      <Filter>GameComponents\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -421,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="Framework\Sound.h">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\UI\ExitSign.h">
+      <Filter>GameComponents\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponents\UI\HealthBar.h">
+      <Filter>GameComponents\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -150,6 +150,7 @@ void RunningMan::Update(float deltaTime)
 				}
 				posX += vX * deltaTime;
 				posY += vY * deltaTime;
+				SOUND->play("enemydie");
 				EXPLODE->ExplodeAt(posX - 8, posY - 24);
 				DeadStartTime = GetTickCount();
 				isDying = true;

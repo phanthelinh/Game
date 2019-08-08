@@ -238,6 +238,7 @@ void Domesto::Update(float deltaTime)
 			posX += vX * deltaTime;
 			posY += vY * deltaTime;
 			//explode
+			SOUND->play("enemydie");
 			EXPLODE->ExplodeAt(posX-8, posY-24);
 			startTime = now;
 			isStopUpdate = true;

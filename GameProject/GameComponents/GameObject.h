@@ -1,5 +1,6 @@
 #pragma once
 #include "../Framework/Global.h"
+#include "../Framework/Sound.h"
 
 enum Tag {
 	Captain,

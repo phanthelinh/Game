@@ -190,6 +190,8 @@
     <ClCompile Include="GameComponents\Player\PlayerWaterRun.cpp" />
     <ClCompile Include="GameComponents\Player\PlayerWaterStand.cpp" />
     <ClCompile Include="GameComponents\Shield\Shield.cpp" />
+    <ClCompile Include="GameComponents\UI\ExitSign.cpp" />
+    <ClCompile Include="GameComponents\UI\HealthBar.cpp" />
     <ClCompile Include="GameComponents\Water.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\DemoScene.cpp" />
@@ -256,6 +258,8 @@
     <ClInclude Include="GameComponents\Player\PlayerWaterRun.h" />
     <ClInclude Include="GameComponents\Player\PlayerWaterStand.h" />
     <ClInclude Include="GameComponents\Shield\Shield.h" />
+    <ClInclude Include="GameComponents\UI\ExitSign.h" />
+    <ClInclude Include="GameComponents\UI\HealthBar.h" />
     <ClInclude Include="GameComponents\Water.h" />
     <ClInclude Include="Scene\DemoScene.h" />
     <ClInclude Include="Scene\Scene.h" />

@@ -204,6 +204,7 @@ void DynamiteNapalm::Update(float deltaTime)
 			if (CheckStateTime(0, DIE_STAY_TIME) && isDead != true)
 			{
 				isDead = true;
+				SOUND->play("bossdie");
 				EXPLODE->ExplodeAt(posX, posY - 30);
 			}
 		}

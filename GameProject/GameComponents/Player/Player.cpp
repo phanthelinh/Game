@@ -39,6 +39,8 @@ Player::Player()
 	shield = new Shield();
 	shieldFlying = false;
 
+	healthbar = new HealthBar();
+
 	health = 100;
 	scores = 0;
 }
@@ -95,6 +97,7 @@ void Player::Update(float deltaTime)
 			shield->SetState(Normal);
 		}
 	}
+	healthbar->Update(deltaTime);
 	//
 	//assign for standing on bar flying
 	//
@@ -115,6 +118,7 @@ void Player::Draw()
 	}
 	currentAnim->Draw(posX, posY);
 	shield->Draw();
+	healthbar->Draw();
 }
 
 void Player::ChangeState(StateName stateName)
@@ -198,19 +202,6 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 	if (object == NULL)
 		return;
 	currentState->OnCollision(object, deltaTime);
-	/*if (object->tag == FlyingBarTag)
-	{
-		auto res = COLLISION->SweptAABB(GetBoundingBox(), object->GetBoundingBox(), deltaTime);
-		if (res.isCollide && res.sideCollided == CollisionSide::Bottom)
-		{
-			isStandOnFlyingBar = true;
-			barObject = object;
-			posY = barObject->posY - currentAnim->_frameHeight/2 +1;
-			vX = barObject->vX;
-			vY = barObject->vY;
-			ChangeState(Standing);
-		}
-	}*/
 }
 
 void Player::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -288,6 +279,10 @@ void Player::Release()
 	}
 	if (shield != nullptr)
 		delete shield;
+	if (healthbar != nullptr)
+	{
+		delete healthbar;
+	}
 	LastKeyState.clear();
 }
 
@@ -300,5 +295,6 @@ void Player::JumpBack()
 	else
 		this->vX = -2.0f;
 	health--;
+	SOUND->play("jump");
 	ChangeState(StateName::Jumping);
 }

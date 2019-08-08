@@ -24,6 +24,7 @@ void PlayerWaterStand::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 	{
 		PLAYER->isOnWater = false;
 		PLAYER->LastKeyState[X] = true;
+		SOUND->play("jump");
 		PLAYER->ChangeState(Jumping);
 	}
 	if (!keys['X'])

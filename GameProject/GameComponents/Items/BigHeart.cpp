@@ -1,4 +1,5 @@
 #include "BigHeart.h"
+#include "../Player/Player.h"
 
 BigHeart::BigHeart(int x, int y, int width, int height)
 {
@@ -36,6 +37,9 @@ void BigHeart::OnCollision(GameObject* object, float deltaTime)
 				break;
 			case Tag::Captain:
 				isDead = true;
+				PLAYER->health += 20;
+				SOUND->stop("item");
+				SOUND->play("item");
 				break;
 			default:
 				break;

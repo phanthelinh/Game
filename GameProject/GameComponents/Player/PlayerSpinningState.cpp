@@ -18,7 +18,11 @@ void PlayerSpinningState::Update(float deltaTime)
 	PLAYER->posY = PLAYER->posY + PLAYER->vY * deltaTime;
 	PLAYER->vY += GRAVITY;
 	if (PLAYER->vY == 0)
+	{
+		SOUND->stop("jump");
+		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
+	}
 }
 
 void PlayerSpinningState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
@@ -62,15 +66,19 @@ void PlayerSpinningState::OnCollision(GameObject* entity, float deltaTime)
 				PLAYER->posX += PLAYER->vX*deltaTime;
 				PLAYER->posY += PLAYER->vY*deltaTime;
 				PLAYER->vY = 0.0f;
+				SOUND->stop("jump");
+				SOUND->play("jump");
 				PLAYER->ChangeState(Falling);
 				break;
 			}
 			case CollisionSide::Right:
 			case CollisionSide::Left:
 			{
-				PLAYER->posX += PLAYER->vX*deltaTime;
-				PLAYER->posY += PLAYER->vY*deltaTime;
+				/*PLAYER->posX += PLAYER->vX*deltaTime;
+				PLAYER->posY += PLAYER->vY*deltaTime;*/
 				PLAYER->vX = 0.0f;
+				SOUND->stop("jump");
+				SOUND->play("jump");
 				PLAYER->ChangeState(Falling);
 				break;
 			}

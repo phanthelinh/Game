@@ -87,6 +87,7 @@ void Tank::Update(float deltaTime)
 		return;
 	if (currHealth <= 0)
 	{
+		SOUND->play("enemydie");
 		EXPLODE->ExplodeAt(D3DXVECTOR3(posX, posY, 0));
 		PLAYER->scores += point;
 		isDead = true;

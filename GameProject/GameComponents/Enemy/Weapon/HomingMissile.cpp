@@ -76,12 +76,12 @@ void HomingMissile::CalculateHoming()
 		if (d < 0)
 		{
 			// headed directly away.  Rotate either CW or CCW -- doesn't matter
-			vX = 0;
+			vY = -vY;
 		}
 		else
 		{
 			// headed directly towards -- no need to rotate.
-			vY = -vY;
+			/*vY = 0;*/
 		}
 	}
 }

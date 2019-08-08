@@ -19,6 +19,7 @@ DemoScene::DemoScene()
 	//LoadGridFromFile(1);
 	ReloadResources(3); //test tank
 	fly = new FlyingBar(120, 900, 120, 790, 0);
+	GRID->AddObject(fly);
 }
 
 DemoScene::~DemoScene()
@@ -27,7 +28,7 @@ DemoScene::~DemoScene()
 
 void DemoScene::Update(float deltaTime)
 {
-	fly->Update(deltaTime);
+	//fly->Update(deltaTime);
 	PLAYER->OnCollision(fly, deltaTime);
 	auto now = GetTickCount();
 	if ((now - timePause) / 1000.0f >= GLOBAL->g_ChangeScene_Delay && isGamePause)
@@ -74,7 +75,7 @@ void DemoScene::Update(float deltaTime)
 			break;
 		}
 	}
-	if (!onGround && !onWater)
+	if (!onGround && !onWater && !PLAYER->isStandOnFlyingBar)
 	{
 		if (PLAYER->isOnGround)
 		{
@@ -120,7 +121,7 @@ void DemoScene::Draw()
 	//render player
 	PLAYER->Draw();
 	EXPLODE->Draw();
-	fly->Draw();
+	//fly->Draw();
 }
 
 void DemoScene::OnKeyDown(int keyCode)

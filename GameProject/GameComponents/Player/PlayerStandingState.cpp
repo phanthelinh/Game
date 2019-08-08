@@ -2,7 +2,8 @@
 
 PlayerStandingState::PlayerStandingState()
 {
-	PLAYER->vX = PLAYER->vY = 0;
+	if(!PLAYER->isStandOnFlyingBar)
+		PLAYER->vX = PLAYER->vY = 0;
 	PLAYER->allow[Jumping] = true;
 	PLAYER->allow[Moving] = true;
 	PLAYER->allow[Attacking_Shield] = true;
@@ -12,7 +13,11 @@ PlayerStandingState::PlayerStandingState()
 
 void PlayerStandingState::Update(float deltaTime)
 {
-	
+	if (PLAYER->isStandOnFlyingBar)
+	{
+		PLAYER->posX += PLAYER->vX * deltaTime;
+		PLAYER->posY += PLAYER->vY * deltaTime;
+	}
 }
 
 void PlayerStandingState::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

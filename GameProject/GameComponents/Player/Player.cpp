@@ -100,7 +100,9 @@ void Player::Update(float deltaTime)
 	//
 	if (isStandOnFlyingBar)
 	{
-		posY = barObject->posY;
+		vX = barObject->vX;
+		//vY = barObject->vY;
+		posY = barObject->posY - currentAnim->_frameHeight / 2 + 1;
 	}
 }
 
@@ -201,6 +203,10 @@ void Player::OnCollision(GameObject * object, float deltaTime)
 		{
 			isStandOnFlyingBar = true;
 			barObject = object;
+			posY = barObject->posY - currentAnim->_frameHeight/2 +1;
+			vX = barObject->vX;
+			vY = barObject->vY;
+			ChangeState(Standing);
 		}
 	}
 }

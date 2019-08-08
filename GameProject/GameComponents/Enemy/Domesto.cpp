@@ -10,7 +10,7 @@ Domesto::Domesto(int level)
 Domesto::Domesto(float x, float y) : Enemy(x, y, 0, 0)
 {
 	point = 400;//400 scores for player if he killed this object
-	currHealth = maxHealth = 50; //attack five times
+	currHealth = maxHealth = 30; //attack five times
 	anims[EnemyStateName::EnemyStand] = new Animation("Resources/enemy/domesto/domesto_stand_23_46.png", 1, 1, 1);
 	currentAnim = anims[EnemyStateName::EnemyRun] = new Animation("Resources/enemy/domesto/domesto_run_46_46.png", 2, 1, 2, true, 0.8f);
 	anims[EnemyStateName::EnemyJump] = anims[EnemyStateName::EnemySit] = new Animation("Resources/enemy/domesto/domesto_sit_24_31.png", 1, 1, 1);

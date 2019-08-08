@@ -10,16 +10,16 @@ DemoScene::DemoScene()
 	currentLevel = 1;
 	//init for Player
 	PLAYER; //get instance
-	PLAYER->posX = 9;
-	PLAYER->posY = 384;
+	PLAYER->posX = 16;
+	PLAYER->posY = 413;
 	PLAYER->isOnGround = false;
-	PLAYER->currentState = new PlayerFallingState();
+	PLAYER->currentState = new PlayerStandingState();
 	CAMERA->camPosition = PLAYER->GetPosition();
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	LoadGridFromFile(1);
-	//ReloadResources(3); //test tank
+	LoadGridFromFile(currentLevel);
+	ReloadResources(currentLevel); //test tank
 	SOUND->play("soundtrack", true);
 	
 }
@@ -36,6 +36,7 @@ void DemoScene::Update(float deltaTime)
 
 		ReloadResources(currentLevel);
 		isGamePause = false;
+		return;
 	}
 	if (isGamePause)
 		return;
@@ -50,7 +51,6 @@ void DemoScene::Update(float deltaTime)
 		GRID->AddObject(PLAYER->shield);
 		shieldInserted = true;
 	}
-	CheckForNextStage();
 	//
 	//COLLISION
 	//
@@ -84,7 +84,7 @@ void DemoScene::Update(float deltaTime)
 		}
 	}
 
-	if (PLAYER->isStandOnFlyingBar && !COLLISION->IsCollide(PLAYER->GetBoundingBox(), PLAYER->barObject->GetBoundingBox()))
+	if (PLAYER->isStandOnFlyingBar && PLAYER->barObject != NULL &&!COLLISION->IsCollide(PLAYER->GetBoundingBox(), PLAYER->barObject->GetBoundingBox()))
 	{
 		PLAYER->isStandOnFlyingBar = false;
 	}
@@ -112,6 +112,7 @@ void DemoScene::Update(float deltaTime)
 		RunningMan* runningman3 = new RunningMan(220, 436, 0, 0);
 		GRID->AddObject(runningman3);
 	}
+	CheckForNextStage();
 }
 
 void DemoScene::Draw()
@@ -173,8 +174,9 @@ void DemoScene::CheckForNextStage()
 	switch (currentLevel)
 	{
 	case 1://
-		if (PLAYER->posX >= GLOBAL->g_Scene1_EndMap)
+		if (PLAYER->posX >= GLOBAL->g_Scene1_EndMap && PLAYER->hasExit)
 		{
+			PLAYER->hasExit = false;
 			currentLevel++;
 			ChangingStage();
 		}
@@ -182,6 +184,15 @@ void DemoScene::CheckForNextStage()
 	case 2:
 		if (PLAYER->posX >= GLOBAL->g_Scene2_EndMap && PLAYER->isBossKilled)
 		{
+			PLAYER->hasExit = false;
+			currentLevel++;
+			ChangingStage();
+		}
+		break;
+	case 3:
+		if (PLAYER->posX >= 944 && PLAYER->posY >= 864)
+		{
+			PLAYER->hasExit = false;
 			currentLevel++;
 			ChangingStage();
 		}
@@ -189,6 +200,7 @@ void DemoScene::CheckForNextStage()
 	case 4:
 		break;
 	}
+	
 }
 
 void DemoScene::ChangingStage()
@@ -214,12 +226,13 @@ void DemoScene::ReloadResources(int level)
 		break;
 	case 3:
 		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(16, 870, 0));
+		PLAYER->SetPosition(D3DXVECTOR3(16, 893, 0));
 		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = true;
 		LoadGridFromFile(level);
 		break;
 	case 4:
+		SCENES->ReplaceScene(new Scene4());
 		break;
 	}
 }

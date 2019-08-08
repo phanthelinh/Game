@@ -284,12 +284,12 @@ void WizardBoss::Release()
 
 void WizardBoss::InsertFromFile(int level)
 {
-	std::unordered_set<GameObject*> rs;
-	std::ifstream file;
-	if (level == 2)
+	if (level != 2)
 	{
-		file.open("Resources/boss/wizardBoss.txt");
+		return;
 	}
+	std::unordered_set<GameObject*> rs;
+	std::ifstream file("Resources/boss/wizardBoss.txt");
 	//insert to grid
 
 	if (file.good())

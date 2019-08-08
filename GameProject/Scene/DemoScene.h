@@ -16,6 +16,7 @@
 #include "../GameComponents/Enemy/Tank.h"
 #include "../GameComponents/Enemy/Gigi.h"
 #include "../GameComponents/FlyingBar.h"
+#include "Scene4.h"
 
 class DemoScene:public Scene
 {

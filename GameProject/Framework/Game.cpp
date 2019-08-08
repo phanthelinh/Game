@@ -45,6 +45,7 @@ int Game::InitWindow()
 		return 0;
 	}
 	GLOBAL->g_HWND = hwnd;
+	Sound::create(hwnd);
 	ShowWindow(hwnd, _nCmdShow);
 	return 1;
 }

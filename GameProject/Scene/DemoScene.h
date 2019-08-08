@@ -3,6 +3,7 @@
 #include <unordered_set>
 #include <iostream>
 #include "Scene.h"
+#include "../Framework/Sound.h"
 #include "../Framework/Animation.h"
 #include "../Framework/GameMap.h"
 #include "../GameComponents/Player/Player.h"

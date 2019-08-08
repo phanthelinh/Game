@@ -227,6 +227,7 @@ void Player::OnKeyDown(int keyCode)
 			currentState->GetState() != Spinning && currentState->GetState() != Kicking)
 		{
 			allow[Attacking_Shield] = false;
+			SOUND->play("attack");
 			ChangeState(Attacking);
 		}
 		break;

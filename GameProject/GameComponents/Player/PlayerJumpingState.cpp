@@ -21,6 +21,8 @@ void PlayerJumpingState::Update(float deltaTime)
 	PLAYER->vY += GRAVITY;
 	if (PLAYER->vY >= 0 && PLAYER->LastKeyState[X] == false)
 	{
+		SOUND->stop("jump");
+		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
 	}
 }
@@ -39,12 +41,16 @@ void PlayerJumpingState::HandleKeyboard(std::map<int, bool> keys, float deltaTim
 	}
 	if (keys['Z'] && PLAYER->allow[Kicking])
 	{
+		SOUND->stop("jump");
+		SOUND->play("attack");
 		PLAYER->ChangeState(Kicking);
 	}
 	if (keys['X'])
 	{
 		if (PLAYER->vY >= 0)
 		{
+			SOUND->stop("jump");
+			SOUND->play("jump");
 			PLAYER->ChangeState(Spinning);
 		}
 		PLAYER->LastKeyState[X] = true;
@@ -74,6 +80,8 @@ void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 				PLAYER->posX += PLAYER->vX*deltaTime;
 				PLAYER->posY += PLAYER->vY*deltaTime;
 				PLAYER->vY = 0.0f;
+				SOUND->stop("jump");
+				SOUND->play("jump");
 				PLAYER->ChangeState(Falling);
 				break;
 			}

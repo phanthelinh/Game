@@ -142,6 +142,7 @@
     <ClCompile Include="Framework\GameMap.cpp" />
     <ClCompile Include="Framework\Global.cpp" />
     <ClCompile Include="Framework\Grid.cpp" />
+    <ClCompile Include="Framework\Sound.cpp" />
     <ClCompile Include="Framework\Sprite.cpp" />
     <ClCompile Include="Framework\Tile.cpp" />
     <ClCompile Include="Framework\TileSet.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Framework\GameMap.h" />
     <ClInclude Include="Framework\Global.h" />
     <ClInclude Include="Framework\Grid.h" />
+    <ClInclude Include="Framework\Sound.h" />
     <ClInclude Include="Framework\Sprite.h" />
     <ClInclude Include="Framework\Tile.h" />
     <ClInclude Include="Framework\TileSet.h" />

@@ -18,9 +18,10 @@ DemoScene::DemoScene()
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	LoadGridFromFile(3);
+	//LoadGridFromFile(1);
 	//LoadGridFromFile(1);
 	ReloadResources(3); //test tank
+	//SOUND->play("soundtrack", true);
 	
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "../../Framework/Sound.h"
 #include <unordered_set>
 #include <map>
 #include "../GameObject.h"

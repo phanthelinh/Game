@@ -228,6 +228,9 @@
     <ClCompile Include="GameComponents\FlyingBar.cpp">
       <Filter>GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Sound.cpp">
+      <Filter>Framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Game.h">
@@ -415,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="GameComponents\FlyingBar.h">
       <Filter>GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Sound.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

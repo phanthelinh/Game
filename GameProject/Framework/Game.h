@@ -1,6 +1,7 @@
 #include "Global.h"
 #include "../Scene/SceneManager.h"
 #include "../Scene/Scene4.h"
+#include "Sound.h"
 
 class Game
 {

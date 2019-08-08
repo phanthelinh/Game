@@ -15,6 +15,7 @@
 #include "../../Framework/Collision.h"
 #include "../../Framework/Animation.h"
 #include "../../Framework/Grid.h"
+#include "../../Framework/Sound.h"
 
 #define PLAYER	Player::GetInstance()
 

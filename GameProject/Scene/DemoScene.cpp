@@ -310,6 +310,7 @@ void DemoScene::LoadGridFromFile(int level)
 			GRID->AddObject(water);
 		}
 		//load items and container
+		Gigi::InsertFromFile(level);
 		ItemsContainer::InsertFromFile(level);
 		
 		//add boss
@@ -320,7 +321,6 @@ void DemoScene::LoadGridFromFile(int level)
 		Domesto::InsertFromFile(level);
 		RunningMan::InsertFromFile(level);
 		Tank::InsertFromFile(level);
-		Gigi::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}

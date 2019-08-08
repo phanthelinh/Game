@@ -21,6 +21,16 @@ HomingMissile::HomingMissile(float posX, float posY, int direction): Weapon(posX
 	SetState(HomingState::down);
 }
 
+float HomingMissile::Dot(float ax, float ay, float bx, float by)
+{
+	return (ax * bx) + (ay * by);
+}
+
+float HomingMissile::perpDot(float ax, float ay, float bx, float by)
+{
+	return (ay * bx) - (ax * by);
+}
+
 
 void HomingMissile::Update(float deltaTime)
 {
@@ -34,7 +44,7 @@ void HomingMissile::Update(float deltaTime)
 		}
 	}
 
-	//CalculateHoming();
+	CalculateHoming();
 
 
 	posX += vX * deltaTime;
@@ -48,22 +58,32 @@ void HomingMissile::Update(float deltaTime)
 
 void HomingMissile::CalculateHoming()
 {
-	float relativePosX = PLAYER->posX - posX;
-	float relativePosY = PLAYER->posY - posY;
-	float relativeVeloX = abs(PLAYER->vX - vX);
-	float relativeVeloY = abs(PLAYER->vY - vY);
-
-	//calculate the to time impact = distance/velocity
-
-	float distance = sqrt(relativePosX * relativePosX + relativePosY * relativePosY); //distance between homing missle and the player
-	float velocity = relativePosX + relativePosY; //relative velo
-	float timetoImpact = distance / velocity;
-
-	float newPosX = PLAYER->posX + timetoImpact * PLAYER->vX;
-	float newPosY = PLAYER->posX + timetoImpact * PLAYER->vY;
-
-	vX = newPosX - posX;
-	vY = newPosY - posY;
+	double d = perpDot(PLAYER->posX - posX, PLAYER->posY - posY, vX, vY);
+	if (d < 0)
+	{
+		// rotate your missile clockwise
+		vX = MISSLE_SPEED;
+	}
+	else if (d > 0)
+	{
+		// rotate your missile counter-clockwise
+		vX = -MISSLE_SPEED;
+	}
+	else
+	{
+		// missile is headed either directly towards or directly away from the target.  Find out which:
+		d = Dot(PLAYER->posX - posX, PLAYER->posY - posY, vX, vY);
+		if (d < 0)
+		{
+			// headed directly away.  Rotate either CW or CCW -- doesn't matter
+			vY = -vY;
+		}
+		else
+		{
+			// headed directly towards -- no need to rotate.
+			/*vY = 0;*/
+		}
+	}
 }
 
 void HomingMissile::OnCollision(GameObject * object, float deltaTime)

@@ -2,7 +2,7 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
-//tesing homingmissle
+//tesing homingmissle/gigi
 #include "../GameComponents/Enemy/Weapon/HomingMissile.h"
 DemoScene::DemoScene()
 {
@@ -22,7 +22,7 @@ DemoScene::DemoScene()
 	ReloadResources(3); //test tank
 	
 	//tesing homing missile
-	HomingMissile* temp = new HomingMissile(9, 384, false);
+	HomingMissile* temp = new HomingMissile(300, 870, false);
 	GRID->AddObject(temp);
 }
 

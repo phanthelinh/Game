@@ -18,8 +18,7 @@ DemoScene::DemoScene()
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	//LoadGridFromFile(1);
-	//LoadGridFromFile(1);
+	LoadGridFromFile(1);
 	ReloadResources(3); //test tank
 	SOUND->play("soundtrack", true);
 	
@@ -280,6 +279,13 @@ void DemoScene::SaveGridToFile(int level)
 				file << tnk->posX << " " << tnk->posY << " " << tnk->initState;
 				break;
 			}
+			case GigiTag:
+			{
+				auto gigi = (Gigi*)enemy;
+				file << "\ngigi ";
+				file << gigi->posX << " " << gigi->posY;
+				break;
+			}
 			default:
 				break;
 			}
@@ -343,6 +349,7 @@ void DemoScene::LoadGridFromFile(int level)
 		RunningMan::InsertFromFile(level);
 		Tank::InsertFromFile(level);
 		FlyingBar::InsertFromFile(level);
+		Gigi::InsertFromFile(level);
 		SaveGridToFile(level);
 		return;
 	}
@@ -423,6 +430,12 @@ void DemoScene::LoadGridFromFile(int level)
 			int st, sy, ex, ey, t;
 			file >> st >> sy >> ex >> ey >> t;
 			GRID->AddObject(new FlyingBar(st, sy, ex, ey, t));
+		}
+		else if (objectname._Equal("gigi"))
+		{
+			int x, y;
+			file >> x >> y;
+			GRID->AddObject(new Gigi(x, y));
 		}
 	}
 	file.close();

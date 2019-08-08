@@ -23,14 +23,11 @@ private:
 	GameMap*	map;
 	std::unordered_set<GameObject*> visibleObject;
 	std::vector<GameObject*> listObject;
-	WizardBoss* wizard;
-	Tank* tank;
 	bool isSpawned = false;
 	bool		shieldInserted;
 	int			currentLevel;
 	DWORD		timePause;
 	bool		isGamePause;
-	FlyingBar*	fly;
 public:
 	DemoScene();
 	~DemoScene();

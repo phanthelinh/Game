@@ -5,7 +5,7 @@
 DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
-	currentLevel = 1;
+	currentLevel = 3;
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 9;
@@ -16,8 +16,8 @@ DemoScene::DemoScene()
 	CAMERA->isFollowY = true;
 	//implement grid
 	GRID;
-	LoadGridFromFile(1);
-	//ReloadResources(3); //test tank
+	LoadGridFromFile(3);
+	ReloadResources(3); //test tank
 }
 
 DemoScene::~DemoScene()

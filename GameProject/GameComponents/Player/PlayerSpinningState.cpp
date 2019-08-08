@@ -19,8 +19,6 @@ void PlayerSpinningState::Update(float deltaTime)
 	PLAYER->vY += GRAVITY;
 	if (PLAYER->vY == 0)
 	{
-		SOUND->stop("jump");
-		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
 	}
 }

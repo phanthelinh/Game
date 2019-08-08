@@ -21,8 +21,6 @@ void PlayerJumpingState::Update(float deltaTime)
 	PLAYER->vY += GRAVITY;
 	if (PLAYER->vY >= 0 && PLAYER->LastKeyState[X] == false)
 	{
-		SOUND->stop("jump");
-		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
 	}
 }
@@ -82,8 +80,6 @@ void PlayerJumpingState::OnCollision(GameObject* entity, float deltaTime)
 				if (entity->height > 8)
 				{
 					PLAYER->vY = 0.0f;
-					SOUND->stop("jump");
-					SOUND->play("jump");
 					PLAYER->ChangeState(Falling);
 				}
 				break;

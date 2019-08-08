@@ -37,8 +37,6 @@ void PlayerHurt::Update(float deltaTime)
 		}
 		else
 		{
-			SOUND->stop("jump");
-			SOUND->play("jump");
 			PLAYER->ChangeState(Falling);
 		}
 			

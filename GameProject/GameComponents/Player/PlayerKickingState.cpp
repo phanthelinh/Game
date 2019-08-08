@@ -30,8 +30,6 @@ void PlayerKickingState::Update(float deltaTime)
 	if (PLAYER->vY >= 0)
 	{
 		PLAYER->allow[Kicking] = true;
-		SOUND->stop("jump");
-		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
 	}
 }
@@ -114,8 +112,6 @@ void PlayerKickingState::OnCollision(GameObject* entity, float deltaTime)
 	}
 	else
 	{
-		SOUND->stop("jump");
-		SOUND->play("jump");
 		PLAYER->ChangeState(Falling);
 	}
 }

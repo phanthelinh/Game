@@ -3,14 +3,26 @@
 #include "../../../Framework/Collision.h"
 #include "../../Player/Player.h"
 
+enum HomingState
+{
+	down,
+	downleft,
+	downright,
+	downleftup,
+	downrightup
+};
 
 class HomingMissile : public Weapon
 {
+	Animation*		currentAnim;
+	std::unordered_map<HomingState, Animation*> animations;
+	HomingState	currentState, prevState;
 	D3DXVECTOR3		startingPoint;
 public:
 	//posX, posY is the left, top of weapon
 	HomingMissile(float posX, float posY, int direction);
 
+	void CalculateHoming();
 	void OnCollision(GameObject* object, float deltaTime = 0);
 	RECT GetBound();
 	BoundingBox GetBoundingBox();
@@ -19,4 +31,5 @@ public:
 	//Draw at its position
 	void Draw();
 	void Release();
+	void SetState(HomingState state);
 };

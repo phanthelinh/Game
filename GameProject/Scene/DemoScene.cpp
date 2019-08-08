@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
+//tesing homingmissle
+#include "../GameComponents/Enemy/Weapon/HomingMissile.h"
 DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
@@ -18,6 +20,10 @@ DemoScene::DemoScene()
 	GRID;
 	LoadGridFromFile(3);
 	ReloadResources(3); //test tank
+	
+	//tesing homing missile
+	HomingMissile* temp = new HomingMissile(9, 384, false);
+	GRID->AddObject(temp);
 }
 
 DemoScene::~DemoScene()

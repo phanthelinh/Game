@@ -1,26 +1,64 @@
 #include "HomingMissile.h"
 
-
+#define MISSLE_SPEED 5.0f
 
 HomingMissile::HomingMissile(float posX, float posY, int direction): Weapon(posX,posY,0,0)
 {
 	startingPoint = { posX, posY, 0};
-	vX = BULLET_SPEED * direction;
-	currAnim = new Animation("Resources/weapon/RunningManBullet.png", 1, 1, 1);
+	vX = vY = 0;
 	weaponDamage = 2;
 	tag = Tag::WeaponTag;
+
+	animations[down] = new Animation("Resources/weapon/missle_down.png", 2, 1, 2);
+	animations[downleft] = new Animation("Resources/weapon/missle_down_left.png", 2, 1, 2);
+	animations[downleftup] = new Animation("Resources/weapon/missle_down_left_up.png", 3, 1, 3);
+	animations[downright] = new Animation("Resources/weapon/missle_down_right.png", 2, 1, 2);
+	animations[downrightup] = new Animation("Resources/weapon/missle_down_right_up.png", 3, 1, 3);
+
+
+	currentState = HomingState::down;
+	currAnim = animations[down];
+	SetState(HomingState::down);
 }
 
 
 void HomingMissile::Update(float deltaTime)
 {
-	posX += vX * deltaTime;
-	posY += vY * deltaTime;
+	switch (currentState)
+	{
+		case down:
+		{
+			/*vX = 0;
+			vY = MISSLE_SPEED;*/
+			break;
+		}
+	}
+
+	CalculateHoming();
+
+	/*posX += vX * deltaTime;
+	posY += vY * deltaTime;*/
+
+
 	currAnim->Update(deltaTime);
 	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
 		isDead = true;
 	}
+}
+
+void HomingMissile::CalculateHoming()
+{
+	float relativePosX = PLAYER->posX - posX;
+	float relativePosY = PLAYER->posY - posY;
+	float relativeVeloX = abs(PLAYER->vX - vX);
+	float relativeVeloY = abs(PLAYER->vY - vY);
+
+	//calculate the to time impact = distance/velocity
+
+	float distance = sqrt(relativePosX * relativePosX + relativePosY * relativePosY); //distance between homing missle and the player
+	float velocity = relativePosX + relativePosY; //relative velo
+	float timetoImpact = distance / velocity;
 }
 
 void HomingMissile::OnCollision(GameObject * object, float deltaTime)
@@ -91,4 +129,14 @@ BoundingBox HomingMissile::GetBoundingBox()
 
 void HomingMissile::Release()
 {
+}
+
+void HomingMissile::SetState(HomingState state)
+{
+	prevState = currentState;
+	currentState = state;
+	currentAnim = animations[state];
+	currentAnim->ResetAnim();
+	this->width = animations[state]->_frameWidth;
+	this->height = animations[state]->_frameHeight;
 }

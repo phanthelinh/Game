@@ -75,7 +75,7 @@ void DemoScene::Update(float deltaTime)
 			break;
 		}
 	}
-	if (!onGround && !onWater && !PLAYER->isStandOnFlyingBar)
+	if (!onGround && !onWater && !PLAYER->isStandOnFlyingBar && PLAYER->currentState->GetState() != OnShield)
 	{
 		if (PLAYER->isOnGround)
 		{

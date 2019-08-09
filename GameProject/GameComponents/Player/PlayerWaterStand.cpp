@@ -1,4 +1,5 @@
 #include "PlayerWaterStand.h"
+#define WATER_FORCE 2.0f
 
 PlayerWaterStand::PlayerWaterStand()
 {
@@ -11,7 +12,10 @@ PlayerWaterStand::PlayerWaterStand()
 
 void PlayerWaterStand::Update(float deltaTime)
 {
+	PLAYER->vX = -WATER_FORCE;
 	PLAYER->vY = 0.0f;
+	PLAYER->posX += PLAYER->vX*deltaTime;
+	PLAYER->posY += PLAYER->vY*deltaTime;
 }
 
 void PlayerWaterStand::HandleKeyboard(std::map<int, bool> keys, float deltaTime)

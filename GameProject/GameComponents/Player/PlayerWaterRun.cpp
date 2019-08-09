@@ -28,7 +28,7 @@ void PlayerWaterRun::HandleKeyboard(std::map<int, bool> keys, float deltaTime)
 		PLAYER->isReverse = false;
 		PLAYER->vX = -PLAYER_RUNNING_SPEED;
 	}
-	else
+	else if (!keys[VK_RIGHT] && !keys[VK_LEFT])
 	{
 		PLAYER->ChangeState(WaterStand);
 	}

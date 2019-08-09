@@ -53,6 +53,7 @@ void PlayerOnShieldState::HandleKeyboard(std::map<int, bool> keys, float deltaTi
 		}
 		else
 		{
+			PLAYER->posY -= 2;
 			PLAYER->ChangeState(Standing);
 			PLAYER->shield->SetState(ShieldState::Normal);
 		}
@@ -74,12 +75,16 @@ void PlayerOnShieldState::OnCollision(GameObject* entity, float deltaTime)
 	if (res.isCollide && entity->tag == GroundTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnGround = true;
+		PLAYER->posX += PLAYER->vX*res.entryTime;
+		PLAYER->posY += PLAYER->vY*res.entryTime;
 		PLAYER->vY = 0;
 		PLAYER->standingGround = entity->GetBoundFromCorner();
 	}
 	else if (res.isCollide && entity->tag == WaterTag && res.sideCollided == Bottom)
 	{
 		PLAYER->isOnWater = true;
+		PLAYER->posX += PLAYER->vX*res.entryTime;
+		PLAYER->posY += PLAYER->vY*res.entryTime;
 		PLAYER->posY = entity->GetBoundFromCorner().top;
 		PLAYER->vY = 0;
 	}

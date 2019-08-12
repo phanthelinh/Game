@@ -15,7 +15,7 @@ DynamiteNapalm::DynamiteNapalm() :Enemy()
 DynamiteNapalm::DynamiteNapalm(float posX, float posY) :Enemy(posX, posY, 0, 0)
 {
 	point = 500;	//score when kill this boss
-	currHealth = maxHealth = 18;
+	currHealth = maxHealth = 9;
 
 	animations[DMBarrelThrow] = new Animation("Resources/enemy/Dynamite Napalm/DMBarrelThrow.png", 2, 1, 2, false, 0.7f);
 	animations[DMHurt] = new Animation("Resources/enemy/Dynamite Napalm/DMHurt.png", 2, 1, 2, true, 1.5f);

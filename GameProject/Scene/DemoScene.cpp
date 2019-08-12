@@ -2,12 +2,10 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 
-//tesing homingmissle/gigi
-#include "../GameComponents/Enemy/Weapon/HomingMissile.h"
 DemoScene::DemoScene()
 {
 	map = new GameMap(16, 16, 128, 30, "Resources/map/Charleston.png", "Resources/map/Charleston.csv");
-	currentLevel = 1;
+	currentLevel = 3;
 	//init for Player
 	PLAYER; //get instance
 	PLAYER->posX = 16;
@@ -190,7 +188,7 @@ void DemoScene::CheckForNextStage()
 		}
 		break;
 	case 3:
-		if (PLAYER->posX >= 944 && PLAYER->posY >= 864)
+		if (PLAYER->posX >= 944 && PLAYER->posY >= 864 && PLAYER->hasExit)
 		{
 			PLAYER->hasExit = false;
 			currentLevel++;
@@ -226,7 +224,7 @@ void DemoScene::ReloadResources(int level)
 		break;
 	case 3:
 		map = new GameMap(16, 16, 64, 60, "Resources/map/Pittsburgh_out.png", "Resources/map/Pittsburgh.csv");
-		PLAYER->SetPosition(D3DXVECTOR3(16, 893, 0));
+		PLAYER->SetPosition(D3DXVECTOR3(16, 200, 0));
 		PLAYER->shield = new Shield();
 		CAMERA->isFollowY = true;
 		LoadGridFromFile(level);

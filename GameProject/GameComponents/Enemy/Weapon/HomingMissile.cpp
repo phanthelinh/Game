@@ -51,10 +51,10 @@ void HomingMissile::Update(float deltaTime)
 	posX += vX * deltaTime;
 	posY += vY * deltaTime;
 	currAnim->Update(deltaTime);
-	/*if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
+	if (posX < CAMERA->GetBound().left || posX>CAMERA->GetBound().right || posY < CAMERA->GetBound().top || posY > CAMERA->GetBound().bottom)
 	{
 		isDead = true;
-	}*/
+	}
 }
 
 void HomingMissile::CalculateHoming()

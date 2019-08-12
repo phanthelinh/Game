@@ -1,6 +1,6 @@
 #include "PlayerFallingState.h"
 
-#define PLAYER_FALLING_SPEED 40.0f
+#define PLAYER_FALLING_SPEED 20.0f
 #define GRAVITY 3.0f
 
 PlayerFallingState::PlayerFallingState()

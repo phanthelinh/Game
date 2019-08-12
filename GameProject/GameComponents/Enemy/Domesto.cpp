@@ -98,7 +98,7 @@ void Domesto::OnCollision(GameObject * object, float deltaTime)
 		{
 			if (PLAYER->currentState->GetState() == Dashing)
 			{
-				currHealth -= 10;
+				currHealth -= 30;
 			}
 			break;
 		}

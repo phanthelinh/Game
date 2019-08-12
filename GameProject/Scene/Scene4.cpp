@@ -14,8 +14,10 @@ Scene4::Scene4()
 	PLAYER; //get instance
 	PLAYER->posX = 50;
 	PLAYER->posY = 150;
+	PLAYER->vX = 0;
+	PLAYER->vY = 0;
 	PLAYER->isOnGround = false;
-	PLAYER->ChangeState(Falling);
+	PLAYER->ChangeState(Standing);
 	CAMERA->camPosition = PLAYER->GetPosition();
 	CAMERA->isFollowY = true;
 

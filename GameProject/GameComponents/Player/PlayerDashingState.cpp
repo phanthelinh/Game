@@ -55,4 +55,14 @@ StateName PlayerDashingState::GetState()
 
 void PlayerDashingState::OnCollision(GameObject* entity, float deltaTime)
 {
+	CollisionResult res = COLLISION->SweptAABB(PLAYER->GetBoundingBox(), entity->GetBoundingBoxFromCorner());
+	if (res.isCollide && entity->tag == GroundTag && res.sideCollided != Bottom)
+	{
+		
+		PLAYER->posX += PLAYER->vX*res.entryTime;
+		PLAYER->posY += PLAYER->vY*res.entryTime;
+		PLAYER->ChangeState(Standing);
+		PLAYER->shield->SetState(ShieldState::Normal);
+		PLAYER->standingGround = entity->GetBoundFromCorner();
+	}
 }
